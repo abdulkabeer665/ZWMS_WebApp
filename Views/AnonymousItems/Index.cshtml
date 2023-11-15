@@ -1,0 +1,118 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <script type="text/javascript" src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" defer></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+</head>
+<input type="hidden" id="url_local" value="@System.Configuration.ConfigurationManager.AppSettings["url_local"]" />
+<body>
+    <div class="main main-app p-3 p-lg-4">
+        <h4>Inventory</h4>
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card card-default">
+                    <div class="card-header card-header-border-bottom d-flex justify-content-between">
+                        @*<h2>Hoverable Data Table</h2>*@
+                        <button type="submit" id="btnadd" class="btn btn-primary" style="margin-right: 5px; float:right" data-toggle="modal" data-target="#modal-lg">
+                            <i class="fa fa-plus"></i> Add
+                        </button>
+                        @*<a href="https://datatables.net/examples/styling/hover.html" target="_blank" class="btn btn-outline-primary btn-sm text-uppercase">
+                                <i class=" mdi mdi-link mr-1"></i> Docs
+                            </a>*@
+                    </div>
+                    <div class="card-body">
+                        <div style="color:black" class="table-responsive hoverable-data-table">
+                            <table id="tblAnonymous" class="table table-hover nowrap table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        @*<th>Scale ID</th>*@
+                                        <th style='display:none'>GUID</th>
+                                        <th>Item Name</th>
+                                        <th>Inventory Name</th>
+                                        <th>Device Name</th>
+                                        @*<th>Inventory Date</th>*@
+                                        @*<th style="display:none">LocId</th>*@
+
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        @*modelpopup*@
+        <div class="modal fade" id="modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLarge" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header header">
+                        <button type="button" id="cls" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h2 class="modal-title" id="exampleModalLarge2" style="color:white">Scale</h2>
+
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+
+
+
+                            <div class="col-sm-6 ">
+                                <label>Code</label>
+                                <input class="form-control" placeholder="" type="text" maxlength="100" id="sclDesc" />
+                            </div>
+                            <div class="col-sm-6">
+                                <label>En Name</label>
+                                <input class="form-control" type="text" id="sclIP" />
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-sm-6">
+                                <label>En Name</label>
+                                <input class="form-control" type="text" id="sclIP" />
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Inventory Date</label>
+                                <input type="date" class="form-control calendar" id="dateInput" name="dateInput">
+                            </div>
+
+                        </div>
+
+                        @*<input type="checkbox" id="active">
+                            <label for="active"> Active</label><br>*@
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="btnclose" class="btn btn-danger btn-pill" data-dismiss="modal">Close</button>
+                        <button type="button" id="btnsave" title="Save" class="btn btn-primary btn-pill">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../Assets/assets/contents/js/AnonymousItems.js"></script>
+    <script src="../Assets/assets/contents/js/GenericAjax.js"></script>
+    <script src="../Assets/assets/contents/js/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
