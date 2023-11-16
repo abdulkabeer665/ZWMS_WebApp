@@ -74,25 +74,34 @@
 
                             <div class="col-sm-6 ">
                                 <label>Code</label>
-                                <input class="form-control" placeholder="" type="text" maxlength="100" id="sclDesc" />
+                                <input class="form-control" placeholder="" type="text" maxlength="100" id="code" disabled />
                             </div>
                             <div class="col-sm-6">
                                 <label>En Name</label>
-                                <input class="form-control" type="text"  id="sclIP" />
+                                <input class="form-control" type="text"  id="enName" />
                             </div>
 
                         </div>
                         <div class="row">
 
                             <div class="col-sm-6">
-                                <label>En Name</label>
-                                <input class="form-control" type="text"  id="sclIP" />
+                                <label>Ar Name</label>
+                                <input class="form-control" type="text" id="arName" />
                             </div>
+
+                            <div class="col-sm-6">
+                                <label>Warehouse</label>
+                                <select style="max-width: 400px;" id="warehouse" class="form-control">
+                                </select>
+                              
+                            </div>
+
+                        </div>
+                        <div class="row">
                             <div class="col-sm-6">
                                 <label>Inventory Date</label>
                                 <input type="date" class="form-control calendar" id="dateInput" name="dateInput">
                             </div>
-
                         </div>
 
                         @*<input type="checkbox" id="active">

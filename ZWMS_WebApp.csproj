@@ -227,6 +227,7 @@
     <Content Include="Assets\assets\img\sidebar1.png" />
     <Content Include="Assets\assets\img\sidebar2.png" />
     <Content Include="Assets\assets\img\sidebar3.png" />
+    <Content Include="Assets\assets\img\warehouse_1.png" />
     <Content Include="Assets\assets\img\zwmsaljazeerah.jpeg" />
     <Content Include="Assets\assets\js\apexchart.js" />
     <Content Include="Assets\assets\js\calendar-events.js" />

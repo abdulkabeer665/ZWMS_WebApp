@@ -1,6 +1,7 @@
-﻿$(window).on('load', function () {
-    var yourToken = sessionStorage.getItem('yourToken')
-
+﻿var yourToken = sessionStorage.getItem('yourToken')
+var loginName = sessionStorage.getItem('loginName')
+$(window).on('load', function () {
+   
     console.log("here ==== Authorization : Bearer " + yourToken);
     //Common.Ajax('POST', $('#url_local').val() + "/api/Warehouse/GetAllWarehouses", "{ \"GET\": 1 }", 'json', FillGridHandler });
 
@@ -8,7 +9,11 @@
         url: $('#url_local').val() + "/api/Inventory/GetAllInventories",
         type: 'POST',
         contentType: 'application/json', // Set the content type based on your API requirements
-        data: JSON.stringify({ "GET": 1 }), // Adjust the payload format based on your API
+        data: JSON.stringify({
+            "GET": 1,
+            "web": 1
+
+                }), // Adjust the payload format based on your API
         headers: {
             'Authorization': 'Bearer ' + yourToken
         },
@@ -22,7 +27,7 @@
             console.log(jqXHR.responseText); // Log the response for more details
         }
 
-})
+    })
      $('.datepicker').datepicker();
     });
 
@@ -81,13 +86,194 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
         });
 }
 $('#btnadd').click(function () {
+
     //$('#btnsave').text($('#hdnsave').val());
     //$('#btnsave').prop('title', 'Save');
     //$('#HieLevelCode').val('');
     //$('#exampleModalLargetext').text("Level Creation");
     //('#HieLevelDesc').val('');
+    filldropdownWarehouseType()
     $('#modal-lg').modal('show');
 });
+function filldropdownWarehouseType() {
+  
+    // debugger;
+    //Common.Ajax('POST', $('#url_local').val() + "/api/WarehouseType/GetAllWarehouseTypes", "{\"companyid\":\"1\"}", 'json', ddlHandler);
+    $.ajax({
+        url: $('#url_local').val() + "/api/Warehouse/GetAllWarehouses",
+        type: 'POST',
+        contentType: 'application/json', // Set the content type based on your API requirements
+        data: JSON.stringify({ "GET": 1 }), // Adjust the payload format based on your API
+        headers: {
+            'Authorization': 'Bearer ' + yourToken
+        },
+        success: function (data) {
+            // Handle the successful response
+
+            ddlHandler(data);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // Handle the error
+            console.log('AJAX Error: ' + textStatus, errorThrown);
+            console.log(jqXHR.responseText); // Log the response for more details
+        }
+    });
+
+}
+function ddlHandler(response) {
+ 
+    console.log("******************")
+    console.log(response)
+    // debugger;
+    fillddls('warehouse', 'Please Warehouse', response)
+}
+function fillddls(name, selecttext, data) {
+    console.log("$$$$$$$$$$$$ " + data)
+    $("#" + name).empty();
+    var s = '<option value="0">' + selecttext + '</option>';
+    //for (var i = 0; i < data.length; i++) {
+    //    s += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+    //}
+    $.each(data, function (index, item) {
+        s += '<option value="' + item.guid + '">' + item.engName + '</option>';
+
+    });
+    $("#" + name).html(s);
+}
+$("#warehouse").change(function () {
+    
+ 
+    console.log("^^^^^^^^^^^")
+    var ddvalue = $('#warehouse').val()
+
+    $.ajax({
+        url: $('#url_local').val() + "/api/Inventory/GenerateInventoryCode",
+        type: 'POST',
+        contentType: 'application/json', // Set the content type based on your API requirements
+        data: JSON.stringify({
+            "warehouseGUID": ddvalue,
+            "LoginName": loginName
+        }), // Adjust the payload format based on your API
+        headers: {
+            'Authorization': 'Bearer ' + yourToken
+        },
+        success: function (data) {
+            // Handle the successful response
+
+            ddlHandler2(data);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // Handle the error
+            console.log('AJAX Error: ' + textStatus, errorThrown);
+            console.log(jqXHR.responseText); // Log the response for more details
+        }
+    });
+});
+function ddlHandler2(response) {
+    console.log(response)
+    $('#code').val(response.code)
+}
+function fillddls2(name, selecttext, data) {
+    console.log("$$$$$$$$$$$$ " + data)
+    $("#" + name).empty();
+    var s = '<option value="0">' + selecttext + '</option>';
+    //for (var i = 0; i < data.length; i++) {
+    //    s += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+    //}
+    $.each(data, function (index, item) {
+        s += '<option value="' + item.guid + '">' + item.engName + '</option>';
+
+    });
+    $("#" + name).html(s);
+}
+
+
+
+$('#btnsave').click(function () {
+    if ($('#enName').val() == '') {
+        swal({
+
+            title: "Name must be enter",
+            icon: "warning",
+            button: "OK",
+        });
+    }
+    else {
+        var flag = $('#btnsave').attr('title');
+        if (flag == "Save") {
+            var currentDateValue = $('#dateInput').val();
+
+            $('#modal-lg').modal('hide');
+
+            $.ajax({
+                url: $('#url_local').val() + "/api/Inventory/InsertInventory",
+                type: 'POST',
+                contentType: 'application/json', // Set the content type based on your API requirements
+                data: JSON.stringify({
+                    "add": 1,
+                    "engName": $('#enName').val(),
+                    "warehouseGUID": $('#warehouse').val(),
+                    "name": $('#arName').val(),
+                    "code": $('#code').val(),
+                    "inventoryDate": currentDateValue,
+                    "createdBy": loginName,
+                    "lastEditBy": loginName
+
+                }), // Adjust the payload format based on your API
+                headers: {
+                    'Authorization': 'Bearer ' + yourToken
+                },
+                success: function (data) {
+                    // Handle the successful response
+
+                    SaveHandler(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // Handle the error
+                    console.log('AJAX Error: ' + textStatus, errorThrown);
+                    console.log(jqXHR.responseText); // Log the response for more details
+                }
+            });
+        }
+    }
+})
+function SaveHandler(response) {
+  /*  $('#modal-lg').modal('hide');*/
+    $('#loader').hide();
+    "herrrrrrrrrrrrrrrre"
+    console.log(response)
+    $('#modal-lg').modal('hide');
+    alert("success")
+    var str = response.message;
+    if (str.includes("Already")) {
+        swal({
+            title: response.message + "...",
+            icon: "warning",
+            button: "OK",
+        }).then((exist) => {
+            if (exist) {
+                location.href = '';
+            }
+        })
+    }
+    else {
+        swal({
+            title: response.message + "...",
+            icon: "success",
+            button: "OK",
+        })
+            .then((Save) => {
+                if (Save) {
+                    location.href = '';
+                }
+            })
+
+    }
+    //location.href = '';
+    //alert(response.detail[0].message);
+
+}
+
 $('#cls').click(function () {
     //$('#btnsave').text($('#hdnsave').val());
     //$('#btnsave').prop('title', 'Save');

@@ -30,10 +30,13 @@ $("#btnLogin").click(function () {
 
 function EditRes(response) {
     console.log(response["token"])
+    var loginName = $("#loginName").val();
+ 
     //console.log(response.message)
     if (response.status == '200') {
-    
+       
         sessionStorage.setItem("yourToken", response["token"]);
+        sessionStorage.setItem("loginName", loginName);
         window.location.href = $("#front_URL").val() + "/Home/Index";
 
     }

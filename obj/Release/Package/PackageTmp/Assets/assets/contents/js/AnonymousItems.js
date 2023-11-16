@@ -1,9 +1,11 @@
-﻿$(window).on('load', function () {
-    var yourToken = sessionStorage.getItem('yourToken')
+﻿var yourToken = sessionStorage.getItem('yourToken')
+var loginName = sessionStorage.getItem('loginName')
+
+$(window).on('load', function () {
 
     console.log("here ==== Authorization : Bearer " + yourToken);
     //Common.Ajax('POST', $('#url_local').val() + "/api/Warehouse/GetAllWarehouses", "{ \"GET\": 1 }", 'json', FillGridHandler });
-
+        
     $.ajax({
         url: $('#url_local').val() + "/api/AnonymousItems/GetAllAnonymousItems",
         type: 'POST',
@@ -23,10 +25,11 @@
         }
 
     })
-    $('.datepicker').datepicker();
+  //  $('.datepicker').datepicker();
 });
 
 function FillGridHandler(response) {
+   
     console.log("=================>");
     console.log(response);
 
@@ -63,6 +66,8 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
         tr.append("<td>" + json[i].itemName + "</td>");
         tr.append("<td>" + json[i].inventoryName + "</td>");
         tr.append("<td>" + json[i].deviceName + "</td>");
+        tr.append("<td style='display: none;'>" + json[i].imageBase64 + "</td>");
+        //tr.append("<td>" + json[i].deviceName + "</td>");
         //tr.append("<td>" + json[i].inventoryDate + "</td>");
         //if (json[i].scalestatus == "1") {
         //    tr.append("<td>Active</td>");
@@ -104,3 +109,138 @@ $('#btnclose').click(function () {
     //('#HieLevelDesc').val('');
     $('#modal-lg').modal('hide');
 });
+function Edit(value) {
+
+   // $('#exampleModalLargetext').text("Level Updation");
+    var table = $('#tblAnonymous').DataTable();
+    var data = table.row(value).data();
+    //console.log(data);
+    $('#guid').val(data[0]);
+    $('#name').val(data[1]);
+   // $('#HieLevelDesc').val(data[1]);
+    //alert(data[0]);
+    $('#modal-lg').modal('show');
+    $('#btnsave').prop('title', 'Update');
+    $('#btnsave').text($('#hdnupdate').val());
+    loadimage();
+};
+
+function loadimage() {
+    console.log($('#guid').val())
+    $.ajax({
+        url: $('#url_local').val() + "/api/AnonymousItems/GetAnonymousItemByGUID",
+        type: 'POST',
+        contentType: 'application/json', // Set the content type based on your API requirements
+        data: JSON.stringify({
+            "getByGUID": 1,
+            "anonymousItemGUID": $('#guid').val()
+        }), // Adjust the payload format based on your API
+        headers: {
+            'Authorization': 'Bearer ' + yourToken
+        },
+        success: function (data) {
+            console.log("---------------- hewrrr")
+            console.log(data[0]["imageBase64"])
+            // Handle the successful response
+           // var base64Image = 'data: ' + data[0]["imageBase64"]+''; // Replace with your base64 image data
+
+
+            $('#img').attr('src', 'data:image/png;base64,' + data[0]["imageBase64"]);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // Handle the error
+            console.log('AJAX Error: ' + textStatus, errorThrown);
+            console.log(jqXHR.responseText); // Log the response for more details
+        }
+
+    })
+}
+
+$('#btnsave').click(function () {
+    if ($('#name').val() == '') {
+        swal({
+
+            title: "name must be enter",
+            icon: "warning",
+            button: "OK",
+        });
+    }
+    else {
+        var flag = $('#btnsave').attr('title');
+        if (flag == "Save") {
+            $('#modal-lg').modal('hide');
+            $('#loader').show();
+            //console.log("clicked")
+            Common.Ajax('POST', $('#url_local').val() + "/api/Levels/addlevels", "{ \"desc\": \"" + $("#HieLevelDesc").val() + "\", \"companyid\": \"1\",\"add\":\"1\" }", 'json', EditRes);
+        }
+        else {
+
+            $('#modal-lg').modal('hide');
+            $.ajax({
+                url: $('#url_local').val() + "/api/Inventory/InsertInventory",
+                type: 'POST',
+                contentType: 'application/json', // Set the content type based on your API requirements
+                data: JSON.stringify({
+                    "update": 1,
+                    "anonymousItemGUID": $('#guid').val(),
+                    "engName": $('#name').val(),
+                    "imageimageBase64": $('#image').text(),
+                    "lastEditBy": loginName,
+                    
+                }), // Adjust the payload format based on your API
+                headers: {
+                    'Authorization': 'Bearer ' + yourToken
+                },
+                success: function (data) {
+                    // Handle the successful response
+
+                    SaveHandler(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // Handle the error
+                    console.log('AJAX Error: ' + textStatus, errorThrown);
+                    console.log(jqXHR.responseText); // Log the response for more details
+                }
+            });
+        }
+    }
+    loadGridAjax();
+});
+
+
+function SaveHandler(response) {
+    /*  $('#modal-lg').modal('hide');*/
+    //$('#loader').hide();
+
+    console.log(response)
+    $('#modal-lg').modal('hide');
+   
+    var str = response.message;
+    if (str.includes("Already")) {
+        swal({
+            title: response.message + "...",
+            icon: "warning",
+            button: "OK",
+        }).then((exist) => {
+            if (exist) {
+                location.href = '';
+            }
+        })
+    }
+    else {
+        swal({
+            title: response.message + "...",
+            icon: "success",
+            button: "OK",
+        })
+            .then((Save) => {
+                if (Save) {
+                    location.href = '';
+                }
+            })
+
+    }
+    //location.href = '';
+    //alert(response.detail[0].message);
+
+}
