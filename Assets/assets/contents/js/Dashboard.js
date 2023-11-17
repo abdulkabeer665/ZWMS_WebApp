@@ -82,6 +82,8 @@ function loadinventcount() {
             success: function (data) {
                 // Handle the successful response
                 FillGridHandlerAllInvent(data);
+                $('#slab1').removeClass('loaderforslabs');
+                $('#slab2').removeClass('loaderforslabs');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 // Handle the error
@@ -108,6 +110,8 @@ function loadinventcount() {
             success: function (data) {
                 // Handle the successful response
                 FillGridHandlerAllInvent(data);
+                $('#slab1').removeClass('loaderforslabs');
+                $('#slab2').removeClass('loaderforslabs');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 // Handle the error
@@ -168,6 +172,7 @@ function loadanonymouscount() {
             success: function (data) {
                 // Handle the successful response
                 FillGridHandlerAllAnonymous(data);
+                $('#slab3').removeClass('loaderforslabs');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 // Handle the error
@@ -192,6 +197,7 @@ function loadanonymouscount() {
             success: function (data) {
                 // Handle the successful response
                 FillGridHandlerAllAnonymous(data);
+                $('#slab3').removeClass('loaderforslabs');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 // Handle the error
@@ -299,6 +305,7 @@ function VarianceInfo() {
         success: function (data) {
             // Handle the successful response
             divFunction(data)
+            $('#progressBarDiv').removeClass('loader');
         },
         error: function (jqXHR, textStatus, errorThrown) {
             // Handle the error
@@ -327,4 +334,5 @@ function divFunction(data) {
         $("#progressBarDiv").append('<div class="progress-bar bg-' + color + ' w-' + countArray[j].toLocaleString() + '" role="progressbar" aria-valuenow="' + countArray[j].toLocaleString() + '" aria-valuemin="0" aria-valuemax="100"></div>')
         $("#performanceTable").append('<tbody><tr><td><div class="badge-dot bg-' + color + '"></div></td><td>' + data.returnTable[j]["name"] + '</td><td>' + data.returnTable[j]["count"].toLocaleString() + '</td><td>' + data.returnTable[j]["percentage"] + '%</td></tr></tbody>');
     }    
+   
 }

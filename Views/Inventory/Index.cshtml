@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
     <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+
+   
 </head>
 <input type="hidden" id="url_local" value="@System.Configuration.ConfigurationManager.AppSettings["url_local"]" />
 <body>
@@ -17,6 +19,7 @@
         <h4>Inventory</h4>
 
         <div class="row">
+            <div class="loader" style="display: none;"></div>
 
             <div class="col-12">
                 <div class="card card-default">
@@ -26,8 +29,8 @@
                             <i class="fa fa-plus"></i> Add
                         </button>
                         @*<a href="https://datatables.net/examples/styling/hover.html" target="_blank" class="btn btn-outline-primary btn-sm text-uppercase">
-                                <i class=" mdi mdi-link mr-1"></i> Docs
-                            </a>*@
+                        <i class=" mdi mdi-link mr-1"></i> Docs
+                    </a>*@
                     </div>
                     <div class="card-body">
                         <div style="color:black" class="table-responsive hoverable-data-table">
@@ -53,7 +56,7 @@
                     </div>
                 </div>
             </div>
-
+            </div>
         </div>
         @*modelpopup*@
         <div class="modal fade" id="modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLarge" aria-hidden="true">

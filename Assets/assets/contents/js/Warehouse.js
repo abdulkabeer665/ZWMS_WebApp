@@ -4,7 +4,7 @@ $(window).on('load', function () {
 
     console.log("here ==== Authorization : Bearer " + yourToken);
     //Common.Ajax('POST', $('#url_local').val() + "/api/Warehouse/GetAllWarehouses", "{ \"GET\": 1 }", 'json', FillGridHandler });
-
+    $('.loader').show();
     $.ajax({
         url: $('#url_local').val() + "/api/Warehouse/GetAllWarehouses",
         type: 'POST',
@@ -16,6 +16,7 @@ $(window).on('load', function () {
         success: function (data) {
             // Handle the successful response
             FillGridHandler(data);
+            $('.loader').hide();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             // Handle the error
