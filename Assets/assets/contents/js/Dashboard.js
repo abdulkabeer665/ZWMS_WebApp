@@ -7,6 +7,8 @@ $(window).on('load', function () {
     loadselection()
     startTimer()
     VarianceInfo()
+
+
   
 });
 
@@ -43,7 +45,6 @@ function ddlHandler(response) {
     fillddls('inventories', 'All', response)
 }
 $("#inventories").change(function () {
-
  
     loadinventselectedcount()
     loadanonymouscount()
@@ -197,15 +198,12 @@ function loadanonymouscount() {
                 console.log('AJAX Error: ' + textStatus, errorThrown);
                 console.log(jqXHR.responseText); // Log the response for more details
             }
-
         })
     }
 }
 
 function FillGridHandlerAllAnonymous(response) {
-   
     $("#slab3").text(response.returnTable[0]["foundAnonymousItems"])
-
 };
 
 function startTimer() {
@@ -214,7 +212,7 @@ function startTimer() {
         loadinventcount()
         loadanonymouscount()
         loadselection()
-        //VarianceInfo()
+        VarianceInfo()
     }, 5000);
 
 }
@@ -226,7 +224,7 @@ $("#selection").change(function () {
 function loadselection() {
     if ($("#selection").val() == "Inventory") {
         $("#myselect").text("Anonymous Items found in Inventories")
-        $('#mylist').empty();
+        
         $.ajax({
             url: $('#url_local').val() + "/api/Dashboard/GetAllInventoryItemsCountAgainstInventoryOrDevice",
             type: 'POST',
@@ -253,7 +251,7 @@ function loadselection() {
     }
     if ($("#selection").val() == "Device") {
         $("#myselect").text("Anonymous Items found by Devices")
-        $('#mylist').empty();
+       
         $.ajax({
             url: $('#url_local').val() + "/api/Dashboard/GetAllInventoryItemsCountAgainstInventoryOrDevice",
             type: 'POST',
@@ -282,6 +280,7 @@ function loadselection() {
 }
 
 function FillGridHandlerSelection(response) {
+    $('#mylist').empty();
     for (i = 0; i < response.returnTable.length; i++) {
         $('#mylist').append("<tr><td><span class='badge-dot bg-twitter me-2'></span> <span class='fw-medium'>" + response.returnTable[i].name + "</span></td><td>" + response.returnTable[i].count +"</td></tr>");
     }        
@@ -312,81 +311,20 @@ function VarianceInfo() {
 };
 
 function divFunction(data) {
-
-    var myDiv1 = document.getElementById('myDiv1');
-    var myDiv2 = document.getElementById('myDiv2');
-    var myDiv3 = document.getElementById('myDiv3');
-    var myDiv4 = document.getElementById('myDiv4');
-    var myDiv5 = document.getElementById('myDiv5');
-    var myDiv6 = document.getElementById('myDiv6');
-
-    //console.log("Count ===>>> " + data.returnTable[0]["count"]);
-    //console.log("Name ===>>> " + data.returnTable[0]["name"]);
-    //console.log("TotalItemsCount ===>>> " + data.returnTable[0]["totalItemsCount"]);
-    //console.log("Percentage ===>>> " + data.returnTable[0]["percentage"]);
-    
-    //for (var i = 0; i < 6; i++) {
-
-        //var count = data.returnTable[i]["count"]
-
-        if (myDiv1 !== null) {
-            var length = data.returnTable[0]["count"];
-            console.log(length)
-            // Set the aria-valuenow attribute
-            myDiv1.classList.add('w-' + length);
-            myDiv1.setAttribute('aria-valuenow', length);
-        }
-        else {
-            console.error('Element with id "myDiv1" not found.');
-        }
-        if (myDiv2 !== null) {
-            var length = '25';
-            // Set the aria-valuenow attribute
-            myDiv2.classList.add('w-' + length);
-            myDiv2.setAttribute('aria-valuenow', length);
-        }
-        else {
-            console.error('Element with id "myDiv2" not found.');
-        }
-        if (myDiv3 !== null) {
-            var length = '5';
-            // Set the aria-valuenow attribute
-            myDiv3.classList.add('w-' + length);
-            myDiv3.setAttribute('aria-valuenow', length);
-        }
-        else {
-            console.error('Element with id "myDiv3" not found.');
-        }
-        if (myDiv4 !== null) {
-            var length = '5';
-            // Set the aria-valuenow attribute
-            myDiv4.classList.add('w-' + length);
-            myDiv4.setAttribute('aria-valuenow', length);
-        }
-        else {
-            console.error('Element with id "myDiv4" not found.');
-        }
-        if (myDiv5 !== null) {
-            var length = '10';
-            // Set the aria-valuenow attribute
-            myDiv5.classList.add('w-' + length);
-            myDiv5.setAttribute('aria-valuenow', length);
-        }
-        else {
-            console.error('Element with id "myDiv5" not found.');
-        }
-        if (myDiv6 !== null) {
-            var length = '5';
-            // Set the aria-valuenow attribute
-            myDiv6.classList.add('w-' + length);
-            myDiv6.setAttribute('aria-valuenow', length);
-        }
-        else {
-            console.error('Element with id "myDiv6" not found.');
-        }
-
-    //}
-    
-
-    
+    $('#performanceTable').empty();
+    $('#progressBarDiv').empty();
+    var countArray = [];
+    var color = '';
+    var colorArray = ['primary', 'success', 'orange', 'pink', 'info', 'indigo'];
+    var responseCount = 0;
+    for (var i = 0; i < data.returnTable.length; i++) {
+        responseCount = responseCount + data.returnTable[i]["count"];
+    }
+    for (var j = 0; j < data.returnTable.length; j++) {
+        countArray[j] = (data.returnTable[j]["count"] / responseCount) * 100;
+        countArray[j] = Math.round(countArray[j] / 5) * 5;
+        color = colorArray[j]
+        $("#progressBarDiv").append('<div class="progress-bar bg-' + color + ' w-' + countArray[j].toLocaleString() + '" role="progressbar" aria-valuenow="' + countArray[j].toLocaleString() + '" aria-valuemin="0" aria-valuemax="100"></div>')
+        $("#performanceTable").append('<tbody><tr><td><div class="badge-dot bg-' + color + '"></div></td><td>' + data.returnTable[j]["name"] + '</td><td>' + data.returnTable[j]["count"].toLocaleString() + '</td><td>' + data.returnTable[j]["percentage"] + '%</td></tr></tbody>');
+    }    
 }
