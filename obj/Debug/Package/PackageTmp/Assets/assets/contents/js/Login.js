@@ -1,4 +1,7 @@
-﻿$(document).ready(function () {
+﻿window.onload = function () {
+    document.getElementById('loginName').focus();
+};
+$(document).ready(function () {
     sessionStorage.clear();
 
   //  Common.Ajax('POST', $('#url_local').val() + "/api/Authentication/CreateAdmin", "{}", 'json');
