@@ -2,14 +2,21 @@
 var loginName = sessionStorage.getItem('loginName')
 
 $(window).on('load', function () {
-    filldropdowninventory()
-    filldropdowncategory()
-    loadinventcount()
-    loadanonymouscount()
-    loadselection()
-    startTimer()
-    VarianceInfo()
-    loadinventorycountbycategory()
+    if (loginName == "" || loginName == null) {
+        window.location.href = $("#front_URL").val() + "/Login/Index";
+    }
+    else {
+        $("#loginName").text(loginName);
+        filldropdowninventory()
+        filldropdowncategory()
+        loadinventcount()
+        loadanonymouscount()
+        loadselection()
+        startTimer()
+        VarianceInfo()
+        loadinventorycountbycategory()
+    }
+    
 });
 function filldropdowninventory() {
     $.ajax({
