@@ -135,6 +135,7 @@
   <ItemGroup>
     <Content Include="Assets\assets\contents\js\AnonymousItems.js" />
     <Content Include="Assets\assets\contents\js\Dashboard.js" />
+    <Content Include="Assets\assets\contents\js\Dashboard_charts.js" />
     <Content Include="Assets\assets\contents\js\GenericAjax.js" />
     <Content Include="Assets\assets\contents\js\Inventory.js" />
     <Content Include="Assets\assets\contents\js\Warehouse.js" />
