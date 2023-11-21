@@ -34,6 +34,7 @@ function varianceChart() {
 };
 
 function responseFunction(response) {
+    console.log("==================")
     console.log(response);
     var data = [10, 60, 50, 45, 50, 60, 70, 40, 45, 35, 10, 60, 50, 45, 45];
     var colour = []

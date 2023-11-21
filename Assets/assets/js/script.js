@@ -1,4 +1,3 @@
-'use script'
 
 // Add backdrop element
 $('body').append('<div class="main-backdrop"></div>');
@@ -22,36 +21,36 @@ $('body').on('click', '.main-backdrop', function(){
 })
 
 // Sidebar Interaction
-const psSidebar = new PerfectScrollbar('#sidebarMenu', {
-  suppressScrollX: true
-});
+//const psSidebar = new PerfectScrollbar('#sidebarMenu', {
+//  suppressScrollX: true
+//});
 
-$('.sidebar .nav-label').on('click', function(e){
-  e.preventDefault();
+//$('.sidebar .nav-label').on('click', function(e){
+//  e.preventDefault();
 
-  var target = $(this).next('.nav-sidebar');
-  $(target).slideToggle(function(){
-    psSidebar.update();
-  });
+//  var target = $(this).next('.nav-sidebar');
+//  $(target).slideToggle(function(){
+//    psSidebar.update();
+//  });
 
-});
+//});
 
-$('.sidebar .has-sub').on('click', function(e){
-  e.preventDefault();
+//$('.sidebar .has-sub').on('click', function(e){
+//  e.preventDefault();
 
-  var target = $(this).next('.nav-sub');
-  $(target).slideToggle(function(){
-    psSidebar.update();
-  });
+//  var target = $(this).next('.nav-sub');
+//  $(target).slideToggle(function(){
+//    psSidebar.update();
+//  });
 
-  var siblings = $(this).closest('.nav-item').siblings();
-  siblings.each(function(){
-    var nav = $(this).find('.nav-sub');
-    if(nav.is(':visible')) {
-      nav.slideUp();
-    }
-  });
-});
+//  var siblings = $(this).closest('.nav-item').siblings();
+//  siblings.each(function(){
+//    var nav = $(this).find('.nav-sub');
+//    if(nav.is(':visible')) {
+//      nav.slideUp();
+//    }
+//  });
+//});
 
 $('#sidebarFooterMenu').on('click', function(e){
   e.preventDefault();
