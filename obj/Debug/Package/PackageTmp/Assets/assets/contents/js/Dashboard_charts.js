@@ -1,4 +1,4 @@
-﻿var yourToken = sessionStorage.getItem('yourToken')
+var yourToken = sessionStorage.getItem('yourToken')
 
 $(window).on('load', function () {
 
@@ -55,15 +55,50 @@ function varianceChart() {
 };
 
 function responseFunction(response) {
+    console.log("affasfsaf")
     console.log(response);
+    var name = []
+    var totalcount = []
+    var count = []
+    var variance = []
+    var vv = ""
+    for (var i = 0; i < response.returnTable.length; i++) {
 
+        name[i] = response.returnTable[i]["name"];
+        totalcount[i] = response.returnTable[i]["totalItemsCount"];
+        count[i] = response.returnTable[i]["count"];
+        //totalcount[i] = 8
+        //count[i] = 2
+        //alert(name[i])
+        //alert(totalcount[i])
+        //alert(count[i])
+        console.log('================"' + i + '"================')
+        console.log("Total count : " + totalcount[i])
+        console.log("count : " + count[i])
+        variance[i] = (totalcount[i] + count[i]) / 2
+        console.log("a+b/2 :" + variance[i])
+
+        //alert(variance[i])
+        variance[i] = totalcount[i] - variance[i]
+        console.log("c-b :" + variance[i])
+
+        //alert(variance[i])
+        variance[i] = Math.pow((variance[i]), 2)
+        console.log("Final :" + variance[i] + " %")
+
+        //alert(variance[i])
+
+
+    }
+    //alert(variance[0])
+    /* alert(variance[0])*/
     var chartColor = [];
     var chartLabel = [];
     var chartCount = [];
 
-    for (var i = 0; i < response.returnTable.length; i++) {
-        
-        chartCount[i] = response.returnTable[i]["count"];
+    for (var i = 0; i < variance.length; i++) {
+
+        chartCount[i] = variance[i];
         chartLabel[i] = response.returnTable[i]["name"];
         if (chartCount[i] < 20) {
             chartColor[i] = "#5cb85c"
@@ -71,7 +106,7 @@ function responseFunction(response) {
         if (chartCount[i] >= 20 && chartCount[i] < 50) {
             chartColor[i] = "#f0ad4e"
         }
-        if (chartCount[i] >= 50 && chartCount[i] <= 100) {
+        if (chartCount[i] >= 50) {
             chartColor[i] = "#d9534f"
         }
     };
@@ -84,6 +119,7 @@ function responseFunction(response) {
         type: 'bar',
         data: {
             labels: chartLabel,
+            anotherLabels: variance,
             //labels: ['Invent1', 'Invent2', 'Invent3', 'Invent4', 'Invent5', 'Invent6', 'Invent7', 'Invent8', 'Invent9', 'Invent10', 'Invent1', 'Invent2', 'Invent3', 'Invent4', 'Invent4'],
             datasets: [{
                 data: chartCount,
@@ -108,7 +144,7 @@ function responseFunction(response) {
                     intersect: false, // Allow tooltip to display even if not directly over the point
                     callbacks: {
                         label: function (tooltipItem, data) {
-                            debugger
+                            //debugger
                             console.log(chartCount)
                             var rrr = [];
                             rrr = chartCount;
@@ -119,13 +155,22 @@ function responseFunction(response) {
 
                             var datasetIndex = tooltipItem.dataIndex;
                             var index = tooltipItem.index;
+                            //debugger
 
-                            // Get the corresponding value from the array
-                            var tooltipValue = data.datasets[datasetIndex].data[index];
+
+                            var varianceData = variance[tooltipItem.dataIndex];
+                            var TotalCount = totalcount[tooltipItem.dataIndex];
+                            var Count = count[tooltipItem.dataIndex];
+                            var datasetIndex = tooltipItem.dataIndex;
+
+                            return ['Variance: ' + varianceData + '%', 'Total Items: ' + TotalCount, 'Found Items: ' + Count];
+                            //// Get the corresponding value from the array
+                            //var tooltipValue = data.datasets[datasetIndex].data[index];
 
                             // Customize tooltip label content here
-                            return ["Hello"];
+                            //return [chartCount];
                         }
+
                     }
                 }
             },

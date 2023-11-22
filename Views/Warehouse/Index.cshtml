@@ -39,7 +39,7 @@
                                         <th style='display:none'>GUID</th>
                                         <th>Code</th>
                                         <th>English Name</th>
-                                        <th>Arabic Name</th>
+                                        <th>Warehouse Type</th>
                                         @*<th style="display:none">LocId</th>*@
 
                                         <th>Action</th>
@@ -69,31 +69,28 @@
                     <div class="modal-body">
 
                         <div class="row">
-                            <div class="col-sm-0" style="display: none;">
-
-                                <input class="form-control" placeholder="" type="text" id="HieLevelCode" style="cursor: not-allowed" disabled />
-                            </div>
+                            
                             <div class="col-sm-6 ">
                                 <label>Warehouse Type</label>
-                                <select style="max-width: 400px;" id="waretype" class="form-control">
+                                <select style="max-width: 400px;" value="" id="waretype" class="form-control">
                                 </select>
                             </div>
 
 
                             <div class="col-sm-6 ">
                                 <label>Code</label>
-                                <input class="form-control" placeholder="" type="text" maxlength="100" id="sclDesc" />
+                                <input class="form-control" placeholder="" type="text" maxlength="100" disabled id="code" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
                                 <label>En Name</label>
-                                <input class="form-control" type="text" maxlength="15" placeholder="xxx.xxx.xxx.xxx" id="sclIP" />
+                                <input class="form-control" type="text" maxlength="15" placeholder="Please Insert Warehouse Eng Name" id="engName" />
                             </div>
 
                             <div class="col-sm-6">
                                 <label>Ar Name</label>
-                                <input class="form-control" placeholder="" type="text" id="justAnotherInputBox" />
+                                <input class="form-control" type="text" maxlength="15" placeholder="Please Insert Warehouse Ar Name" id="arName" />
                                 @* <input type="button" style="display:none" title="sadasd" id="btnref" />*@
                                 @*<input type="text" id="example" placeholder="Select">*@
 
@@ -105,120 +102,91 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <label>Main Warehouse</label>
-                                <select style="max-width: 400px;" id="ddllevel" class="form-control">
+                                <select style="max-width: 400px;" id="mainWarehouseddl" class="form-control">
                                 </select>
                             </div>
 
                             <div class="col-sm-6">
                                 <label>Default Currency</label>
-                                <select style="max-width: 400px;" id="ddllevel" class="form-control">
+                                <select style="max-width: 400px;" id="defaultCurrencyddl" class="form-control">
                                 </select>
                             </div>
 
                         </div>
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-sm-6">
                                 <label>Return Warehouse</label>
-                                <select id="ddllevel" class="form-control">
+                                <select style="max-width: 400px;" id="returnWarehouseddl" class="form-control">
+                                    
                                 </select>
                             </div>
-                            <div>
-
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-sm-6">
                                 <label>Notes</label>
-                                <input class="form-control" type="text" id="sclIP" />
-
-                            </div>
-                            <div>
-
+                                <input class="form-control" style="max-width: 400px;" type="text" id="notes" />
                             </div>
 
                         </div>
-
                         <div class="row">
-                            <div class="col-sm-0" style="display: none;">
 
-                                <input class="form-control" placeholder="" type="text" id="HieLevelCode" style="cursor: not-allowed" disabled />
-                            </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <label>Keeper</label>
-                                <input class="form-control" placeholder="" type="text" maxlength="20" id="sclId" onkeyup="nospaces(this)" />
+                                <input class="form-control" placeholder="" type="text" maxlength="20" id="keeper" />
                             </div>
-
-
-                            <div class="col-sm-6">
-                                <label>Phone1</label>
-                                <input class="form-control" placeholder="" type="text" maxlength="100" id="sclDesc" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-0" style="display: none;">
-
-                                <input class="form-control" placeholder="" type="text" id="HieLevelCode" style="cursor: not-allowed" disabled />
-                            </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <label>Phone</label>
-                                <input class="form-control" placeholder="" type="text" maxlength="20" id="sclId" onkeyup="nospaces(this)" />
+                                <input class="form-control" placeholder="" type="text" maxlength="100" id="phone" />
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label>Phone1</label>
+                                <input class="form-control" placeholder="" type="text" maxlength="20" id="phone1" />
                             </div>
 
                         </div>
+
                         <div class="row">
+
                             <div class="col-sm-0" style="display: none;">
 
-                                <input class="form-control" placeholder="" type="text" id="HieLevelCode" style="cursor: not-allowed" disabled />
+                                <input class="form-control" placeholder="" type="text" id="barcode" style="cursor: not-allowed" disabled />
                             </div>
                             <div class="col-sm-4">
                                 <label>Fax</label>
-                                <input class="form-control" placeholder="" type="text" maxlength="20" id="sclId" onkeyup="nospaces(this)" />
+                                <input class="form-control" placeholder="" type="text" maxlength="20" id="fax" />
                             </div>
-
 
                             <div class="col-sm-4">
                                 <label>PO Box</label>
-                                <input class="form-control" placeholder="" type="text" maxlength="100" id="sclDesc" />
+                                <input class="form-control" placeholder="" type="text" maxlength="100" id="poBox" />
                             </div>
 
                             <div class="col-sm-4">
                                 <label>Country</label>
-                                <input class="form-control" placeholder="" type="text" maxlength="20" id="sclId" onkeyup="nospaces(this)" />
+                                <input class="form-control" placeholder="" type="text" maxlength="20" id="country" />
                             </div>
+
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-0" style="display: none;">
-
-                                <input class="form-control" placeholder="" type="text" id="HieLevelCode" style="cursor: not-allowed" disabled />
-                            </div>
-
-
 
                             <div class="col-sm-4">
                                 <label>City</label>
-                                <input class="form-control" placeholder="" type="text" maxlength="100" id="sclDesc" />
+                                <input class="form-control" placeholder="" type="text" maxlength="100" id="city" />
                             </div>
                             <div class="col-sm-4">
                                 <label>Email</label>
-                                <input class="form-control" placeholder="" type="text" maxlength="20" id="sclId" onkeyup="nospaces(this)" />
+                                <input class="form-control" placeholder="" type="text" maxlength="20" id="email" />
                             </div>
-
 
                             <div class="col-sm-4">
                                 <label>Website</label>
-                                <input class="form-control" placeholder="" type="text" maxlength="100" id="sclDesc" />
+                                <input class="form-control" placeholder="" type="text" maxlength="100" id="website" />
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-0" style="display: none;">
-
-                                <input class="form-control" placeholder="" type="text" id="HieLevelCode" style="cursor: not-allowed" disabled />
-                            </div>
                             <div class="col-sm-12">
                                 <label>Address</label>
-                                <input class="form-control" placeholder="" type="text" maxlength="20" id="sclId" onkeyup="nospaces(this)" />
+                                <input class="form-control" placeholder="" type="text" maxlength="20" id="address" />
                             </div>
                         </div>
 
