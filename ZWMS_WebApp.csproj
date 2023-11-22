@@ -120,7 +120,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminToolsController.cs" />
     <Compile Include="Controllers\AnonymousItemsController.cs" />
+    <Compile Include="Controllers\DevicesConfigurationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -136,6 +138,7 @@
     <Content Include="Assets\assets\contents\js\AnonymousItems.js" />
     <Content Include="Assets\assets\contents\js\Dashboard.js" />
     <Content Include="Assets\assets\contents\js\Dashboard_charts.js" />
+    <Content Include="Assets\assets\contents\js\DevicesConfiguration.js" />
     <Content Include="Assets\assets\contents\js\GenericAjax.js" />
     <Content Include="Assets\assets\contents\js\Inventory.js" />
     <Content Include="Assets\assets\contents\js\Warehouse.js" />
@@ -9079,6 +9082,8 @@
     <Content Include="Views\Warehouse\Index.cshtml" />
     <Content Include="Views\Inventory\Index.cshtml" />
     <Content Include="Views\AnonymousItems\Index.cshtml" />
+    <Content Include="Views\DevicesConfiguration\Index.cshtml" />
+    <Content Include="Views\AdminTools\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
