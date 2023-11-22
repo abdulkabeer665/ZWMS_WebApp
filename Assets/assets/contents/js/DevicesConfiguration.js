@@ -2,6 +2,12 @@
 $(window).on('load', function () {
     yourToken = sessionStorage.getItem('yourToken');
     $('.loader').show();
+
+    loadGridAjax();
+
+});
+
+function loadGridAjax() {
     $.ajax({
         url: $('#url_local').val() + "/api/DeviceConfiguration/GetAllDevices",
         type: 'POST',
@@ -21,8 +27,7 @@ $(window).on('load', function () {
             console.log(jqXHR.responseText); // Log the response for more details
         }
     });
-
-})
+}
 function FillGridHandler(response) {
 
     var btnedit_ = 0;
@@ -52,6 +57,7 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
         tr.append("<td  style='display: none;'>" + json[i].guid + "</td>");
         tr.append("<td>" + json[i].code + "</td>");
         tr.append("<td>" + json[i].engName + "</td>");
+        tr.append("<td>" + json[i].name + "</td>");
         tr.append("<td>" + json[i].hardwareID + "</td>");
         tr.append("<td>" + json[i].licKey + "</td>");
         tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button></td>");
@@ -64,66 +70,38 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
         });
 }
 
-$('#btnadd').click(function () {
-    //$('#btnsave').text($('#hdnsave').val());
-    //$('#btnsave').prop('title', 'Save');
-    //$('#HieLevelCode').val('');
-    //$('#exampleModalLargetext').text("Level Creation");
-    //('#HieLevelDesc').val('');
-    //filldropdownWarehouseType()
-    $('#modal-lg').modal('show');
-});
 $('#cls').click(function () {
-    //$('#btnsave').text($('#hdnsave').val());
-    //$('#btnsave').prop('title', 'Save');
-    //$('#HieLevelCode').val('');
-    //$('#exampleModalLargetext').text("Level Creation");
-    //('#HieLevelDesc').val('');
     $('#modal-lg').modal('hide');
 });
 $('#btnclose').click(function () {
-    //$('#btnsave').text($('#hdnsave').val());
-    //$('#btnsave').prop('title', 'Save');
-    //$('#HieLevelCode').val('');
-    //$('#exampleModalLargetext').text("Level Creation");
-    //('#HieLevelDesc').val('');
     $('#modal-lg').modal('hide');
 });
 function Edit(value) {
-    //debugger
     var table = $('#tblDevices').DataTable();
     var data = table.row(value).data();
-    //console.log(data);
 
+    $('#deviceGUID').val(data[0]);
     $('#code').val(data[1]);
     $('#engName').val(data[2]);
-    $('#hardwareID').val(data[3]);
-    $('#licKey').val(data[4]);
-
+    $('#ArName').val(data[3]);
+    $('#hardwareID').val(data[4]);
+    $('#licKey').val(data[5]);
     $('#modal-lg').modal('show');
     $('#btnsave').prop('title', 'Update');
     $('#btnsave').text($('#hdnupdate').val());
-    //loadimage();
-};
-
-function Delete(value) {
-    
 };
 
 $('#btnsave').click(function () {
     var flag = $('#btnsave').attr('title');
     if (flag == "Update") {
-        $('#modal-lg').modal('hide');
         $.ajax({
-            url: $('#url_local').val() + "/api/DeviceConfiguration/UpdateDevice",
+            url: $('#url_local').val() + "/api/DeviceConfiguration/VerifyDeviceLicKeyWeb",
             type: 'POST',
             contentType: 'application/json', // Set the content type based on your API requirements
             data: JSON.stringify({
                 "update": 1,
-                "GUID": $('#guid').val(),
-                "code": $('#engName').val(),
-                "engName": $('#engName').val(),
-                //"name": $('#engName').val(),
+                "deviceSerialNo": $('#hardwareID').val(),
+                "deviceLicKey": $('#licKey').val(),
                 "lastEditBy": loginName,
 
             }), // Adjust the payload format based on your API
@@ -131,9 +109,8 @@ $('#btnsave').click(function () {
                 'Authorization': 'Bearer ' + yourToken
             },
             success: function (data) {
-                // Handle the successful response
-
-                SaveHandler(data);
+                //debugger
+                confirmUpdate(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 // Handle the error
@@ -143,3 +120,120 @@ $('#btnsave').click(function () {
         });
     }
 });
+function confirmUpdate(response) {
+    if (response.status == "200") {
+        $.ajax({
+            url: $('#url_local').val() + "/api/DeviceConfiguration/UpdateDevice",
+            type: 'POST',
+            contentType: 'application/json', // Set the content type based on your API requirements
+            data: JSON.stringify({
+                "update": 1,
+                "deviceGUID": $('#deviceGUID').val(),
+                "engName": $('#engName').val(),
+                "arName": $('#ArName').val(),
+                "deviceLicKey": $('#licKey').val(),
+                "lastEditBy": loginName,
+
+            }), // Adjust the payload format based on your API
+            headers: {
+                'Authorization': 'Bearer ' + yourToken
+            },
+            success: function (data) {
+                // Handle the successful response
+                SaveHandler(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // Handle the error
+                console.log('AJAX Error: ' + textStatus, errorThrown);
+                console.log(jqXHR.responseText); // Log the response for more details
+            }
+        });
+    }
+    else {
+
+        saveHandlerInvalidKey(response)
+    }
+};
+function Delete(value) {
+    swal({
+        title: "Are you sure?",
+        text: "You won't retrieve this record again!",
+        icon: "warning",
+        buttons: [
+            'No, cancel it!',
+            'Yes, I am sure!'
+        ],
+        dangerMode: true,
+    }).then(function (isConfirm) {
+        if (isConfirm) {
+            //debugger
+            $.ajax({
+                url: $('#url_local').val() + "/api/DeviceConfiguration/DeleteDevice",
+                type: 'POST',
+                contentType: 'application/json', // Set the content type based on your API requirements
+                data: JSON.stringify({
+                    "update": 1,
+                    "delete": 1,
+                    "deviceGUID": value
+
+                }), // Adjust the payload format based on your API
+                headers: {
+                    'Authorization': 'Bearer ' + yourToken
+                },
+                success: function (data) {
+                    // Handle the successful response
+
+                    SaveHandler(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // Handle the error
+                    console.log('AJAX Error: ' + textStatus, errorThrown);
+                    console.log(jqXHR.responseText); // Log the response for more details
+                }
+            });
+        } else {
+            swal("Cancelled", "Your record is safe!", "error");
+        }
+    })
+};
+function saveHandlerInvalidKey(response) {
+    
+    swal({
+        title: response.message + "...",
+        icon: "warning",
+        button: "OK",
+    }).then((Save) => {
+        if (Save) {
+            loadGridAjax()
+        }
+    })
+}
+function SaveHandler(response) {
+    $('#modal-lg').modal('hide');
+
+    var str = response.message;
+    if (str.includes("Already")) {
+        swal({
+            title: response.message + "...",
+            icon: "warning",
+            button: "OK",
+        }).then((exist) => {
+            if (exist) {
+                location.href = '';
+            }
+        })
+    }
+    else {
+        swal({
+            title: response.message + "...",
+            icon: "success",
+            button: "OK",
+        }).then((Save) => {
+          if (Save) {
+              //debugger
+              loadGridAjax()
+          }
+        })
+
+    }
+}

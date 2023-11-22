@@ -39,6 +39,7 @@
                                         <th style='display:none'>GUID</th>
                                         <th>Code</th>
                                         <th>English Name</th>
+                                        <th>Ar Name</th>
                                         <th>Hardware ID</th>
                                         <th>License Key</th>
                                         <th>Action</th>
@@ -66,18 +67,8 @@
 
                     </div>
                     <div class="modal-body">
-
+                        <input type="hidden" type="text" maxlength="100" id="deviceGUID" />
                         <div class="row">
-                            @*<div class="col-sm-0" style="display: none;">
-
-                                   <input class="form-control" placeholder="" type="text" id="HieLevelCode" style="cursor: not-allowed" disabled />
-                               </div>*@
-                                                   @*<div class="col-sm-6 ">
-                                   <label>Warehouse Type</label>
-                                   <select style="max-width: 400px;" id="waretype" class="form-control">
-                                   </select>
-                               </div>*@
-
 
                             <div class="col-sm-6 ">
                                 <label>Code</label>
@@ -89,29 +80,32 @@
                                 <input class="form-control" type="text" maxlength="15" placeholder="Insert English Name here" id="engName" />
                             </div>
                         </div>
+
+                        <br />
+
                         <div class="row">
+
+                            <div class="col-sm-6">
+                                <label>Ar Name</label>
+                                <input class="form-control" placeholder="Insert Arabic Name Here" type="text" id="ArName" />
+                            </div>
 
                             <div class="col-sm-6">
                                 <label>Hardware ID</label>
                                 <input disabled class="form-control" type="text" maxlength="128" placeholder="" id="hardwareID" />
                             </div>
 
+                        </div>
+                        
+                        <br />
+
+                        <div class="row">
                             <div class="col-sm-6">
                                 <label>License Key</label>
                                 <input class="form-control" type="text" maxlength="128" placeholder="" id="licKey" />
                             </div>
-
-                            <!--<div class="col-sm-6">
-                                <label>Ar Name</label>
-                                <input class="form-control" placeholder="Insert English Name Here" type="text" id="name" />-->
-                                @* <input type="button" style="display:none" title="sadasd" id="btnref" />*@
-                                @*<input type="text" id="example" placeholder="Select">*@
-
-
-                                @*<input type="button" style="display:none" title="sadasd" id="btnref" />*@
-                            <!--</div>-->
-
                         </div>
+
                     </div>
 
                     <div class="modal-footer">

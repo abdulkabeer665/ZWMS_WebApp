@@ -55,6 +55,7 @@ function varianceChart() {
 };
 
 function responseFunction(response) {
+<<<<<<< Updated upstream
     console.log("affasfsaf")
     console.log(response);
     var name=[]
@@ -63,6 +64,9 @@ function responseFunction(response) {
     var variance = []
     var vv=""
     for (var i = 0; i < response.returnTable.length; i++) {
+=======
+    //console.log(response);
+>>>>>>> Stashed changes
 
         name[i] = response.returnTable[i]["name"];
         totalcount[i] = response.returnTable[i]["totalItemsCount"];
@@ -145,7 +149,11 @@ function responseFunction(response) {
                     callbacks: {
                         label: function (tooltipItem, data) {
                             //debugger
+<<<<<<< Updated upstream
                             console.log(chartCount)
+=======
+                            //console.log(chartCount)
+>>>>>>> Stashed changes
                             var rrr = [];
                             rrr = chartCount;
                             //console.log(tooltipItem)
