@@ -214,7 +214,6 @@ $('#btnsave').click(function () {
 function SaveHandler(response) {
     /*  $('#modal-lg').modal('hide');*/
     //$('#loader').hide();
-
     console.log(response)
     $('#modal-lg').modal('hide');
    
