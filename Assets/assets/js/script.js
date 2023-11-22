@@ -1,7 +1,7 @@
-
+'use script'
 // Add backdrop element
 $('body').append('<div class="main-backdrop"></div>');
-
+var psSidebar = new PerfectScrollbar('.sidebar'); 
 // Enable tooltips everywhere
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -25,32 +25,37 @@ $('body').on('click', '.main-backdrop', function(){
 //  suppressScrollX: true
 //});
 
-//$('.sidebar .nav-label').on('click', function(e){
-//  e.preventDefault();
+$('.sidebar .nav-label').on('click', function (e) {
+    e.preventDefault();
 
-//  var target = $(this).next('.nav-sidebar');
-//  $(target).slideToggle(function(){
-//    psSidebar.update();
-//  });
+    console.log('Clicked'); // Log to see if the click event is triggered
 
-//});
+    var target = $(this).next('.nav-sidebar');
+    console.log(target); // Log to verify if the target element is selected correctly
 
-//$('.sidebar .has-sub').on('click', function(e){
-//  e.preventDefault();
+    target.slideToggle(function () {
+        psSidebar.update();
+        console.log('Sidebar Toggled'); // Log to check if the toggle is happening
+  });
 
-//  var target = $(this).next('.nav-sub');
-//  $(target).slideToggle(function(){
-//    psSidebar.update();
-//  });
+});
+    
+$('.sidebar .has-sub').on('click', function(e){
+  e.preventDefault();
 
-//  var siblings = $(this).closest('.nav-item').siblings();
-//  siblings.each(function(){
-//    var nav = $(this).find('.nav-sub');
-//    if(nav.is(':visible')) {
-//      nav.slideUp();
-//    }
-//  });
-//});
+  var target = $(this).next('.nav-sub');
+  $(target).slideToggle(function(){
+    psSidebar.update();
+  });
+
+  var siblings = $(this).closest('.nav-item').siblings();
+  siblings.each(function(){
+    var nav = $(this).find('.nav-sub');
+    if(nav.is(':visible')) {
+      nav.slideUp();
+    }
+  });
+});
 
 $('#sidebarFooterMenu').on('click', function(e){
   e.preventDefault();
