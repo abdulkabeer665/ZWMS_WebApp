@@ -111,7 +111,7 @@ $('#btnclose').click(function () {
     $('#modal-lg').modal('hide');
 });
 function Edit(value) {
-
+    $('#img').attr('src', '');
    // $('#exampleModalLargetext').text("Level Updation");
     var table = $('#tblAnonymous').DataTable();
     var data = table.row(value).data();
@@ -142,6 +142,7 @@ function loadimage() {
         },
         success: function (data) {
             console.log("---------------- hewrrr")
+            console.log(data)
             console.log(data[0]["imageBase64"])
             // Handle the successful response
            // var base64Image = 'data: ' + data[0]["imageBase64"]+''; // Replace with your base64 image data

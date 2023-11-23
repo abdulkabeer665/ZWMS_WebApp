@@ -59,7 +59,7 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
         tr.append("<td  style='display: none;'>" + json[i].guid + "</td>");
         tr.append("<td>" + json[i].code + "</td>");
         tr.append("<td>" + json[i].engName + "</td>");
-        tr.append("<td>" + json[i].name + "</td>");
+        tr.append("<td style='display: none;'>" + json[i].name + "</td>");
         tr.append("<td>" + json[i].hardwareID + "</td>");
         tr.append("<td>" + json[i].licKey + "</td>");
         tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button></td>");
