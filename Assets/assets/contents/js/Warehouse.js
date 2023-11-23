@@ -85,6 +85,24 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
         });
 }
 $('#btnadd').click(function () {
+
+    $('#code').val('');
+    $('#engName').val('');
+    $('#arName').val('');
+    $('#notes').val('');
+    $('#keeper').val('');
+    $('#phone').val('');
+    $('#phone1').val('');
+    $('#fax').val('');
+    $('#poBox').val('');
+    $('#country').val('');
+    $('#city').val('');
+    $('#email').val('');
+    $('#website').val('');
+    $('#address').val('');
+    $('#modal-lg').modal('show');
+    $('#btnsave').prop('title', 'Update');
+    $('#btnsave').text($('#hdnupdate').val());
     //$('#btnsave').text($('#hdnsave').val());
     //$('#btnsave').prop('title', 'Save');
     //$('#HieLevelCode').val('');
@@ -92,13 +110,13 @@ $('#btnadd').click(function () {
     //('#HieLevelDesc').val('');
 
     // Get all input elements on the page
-    var inputs = document.querySelectorAll('input');
+    //var inputs = document.querySelectorAll('input');
     var selects = document.querySelectorAll('select');
 
     // Iterate through each input element and set its value to an empty string
-    inputs.forEach(function (input) {
-        input.value = '';
-    });
+    //inputs.forEach(function (input) {
+    //    input.value = '';
+    //});
 
     selects.forEach(function (select) {
         select.value = '0';
