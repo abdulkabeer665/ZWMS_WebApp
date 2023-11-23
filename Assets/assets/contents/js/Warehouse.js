@@ -1,6 +1,8 @@
 ﻿var yourToken
 $(window).on('load', function () {
     yourToken = sessionStorage.getItem('yourToken')
+    filldropdownWarehouseType();
+    filldropdownWarehouse();
     //debugger
     //console.log("here ==== Authorization : Bearer " + yourToken);
     //Common.Ajax('POST', $('#url_local').val() + "/api/Warehouse/GetAllWarehouses", "{ \"GET\": 1 }", 'json', FillGridHandler });
@@ -108,9 +110,6 @@ $('#btnclose').click(function () {
 function Edit(value) {
     //debugger
     //console.log(value)
-
-    filldropdownWarehouseType();
-    filldropdownWarehouse();
     var table = $('#tblWarehouse').DataTable();
     var data = table.row(value).data();
     //console.log(data)
@@ -141,8 +140,10 @@ function Edit(value) {
 };
 
 function getData(data) {
-
+    console.log(data)
     $('#waretype').val(data[0]["warehouseTypeGUID"]);
+    $('#mainWarehouseddl').val(data[0]["mainWarehouseGUID"]);
+    $('#returnWarehouseddl').val(data[0]["returnWarehouseGUID"]);
     $('#code').val(data[0]["code"]);
     $('#engName').val(data[0]["warehouseEngName"]);
     $('#arName').val(data[0]["warehouseArName"]);
@@ -203,14 +204,6 @@ function filldropdown(name, selecttext, data) {
     $("#" + name).html(s);
 };
 
-$("#mainWarehouseddl").change(function () {
-    removeWarehouseFromDD($("#mainWarehouseddl").val(), "mainWarehouse")
-});
-
-$("#returnWarehouseddl").change(function () {
-    removeWarehouseFromDD($("#mainWarehouseddl").val(), "returnWarehouseSelected")
-});
-
 function filldropdownWarehouse() {
     $.ajax({
         url: $('#url_local').val() + "/api/Warehouse/GetAllWarehouses",
@@ -252,68 +245,3 @@ function filldllWarehouse(name, selecttext, data) {
     });
     $("#" + name).html(s);
 };
-
-
-
-function removeWarehouseFromDD(value, from) {
-    console.log("remove wale mai aya " + from + " se " + value)
-    debugger
-
-    if (from == "mainWarehouse") {
-        var selectElement = document.getElementById("returnWarehouseddl");
-
-        // Find the index of the option with the specified value
-        //var indexToRemove = -1;
-        //for (var i = 0; i < selectElement.options.length; i++) {
-        //    if (selectElement.options[i].value === value) {
-        //        indexToRemove = i;
-        //        break;
-        //    }
-        //}
-
-        //// Remove the option if found
-        //if (indexToRemove !== -1) {
-        //    debugger
-        //    selectElement.remove(indexToRemove);
-        //    $("#mainWarehouseddl").val($("#mainWarehouseddl").val())
-        //}
-
-        var optionToHide = selectElement.querySelector('option[value="' + value + '"]');
-
-        // Hide the option if found
-        if (optionToHide) {
-            optionToHide.style.display = 'none';
-        }
-
-
-    }
-    else {
-        var mainwarehouseddlValue = $("#mainWarehouseddl").val();
-        var selectElement = document.getElementById("mainWarehouseddl");
-
-        // Find the index of the option with the specified value
-        //var indexToRemove = -1;
-        //for (var i = 0; i < selectElement.options.length; i++) {
-        //    if (selectElement.options[i].value === value) {
-        //        indexToRemove = i;
-        //        break;
-        //    }
-        //}
-
-        //// Remove the option if found
-        //if (indexToRemove !== -1) {
-        //    debugger
-        //    //selectElement.remove(indexToRemove);
-
-        //    $("#mainWarehouseddl").val(mainwarehouseddlValue)
-        //}
-        var optionToHide = selectElement.querySelector('option[value="' + value + '"]');
-
-        // Hide the option if found
-        if (optionToHide) {
-            optionToHide.style.display = 'none';
-        }
-    }
-    
-
-}
