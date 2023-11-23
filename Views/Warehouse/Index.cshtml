@@ -69,7 +69,12 @@
                     <div class="modal-body">
 
                         <div class="row">
-                            
+
+                            <div class="col-sm-6" style="display: none">
+                                <label>GUID</label>
+                                <input style="max-width: 400px;" type="hidden" id="warehouseGUID" class="form-control" />
+                            </div>
+
                             <div class="col-sm-6 ">
                                 <label>Warehouse Type</label>
                                 <select style="max-width: 400px;" value="" id="waretype" class="form-control">
@@ -79,18 +84,18 @@
 
                             <div class="col-sm-6 ">
                                 <label>Code</label>
-                                <input class="form-control" placeholder="" type="text" maxlength="100" disabled id="code" />
+                                <input class="form-control" placeholder="Please Insert Code" type="text" maxlength="100" id="code" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
                                 <label>En Name</label>
-                                <input class="form-control" type="text" maxlength="15" placeholder="Please Insert Warehouse Eng Name" id="engName" />
+                                <input class="form-control" type="text" maxlength="15" placeholder="Please Insert Eng Name" id="engName" />
                             </div>
 
                             <div class="col-sm-6">
                                 <label>Ar Name</label>
-                                <input class="form-control" type="text" maxlength="15" placeholder="Please Insert Warehouse Ar Name" id="arName" />
+                                <input class="form-control" type="text" maxlength="15" placeholder="Please Insert Ar Name" id="arName" />
                                 @* <input type="button" style="display:none" title="sadasd" id="btnref" />*@
                                 @*<input type="text" id="example" placeholder="Select">*@
 
@@ -108,10 +113,10 @@
 
                             <div class="col-sm-6">
                                 <label>Default Currency</label>
-                                <select style="max-width: 400px;" class="form-control">
+                                <select style="max-width: 400px;" class="form-control" id="currencyddl">
                                     <option value="0">Select Currency</option>
                                     <option value="1">SR</option>
-                                    <option value="2">Pakistani Rupee</option>
+                                    <option value="2">Pakistani Rupees</option>
                                 </select>
                             </div>
 

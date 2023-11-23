@@ -1,12 +1,16 @@
-﻿var yourToken
+﻿var yourToken;
+var loginName;
 $(window).on('load', function () {
-    yourToken = sessionStorage.getItem('yourToken')
+    $('.loader').show();
+    yourToken = sessionStorage.getItem('yourToken');
+    loginName = sessionStorage.getItem('loginName');
     filldropdownWarehouseType();
     filldropdownWarehouse();
-    //debugger
-    //console.log("here ==== Authorization : Bearer " + yourToken);
-    //Common.Ajax('POST', $('#url_local').val() + "/api/Warehouse/GetAllWarehouses", "{ \"GET\": 1 }", 'json', FillGridHandler });
-    $('.loader').show();
+    loadGridAjax();
+
+});
+
+function loadGridAjax() {
     $.ajax({
         url: $('#url_local').val() + "/api/Warehouse/GetAllWarehouses",
         type: 'POST',
@@ -26,8 +30,7 @@ $(window).on('load', function () {
             console.log(jqXHR.responseText); // Log the response for more details
         }
     });
-
-})
+}
 function FillGridHandler(response) {
     //console.log("=================>");
     //console.log(response);
@@ -87,7 +90,20 @@ $('#btnadd').click(function () {
     //$('#HieLevelCode').val('');
     //$('#exampleModalLargetext').text("Level Creation");
     //('#HieLevelDesc').val('');
-    filldropdownWarehouseType()
+
+    // Get all input elements on the page
+    var inputs = document.querySelectorAll('input');
+    var selects = document.querySelectorAll('select');
+
+    // Iterate through each input element and set its value to an empty string
+    inputs.forEach(function (input) {
+        input.value = '';
+    });
+
+    selects.forEach(function (select) {
+        select.value = '0';
+    });
+
     $('#modal-lg').modal('show');
 });
 $('#cls').click(function () {
@@ -140,10 +156,33 @@ function Edit(value) {
 };
 
 function getData(data) {
-    console.log(data)
+    //console.log(data)
     $('#waretype').val(data[0]["warehouseTypeGUID"]);
-    $('#mainWarehouseddl').val(data[0]["mainWarehouseGUID"]);
-    $('#returnWarehouseddl').val(data[0]["returnWarehouseGUID"]);
+    if (data[0]["parentWarehouseGUID"] == '00000000-0000-0000-0000-000000000000') {
+        $('#mainWarehouseddl').val(0);
+    }
+    else {
+        $('#mainWarehouseddl').val(data[0]["parentWarehouseGUID"]);
+    };
+
+    if (data[0]["returnWarehouseGUID"] == '00000000-0000-0000-0000-000000000000') {
+        $('#returnWarehouseddl').val(0);
+    }
+    else {
+        $('#returnWarehouseddl').val(data[0]["returnWarehouseGUID"]);
+    }
+
+    if (data[0]["currencyEngName"] == "SR") {
+        $('#currencyddl').val(1);
+    }
+    else if (data[0]["currencyEngName"] == null) {
+        $('#currencyddl').val(0);
+    }
+    else {
+        $('#currencyddl').val(2);
+    }
+    
+    $('#warehouseGUID').val(data[0]["guid"]);
     $('#code').val(data[0]["code"]);
     $('#engName').val(data[0]["warehouseEngName"]);
     $('#arName').val(data[0]["warehouseArName"]);
@@ -162,7 +201,8 @@ function getData(data) {
     $('#btnsave').prop('title', 'Update');
     $('#btnsave').text($('#hdnupdate').val());
 
-}
+};
+
 function filldropdownWarehouseType() {
     
     $.ajax({
@@ -185,7 +225,8 @@ function filldropdownWarehouseType() {
         }
     });
 
-}
+};
+
 function dropdownHandler(res) {
     filldropdown('waretype', 'Please Warehouse Type', res)
 }
@@ -236,12 +277,126 @@ function filldllWarehouse(name, selecttext, data) {
     //console.log(data)
     $("#" + name).empty();
     var s = '<option value="0">' + selecttext + '</option>';
-    //for (var i = 0; i < data.length; i++) {
-    //    s += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
-    //}
     $.each(data, function (index, item) {
         s += '<option value="' + item.guid + '">' + item.warehouseEngName + '</option>';
 
     });
     $("#" + name).html(s);
 };
+
+$("#btnsave").click(function () {
+
+    var flag = $('#btnsave').attr('title');
+    var currency = "", mainwarehouse = "", returnwarehouse = "";
+
+    if ($("#code").val() == '') {
+        alert("Please insert a value in Code!");
+        return;
+    }
+
+    if ($("#engName").val() == '') {
+        alert("Please insert a value in En Name!");
+        return;
+    }
+
+    if ($("#currencyddl").val() == "1") {
+        currency = 'B0DD6DE0-7012-408F-BFB3-719ABD115AE1'
+    }
+    else if ($("#currencyddl").val() == "0") {
+        alert("Please select currency");
+        return;
+    }
+    else {
+        currency = 'B0DD6DE0-7012-408F-BFB3-719ABD115AE1'
+    }
+
+    if ($("#mainWarehouseddl").val() == "0") {
+        mainwarehouse = '00000000-0000-0000-0000-000000000000';
+    }
+    else {
+        mainwarehouse = $("#mainWarehouseddl").val()
+    }
+
+    if ($("#returnWarehouseddl").val() == "0") {
+        returnwarehouse = '00000000-0000-0000-0000-000000000000';
+    }
+    else {
+        returnwarehouse = $("#returnWarehouseddl").val()
+    }
+
+    if (flag == "Update") {
+        var obj = {
+            update: 1,
+            warehouseGUID: $("#warehouseGUID").val(),
+            wHTypeGUID: $("#waretype").val(),
+            code: $("#code").val(),
+            engName: $("#engName").val(),
+            name: $("#arName").val(),
+            parentWarehouseGUID: mainwarehouse,
+            currencyGUID: currency,
+            returnWarehouseGUID: returnwarehouse,
+            notes: $("#notes").val(),
+            keeper: $("#keeper").val(),
+            phone: $("#phone").val(),
+            phone1: $("#phone1").val(),
+            fax: $("#fax").val(),
+            poBox: $("#poBox").val(),
+            country: $("#country").val(),
+            city: $("#city").val(),
+            email: $("#email").val(),
+            website: $("#website").val(),
+            address: $("#address").val(),
+            lastEditBy: loginName
+        };
+
+        //console.log(obj);
+
+        $.ajax({
+            url: $('#url_local').val() + "/api/Warehouse/UpdateWarehouse",
+            type: 'POST',
+            contentType: 'application/json', // Set the content type based on your API requirements
+            data: JSON.stringify(obj), // Adjust the payload format based on your API
+            headers: {
+                'Authorization': 'Bearer ' + yourToken
+            },
+            success: function (data) {
+                //debugger
+                confirmUpdate(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // Handle the error
+                console.log('AJAX Error: ' + textStatus, errorThrown);
+                console.log(jqXHR.responseText); // Log the response for more details
+            }
+        });
+    }
+});
+
+function confirmUpdate(response) {
+    //console.log(res);
+
+    if (response.status == "200") {
+        $('#modal-lg').modal('hide');
+        
+        swal({
+            title: response.message + "...",
+            icon: "success",
+            button: "OK",
+        }).then((Save) => {
+            if (Save) {
+                //debugger
+                loadGridAjax()
+            }
+        })
+    }
+    else {
+        //$('#modal-lg').modal('hide');
+        
+        swal({
+            title: response.message + "...",
+            icon: "warning",
+            button: "OK",
+        })      
+        
+    }
+}

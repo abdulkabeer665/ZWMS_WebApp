@@ -1,6 +1,8 @@
-﻿var yourToken
+﻿var yourToken;
+var loginName;
 $(window).on('load', function () {
     yourToken = sessionStorage.getItem('yourToken');
+    loginName = sessionStorage.getItem('loginName');
     $('.loader').show();
 
     loadGridAjax();
