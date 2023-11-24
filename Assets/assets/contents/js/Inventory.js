@@ -93,10 +93,10 @@ $('#btnadd').click(function () {
     //$('#HieLevelCode').val('');
     //$('#exampleModalLargetext').text("Level Creation");
     //('#HieLevelDesc').val('');
-    filldropdownWarehouseType()
+    filldropdownWarehouse()
     $('#modal-lg').modal('show');
 });
-function filldropdownWarehouseType() {
+function filldropdownWarehouse() {
   
     // debugger;
     //Common.Ajax('POST', $('#url_local').val() + "/api/WarehouseType/GetAllWarehouseTypes", "{\"companyid\":\"1\"}", 'json', ddlHandler);
@@ -136,7 +136,7 @@ function fillddls(name, selecttext, data) {
     //    s += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
     //}
     $.each(data, function (index, item) {
-        s += '<option value="' + item.guid + '">' + item.engName + '</option>';
+        s += '<option value="' + item.guid + '">' + item.warehouseEngName + '</option>';
 
     });
     $("#" + name).html(s);
@@ -191,6 +191,7 @@ function fillddls2(name, selecttext, data) {
 
 
 $('#btnsave').click(function () {
+    debugger
     if ($('#enName').val() == '') {
         swal({
 
