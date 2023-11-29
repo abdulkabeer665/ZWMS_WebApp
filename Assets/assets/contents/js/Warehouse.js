@@ -214,7 +214,7 @@ function getData(data) {
     $('#city').val(data[0]["city"]);
     $('#email').val(data[0]["email"]);
     $('#website').val(data[0]["website"]);
-    $('#address').val(data[0]["address"]);    
+    $('#address').val(data[0]["address"]);
     $('#modal-lg').modal('show');
     $('#btnsave').prop('title', 'Update');
     $('#btnsave').text($('#hdnupdate').val());
@@ -417,4 +417,50 @@ function confirmUpdate(response) {
         })      
         
     }
+}
+
+function Delete(res) {
+    console.log(res);
+    //swal({
+    //    title: "Are you sure?",
+    //    text: data.message,
+    //    icon: "warning",
+    //    buttons: [
+    //        'No, cancel it!',
+    //        'Yes, Proceed!'
+    //    ],
+    //    dangerMode: true,
+    //}).then(function (isConfirm) {
+    //    if (isConfirm) {
+    //        //debugger
+    //        $.ajax({
+    //            url: $('#url_local').val() + "/api/Inventory/DeleteInventory",
+    //            type: 'POST',
+    //            contentType: 'application/json', // Set the content type based on your API requirements
+    //            data: JSON.stringify({
+    //                "inventoryGUID": res,
+    //                "update": res,
+    //                "delete": res,
+    //                "sure": res
+
+    //            }), // Adjust the payload format based on your API
+    //            headers: {
+    //                'Authorization': 'Bearer ' + yourToken
+    //            },
+    //            success: function (data) {
+    //                // Handle the successful response
+
+    //                SaveHandler(data);
+    //            },
+    //            error: function (jqXHR, textStatus, errorThrown) {
+    //                // Handle the error
+    //                console.log('AJAX Error: ' + textStatus, errorThrown);
+    //                console.log(jqXHR.responseText); // Log the response for more details
+    //            }
+    //        });
+    //    } else {
+    //        swal("Cancelled", "Your record is safe!", "error");
+    //    }
+
+    //})
 }

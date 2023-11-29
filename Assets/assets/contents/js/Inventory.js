@@ -1,10 +1,15 @@
 ﻿var yourToken = sessionStorage.getItem('yourToken')
 var loginName = sessionStorage.getItem('loginName')
 $(window).on('load', function () {
-   
-    console.log("here ==== Authorization : Bearer " + yourToken);
-    //Common.Ajax('POST', $('#url_local').val() + "/api/Warehouse/GetAllWarehouses", "{ \"GET\": 1 }", 'json', FillGridHandler });
+
     $('.loader').show();
+    $('.datepicker').datepicker();
+    loadGridAjax();
+
+    filldropdownWarehouse();
+});
+
+function loadGridAjax() {
     $.ajax({
         url: $('#url_local').val() + "/api/Inventory/GetAllInventories",
         type: 'POST',
@@ -13,7 +18,7 @@ $(window).on('load', function () {
             "GET": 1,
             "web": 1
 
-                }), // Adjust the payload format based on your API
+        }), // Adjust the payload format based on your API
         headers: {
             'Authorization': 'Bearer ' + yourToken
         },
@@ -29,12 +34,28 @@ $(window).on('load', function () {
         }
 
     })
-     $('.datepicker').datepicker();
-    });
+}
+
+
+$('#cls').click(function () {
+    //$('#btnsave').text($('#hdnsave').val());
+    //$('#btnsave').prop('title', 'Save');
+    //$('#HieLevelCode').val('');
+    //$('#exampleModalLargetext').text("Level Creation");
+    //('#HieLevelDesc').val('');
+    $('#modal-lg').modal('hide');
+});
+
+$('#btnclose').click(function () {
+    //$('#btnsave').text($('#hdnsave').val());
+    //$('#btnsave').prop('title', 'Save');
+    //$('#HieLevelCode').val('');
+    //$('#exampleModalLargetext').text("Level Creation");
+    //('#HieLevelDesc').val('');
+    $('#modal-lg').modal('hide');
+});
 
 function FillGridHandler(response) {
-    console.log("=================>");
-    console.log(response);
 
     var btnedit_ = 0;
     var btndel_ = 0;
@@ -47,7 +68,7 @@ function FillGridHandler(response) {
 };
 function Bindbody(json, tablename, edit_rights, delete_rights) {
    
-    //  console.log(json[0])
+      //console.log(json)
     var tr;
     var Edit_R;
     var Delete_R;
@@ -76,7 +97,7 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
         //else {
         //    tr.append("<td>Inactive</td>");
         //}
-        tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].scaleID + "')></i> </button></td>");
+        tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button></td>");
         //tr.append("<td>" + Edit_R + Delete_R + "</td>");
         // console.log(Edit_R)
         $("#" + tablename + ' tbody').append(tr);
@@ -87,19 +108,21 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
         });
 }
 $('#btnadd').click(function () {
-
-    //$('#btnsave').text($('#hdnsave').val());
-    //$('#btnsave').prop('title', 'Save');
+    $('#code').val('');
+    $('#enName').val('');
+    $('#arName').val('');
+    $('#warehouse').val(0);
+    $('#dateInput').val('');
+    document.getElementById("warehouse").disabled = false;
+    $('#btnsave').text($('#hdnsave').val());
+    $('#btnsave').prop('title', 'Save');
     //$('#HieLevelCode').val('');
     //$('#exampleModalLargetext').text("Level Creation");
     //('#HieLevelDesc').val('');
-    filldropdownWarehouse()
     $('#modal-lg').modal('show');
 });
 function filldropdownWarehouse() {
   
-    // debugger;
-    //Common.Ajax('POST', $('#url_local').val() + "/api/WarehouseType/GetAllWarehouseTypes", "{\"companyid\":\"1\"}", 'json', ddlHandler);
     $.ajax({
         url: $('#url_local').val() + "/api/Warehouse/GetAllWarehouses",
         type: 'POST',
@@ -122,14 +145,11 @@ function filldropdownWarehouse() {
 
 }
 function ddlHandler(response) {
- 
-    console.log("******************")
-    console.log(response)
     // debugger;
-    fillddls('warehouse', 'Please Warehouse', response)
+    fillddls('warehouse', 'Please Select Warehouse', response)
 }
 function fillddls(name, selecttext, data) {
-    console.log("$$$$$$$$$$$$ " + data)
+    //console.log("$$$$$$$$$$$$ " + data)
     $("#" + name).empty();
     var s = '<option value="0">' + selecttext + '</option>';
     //for (var i = 0; i < data.length; i++) {
@@ -142,9 +162,7 @@ function fillddls(name, selecttext, data) {
     $("#" + name).html(s);
 }
 $("#warehouse").change(function () {
-    
- 
-    console.log("^^^^^^^^^^^")
+    //debugger
     var ddvalue = $('#warehouse').val()
 
     $.ajax({
@@ -172,40 +190,43 @@ $("#warehouse").change(function () {
 });
 function ddlHandler2(response) {
     console.log(response)
-    $('#code').val(response.code)
+    if (response.message.includes("already has prepared")) {
+        swal({
+
+            title: "Error!",
+            text: response.message,
+            icon: "warning",
+            button: "OK",
+        });
+        $('#warehouse').val(0);
+    }
+    else {
+        $('#code').val(response.code)
+    }
+    
 }
-function fillddls2(name, selecttext, data) {
-    console.log("$$$$$$$$$$$$ " + data)
-    $("#" + name).empty();
-    var s = '<option value="0">' + selecttext + '</option>';
-    //for (var i = 0; i < data.length; i++) {
-    //    s += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
-    //}
-    $.each(data, function (index, item) {
-        s += '<option value="' + item.guid + '">' + item.engName + '</option>';
-
-    });
-    $("#" + name).html(s);
-}
-
-
 
 $('#btnsave').click(function () {
     debugger
     if ($('#enName').val() == '') {
-        swal({
-
-            title: "Name must be enter",
-            icon: "warning",
-            button: "OK",
-        });
+        alert("Eng Name must be enter.")
+        return;
+    }
+    else if ($('#warehouse').val() == 0)
+    {
+        alert("Warehouse must be selected.")
+        return;
+    }
+    else if ($('#dateInput').val() == '')
+    {
+        alert("Date must be enter.")
+        return;
     }
     else {
         var flag = $('#btnsave').attr('title');
+        var currentDateValue = $('#dateInput').val();
         if (flag == "Save") {
-            var currentDateValue = $('#dateInput').val();
-
-            $('#modal-lg').modal('hide');
+            debugger    //Insert krne p layout dark ho rahi h
 
             $.ajax({
                 url: $('#url_local').val() + "/api/Inventory/InsertInventory",
@@ -237,15 +258,45 @@ $('#btnsave').click(function () {
                 }
             });
         }
+        else {
+            $.ajax({
+                url: $('#url_local').val() + "/api/Inventory/UpdateInventory",
+                type: 'POST',
+                contentType: 'application/json', // Set the content type based on your API requirements
+                data: JSON.stringify({
+                    "update": 1,
+                    "inventoryGUID": $('#guid').val(),
+                    "code": $('#code').val(),
+                    "engName": $('#enName').val(),
+                    "name": $('#arName').val(),
+                    "warehouseGUID": $('#warehouse').val(),
+                    "inventoryDate": currentDateValue,
+                    "status" : "Prepared",
+                    "notes": "",
+                    "lastEditBy": loginName
+
+                }), // Adjust the payload format based on your API
+                headers: {
+                    'Authorization': 'Bearer ' + yourToken
+                },
+                success: function (data) {
+                    // Handle the successful response
+
+                    SaveHandler(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // Handle the error
+                    console.log('AJAX Error: ' + textStatus, errorThrown);
+                    console.log(jqXHR.responseText); // Log the response for more details
+                }
+            });
+        }
     }
 })
 function SaveHandler(response) {
-  /*  $('#modal-lg').modal('hide');*/
-    $('#loader').hide();
-    "herrrrrrrrrrrrrrrre"
-    console.log(response)
-    $('#modal-lg').modal('hide');
-    alert("success")
+    //$('#loader').hide();
+    //debugger
+    //$('#modal-lg').modal('hide');
     var str = response.message;
     if (str.includes("Already")) {
         swal({
@@ -254,7 +305,7 @@ function SaveHandler(response) {
             button: "OK",
         }).then((exist) => {
             if (exist) {
-                location.href = '';
+                loadGridAjax();
             }
         })
     }
@@ -266,29 +317,173 @@ function SaveHandler(response) {
         })
             .then((Save) => {
                 if (Save) {
-                    location.href = '';
+
+                    $('#modal-lg').modal('hide');
+                    loadGridAjax();
                 }
             })
 
     }
-    //location.href = '';
-    //alert(response.detail[0].message);
+};
 
-}
+function Edit(value) {
+    var table = $('#tblInventory').DataTable();
+    var data = table.row(value).data();
+    var invGUID = data[0];
+    $.ajax({
+        url: $('#url_local').val() + "/api/Inventory/GetInventoryByGUID",
+        type: 'POST',
+        contentType: 'application/json', // Set the content type based on your API requirements
+        data: JSON.stringify({
+            "getByGUID": 1,
+            "inventoryGUID": invGUID
 
-$('#cls').click(function () {
-    //$('#btnsave').text($('#hdnsave').val());
-    //$('#btnsave').prop('title', 'Save');
-    //$('#HieLevelCode').val('');
-    //$('#exampleModalLargetext').text("Level Creation");
-    //('#HieLevelDesc').val('');
-    $('#modal-lg').modal('hide');
-});
-$('#btnclose').click(function () {
-    //$('#btnsave').text($('#hdnsave').val());
-    //$('#btnsave').prop('title', 'Save');
-    //$('#HieLevelCode').val('');
-    //$('#exampleModalLargetext').text("Level Creation");
-    //('#HieLevelDesc').val('');
-    $('#modal-lg').modal('hide');
-});
+        }), // Adjust the payload format based on your API
+        headers: {
+            'Authorization': 'Bearer ' + yourToken
+        },
+        success: function (data) {
+            // Handle the successful response
+            editResponseHandler(data);
+            //$('.loader').hide();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // Handle the error
+            console.log('AJAX Error: ' + textStatus, errorThrown);
+            console.log(jqXHR.responseText); // Log the response for more details
+        }
+
+    })
+};
+
+function editResponseHandler(response) {
+    var onlyDate = response[0]["inventoryDate"].split("T")[0];
+    document.getElementById("warehouse").disabled = true;
+    $("#code").val(response[0]["code"]);
+    $("#enName").val(response[0]["engName"]);
+    $("#arName").val(response[0]["name"]);
+    $("#guid").val(response[0]["guid"]);
+    $("#warehouse").val(response[0]["warehouseGUID"]);
+    $("#dateInput").val(onlyDate);
+
+    $('#modal-lg').modal('show');
+    $('#btnsave').prop('title', 'Update');
+    $('#btnsave').text($('#hdnupdate').val());
+
+};
+
+function Delete(res) {
+    swal({
+        title: "Are you sure?",
+        text: "You won't retrieve this record again!",
+        icon: "warning",
+        buttons: [
+            'No, cancel it!',
+            'Yes, I am sure!'
+        ],
+        dangerMode: true,
+    }).then(function (isConfirm) {
+        if (isConfirm) {
+            //debugger
+            $.ajax({
+                url: $('#url_local').val() + "/api/Inventory/DeleteInventory",
+                type: 'POST',
+                contentType: 'application/json', // Set the content type based on your API requirements
+                data: JSON.stringify({
+                    "inventoryGUID": res
+
+                }), // Adjust the payload format based on your API
+                headers: {
+                    'Authorization': 'Bearer ' + yourToken
+                },
+                success: function (data) {
+                    //debugger
+                    // Handle the successful response
+                    //console.log(data)
+                    //console.log(data.message.includes("There are 0"))
+                    if (data.message.includes("There are 0")) {
+                        $.ajax({
+                            url: $('#url_local').val() + "/api/Inventory/DeleteInventory",
+                            type: 'POST',
+                            contentType: 'application/json', // Set the content type based on your API requirements
+                            data: JSON.stringify({
+                                "update": 1,
+                                "delete": 1,
+                                "sure": 1,
+                                "InventoryGUID": res
+                                
+
+                            }), // Adjust the payload format based on your API
+                            headers: {
+                                'Authorization': 'Bearer ' + yourToken
+                            },
+                            success: function (data) {
+                                // Handle the successful response
+
+                                SaveHandler(data);
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                // Handle the error
+                                console.log('AJAX Error: ' + textStatus, errorThrown);
+                                console.log(jqXHR.responseText); // Log the response for more details
+                            }
+                        });
+                    }
+                    else {
+                        swal({
+                            title: "Are you sure?",
+                            text: data.message,
+                            icon: "warning",
+                            buttons: [
+                                'No, cancel it!',
+                                'Yes, Proceed!'
+                            ],
+                            dangerMode: true,
+                        }).then(function (isConfirm) {
+                            if (isConfirm) {
+                                //debugger
+                                $.ajax({
+                                    url: $('#url_local').val() + "/api/Inventory/DeleteInventory",
+                                    type: 'POST',
+                                    contentType: 'application/json', // Set the content type based on your API requirements
+                                    data: JSON.stringify({
+                                        "inventoryGUID": res,
+                                        "update": res,
+                                        "delete": res,
+                                        "sure": res
+
+                                    }), // Adjust the payload format based on your API
+                                    headers: {
+                                        'Authorization': 'Bearer ' + yourToken
+                                    },
+                                    success: function (data) {
+                                        // Handle the successful response
+
+                                        SaveHandler(data);
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        // Handle the error
+                                        console.log('AJAX Error: ' + textStatus, errorThrown);
+                                        console.log(jqXHR.responseText); // Log the response for more details
+                                    }
+                                });
+                            } else {
+                                swal("Cancelled", "Your record is safe!", "error");
+                            }
+
+                        })
+
+
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // Handle the error
+                    console.log('AJAX Error: ' + textStatus, errorThrown);
+                    console.log(jqXHR.responseText); // Log the response for more details
+                }
+            });
+        } else {
+            swal("Cancelled", "Your record is safe!", "error");
+        }
+    })
+};

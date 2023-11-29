@@ -40,8 +40,8 @@
                                         @*<th>Scale ID</th>*@
                                         <th style='display:none'>GUID</th>
                                         <th>Code</th>
-                                        <th>English Name</th>
-                                        <th>En Name</th>
+                                        <th>Inventory Name</th>
+                                        <th>Warehouse Name</th>
                                         <th>Inventory Date</th>
                                         @*<th style="display:none">LocId</th>*@
 
@@ -73,23 +73,29 @@
 
                         <div class="row">
 
-
+                            <div class="col-sm-6" style="display:none;">
+                                <label>GUID</label>
+                                <input class="form-control" type="hidden" id="guid" disabled />
+                            </div>
 
                             <div class="col-sm-6 ">
                                 <label>Code</label>
-                                <input class="form-control" placeholder="" type="text" maxlength="100" id="code" disabled />
+                                <input class="form-control" placeholder="------------" title="System Generated Value" type="text" maxlength="100" id="code" disabled />
                             </div>
                             <div class="col-sm-6">
                                 <label>En Name</label>
-                                <input class="form-control" type="text"  id="enName" />
+                                <input class="form-control" placeholder="Insert Eng Name" type="text" id="enName" />
                             </div>
 
                         </div>
+
+                        <br />
+
                         <div class="row">
 
                             <div class="col-sm-6">
                                 <label>Ar Name</label>
-                                <input class="form-control" type="text" id="arName" />
+                                <input placeholder="Insert Ar Name" class="form-control" type="text" id="arName" />
                             </div>
 
                             <div class="col-sm-6">
@@ -100,6 +106,9 @@
                             </div>
 
                         </div>
+
+                        <br />
+
                         <div class="row">
                             <div class="col-sm-6">
                                 <label>Inventory Date</label>
