@@ -8583,17 +8583,6 @@
     <Content Include="obj\Release\Package\PackageTmp\Global.asax" />
     <Content Include="obj\Release\Package\PackageTmp\lib\microsoft\signalr\dist\browser\signalr.js" />
     <Content Include="obj\Release\Package\PackageTmp\lib\microsoft\signalr\dist\browser\signalr.min.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\bootstrap.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\bootstrap.min.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-3.4.1.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-3.4.1.min.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-3.4.1.slim.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-3.4.1.slim.min.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery.validate.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery.validate.min.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\modernizr-2.8.3.js" />
     <Content Include="obj\Release\ZWMS_WebApp.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Release\ZWMS_WebApp.dll" />
     <Content Include="obj\Release\ZWMS_WebApp.pdb" />
@@ -8730,8 +8719,6 @@
     <Content Include="obj\Release\Package\PackageTmp\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="obj\Release\Package\PackageTmp\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="obj\Release\Package\PackageTmp\libman.json" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-3.4.1.min.map" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="obj\Release\Package\PackageTmp\Views\AnonymousItems\Index.cshtml" />
     <Content Include="obj\Release\Package\PackageTmp\Views\Home\About.cshtml" />
     <Content Include="obj\Release\Package\PackageTmp\Views\Home\Contact.cshtml" />
@@ -9088,6 +9075,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="obj\Release\Package\PackageTmp\Scripts\" />
     <Folder Include="obj\Release\TempPE\" />
   </ItemGroup>
   <ItemGroup>

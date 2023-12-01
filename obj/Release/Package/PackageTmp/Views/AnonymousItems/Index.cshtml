@@ -6,7 +6,7 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
     <script type="text/javascript" src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" defer></script>
-
+    <script src="~/Assets/assets/js/script.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
     <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
@@ -17,17 +17,17 @@
         <h4>Anonymous Items</h4>
 
         <div class="row">
-
+            <div class="loader" style="display: none;"></div>
             <div class="col-12">
                 <div class="card card-default">
                     <div class="card-header card-header-border-bottom d-flex justify-content-between">
                         @*<h2>Hoverable Data Table</h2>*@
                         @*<button type="submit" id="btnadd" class="btn btn-primary" style="margin-right: 5px; float:right" data-toggle="modal" data-target="#modal-lg">
-                            <i class="fa fa-plus"></i> Add
-                        </button>*@
+                        <i class="fa fa-plus"></i> Add
+                    </button>*@
                         @*<a href="https://datatables.net/examples/styling/hover.html" target="_blank" class="btn btn-outline-primary btn-sm text-uppercase">
-                                <i class=" mdi mdi-link mr-1"></i> Docs
-                            </a>*@
+                        <i class=" mdi mdi-link mr-1"></i> Docs
+                    </a>*@
                     </div>
                     <div class="card-body">
                         <div style="color:black" class="table-responsive hoverable-data-table">
@@ -40,7 +40,7 @@
                                         <th>Inventory Name</th>
                                         <th>Device Name</th>
                                         <th style='display:none'>Image</th>
-                                       
+
                                         @*<th>Inventory Date</th>*@
                                         @*<th style="display:none">LocId</th>*@
 
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-
+          
         </div>
         @*modelpopup*@
         <div class="modal fade" id="modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLarge" aria-hidden="true">
@@ -68,6 +68,7 @@
                         <h2 class="modal-title" id="exampleModalLarge2" style="color:white">Scale</h2>
 
                     </div>
+                    <div class="loader" style="display: none;"></div>
                     <div class="modal-body">
 
                         <div class="row">
@@ -81,7 +82,7 @@
                             <div class="col-sm-6">
                                 <label>Image</label>
                             </div>
-                           
+
 
 
                         </div>
@@ -90,7 +91,7 @@
                                 <label>En Name</label>
                                 <input class="form-control" type="text" id="name" />
                             </div>
-                            
+
                             <div class="col-sm-6 ">
 
                                 <img id="img" style="width:40%" />
@@ -99,19 +100,19 @@
                         </div>
                         @*<div class="row">
 
-            <div class="col-sm-6">
-                <label>En Name</label>
-                <input class="form-control" type="text" id="sclIP" />
-            </div>
-            <div class="col-sm-6">
-                <label>Inventory Date</label>
-                <input type="date" class="form-control calendar" id="dateInput" name="dateInput">
-            </div>
+                <div class="col-sm-6">
+                    <label>En Name</label>
+                    <input class="form-control" type="text" id="sclIP" />
+                </div>
+                <div class="col-sm-6">
+                    <label>Inventory Date</label>
+                    <input type="date" class="form-control calendar" id="dateInput" name="dateInput">
+                </div>
 
-        </div>*@
+            </div>*@
 
                         @*<input type="checkbox" id="active">
-        <label for="active"> Active</label><br>*@
+            <label for="active"> Active</label><br>*@
                     </div>
 
                     <div class="modal-footer">

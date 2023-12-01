@@ -339,6 +339,10 @@ D:\Git\ZWMS_WebApp\bin\roslyn\vbc.exe.config
 D:\Git\ZWMS_WebApp\bin\roslyn\vbc.rsp
 D:\Git\ZWMS_WebApp\bin\roslyn\VBCSCompiler.exe
 D:\Git\ZWMS_WebApp\bin\roslyn\VBCSCompiler.exe.config
+D:\Git\ZWMS_WebApp\obj\Debug\ZWMS_WebApp.csproj.CoreCompileInputs.cache
+D:\Git\ZWMS_WebApp\obj\Debug\ZWMS_WebApp.csproj.CopyComplete
+D:\Git\ZWMS_WebApp\obj\Debug\ZWMS_WebApp.dll
+D:\Git\ZWMS_WebApp\obj\Debug\ZWMS_WebApp.pdb
 D:\Git\ZWMS_WebApp\bin\System.Web.Helpers.xml
 D:\Git\ZWMS_WebApp\bin\System.Web.Mvc.xml
 D:\Git\ZWMS_WebApp\bin\System.Web.Optimization.xml
@@ -350,7 +354,3 @@ D:\Git\ZWMS_WebApp\bin\Newtonsoft.Json.xml
 D:\Git\ZWMS_WebApp\bin\Antlr3.Runtime.pdb
 D:\Git\ZWMS_WebApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 D:\Git\ZWMS_WebApp\obj\Debug\ZWMS_WebApp.csprojAssemblyReference.cache
-D:\Git\ZWMS_WebApp\obj\Debug\ZWMS_WebApp.csproj.CoreCompileInputs.cache
-D:\Git\ZWMS_WebApp\obj\Debug\ZWMS_WebApp.csproj.CopyComplete
-D:\Git\ZWMS_WebApp\obj\Debug\ZWMS_WebApp.dll
-D:\Git\ZWMS_WebApp\obj\Debug\ZWMS_WebApp.pdb

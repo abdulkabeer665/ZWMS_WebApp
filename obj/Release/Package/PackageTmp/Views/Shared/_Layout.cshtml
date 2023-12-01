@@ -4,7 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @*<title>@ViewBag.Title - My ASP.NET Application</title>*@
+    <
     <title>ZWMS</title>
+
     @Styles.Render("~/Assets/lib/Bootstrap/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -17,11 +19,59 @@
     <link rel="stylesheet" href="../Assets/lib/remixicon/fonts/remixicon.css">
     <link rel="stylesheet" href="../Assets/lib/jqvmap/jqvmap.min.css">
     <link rel="stylesheet" href="../Assets/lib/apexcharts/apexcharts.css">
+    <script src="../Assets/lib/jquery/jquery.min.js"></script>
+    <script src="../Assets/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <script src="../Assets/lib/jqvmap/jquery.vmap.min.js"></script>
+    <script src="../Assets/lib/jqvmap/maps/jquery.vmap.world.js"></script>
+    <script src="../Assets/lib/apexcharts/apexcharts.min.js"></script>
+    @*<script src="../Assets/assets/contents/js/Dashboard.js"></script>*@
+
+    <script src="../Assets/assets/js/script.js"></script>
+
+    <script src="../Assets/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="../Assets/assets/js/db.data.js"></script>
+    <script src="../Assets/assets/js/db.analytics.js"></script>
     <!-- Template CSS -->
     <link rel="stylesheet" href="../Assets/assets/css/style.min.css">
-    
+
     <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <style>
+        .loader {
+            border: 5px solid #f3f3f3; /* Light grey */
+            border-top: 5px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -25px; /* Negative half of height */
+            margin-left: -25px; /* Negative half of width */
+        }
+
+        .loaderforslabs {
+            border: 5px solid #f3f3f3; /* Light grey */
+            border-top: 5px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin-top: -25px; /* Negative half of height */
+            /*   margin-left: -25px;*/ /* Negative half of width */
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="sidebar">
@@ -63,10 +113,10 @@
                 <a href="#" class="nav-label">Tools</a>
                 <ul class="nav nav-sidebar">
                     <li class="nav-item">
-                        <a href="../Home/Index" class="nav-link"><i class="ri-folder-2-line"></i> <span>Device Configuration</span></a>
+                        <a href="../DevicesConfiguration/Index" class="nav-link"><i class="ri-folder-2-line"></i> <span>Device Configuration</span></a>
                     </li>
                     <li class="nav-item">
-                        <a href="../Home/Index" class="nav-link"><i class="ri-mail-send-line"></i> <span>Admin Tools</span></a>
+                        <a href="../AdminTools/Index" class="nav-link"><i class="ri-mail-send-line"></i> <span>Admin Tools</span></a>
                     </li>
                     <li class="nav-item">
                         <a href="../Home/Index" class="nav-link"><i class="ri-mail-send-line"></i> <span>Import Master Data</span></a>
@@ -266,12 +316,12 @@
                     <a href="" class="nav-link">Prime</a>
                     <a href="" class="nav-link">Dark</a>
                 </nav>
-                <hr>
-                <label>Direction</label>
-                <nav id="layoutDirection" class="nav nav-skin">
+                @*<hr>*@
+                @*<label>Direction</label>*@
+                @*<nav id="layoutDirection" class="nav nav-skin">
                     <a href="" class="nav-link active">LTR</a>
                     <a href="" class="nav-link">RTL</a>
-                </nav>
+                </nav>*@
             </div><!-- dropdown-menu -->
         </div><!-- dropdown -->
         @*shahroz notification*@
@@ -327,7 +377,8 @@
             <div class="dropdown-menu dropdown-menu-end mt-10-f">
                 <div class="dropdown-menu-body">
                     <div class="avatar avatar-xl online mb-3"><img src="../Assets/assets/img/img1.jpg" alt=""></div>
-                    <h5 class="mb-1 text-dark fw-semibold">Shaira Diaz</h5>
+                    <h5 id="loginName" class="mb-1 text-dark fw-semibold"></h5>
+                    @*<h5 class="mb-1 text-dark fw-semibold">Shaira Diaz</h5>*@
                     <p class="fs-sm text-secondary">Premium Member</p>
 
                     <nav class="nav">
@@ -336,9 +387,9 @@
                     </nav>
                     <hr>
                     <nav class="nav">
-                        <a href=""><i class="ri-question-line"></i> Help Center</a>
-                        <a href=""><i class="ri-lock-line"></i> Privacy Settings</a>
-                        <a href=""><i class="ri-user-settings-line"></i> Account Settings</a>
+                        @*<a href=""><i class="ri-question-line"></i> Help Center</a>*@
+                        @*<a href=""><i class="ri-lock-line"></i> Privacy Settings</a>*@
+                        @*<a href=""><i class="ri-user-settings-line"></i> Account Settings</a>*@
                         <a href="../Login/Index"><i class="ri-logout-box-r-line"></i> Log Out</a>
                     </nav>
                 </div><!-- dropdown-menu-body -->
@@ -350,18 +401,7 @@
             <hr />
 
         </div>
-    <script src="../Assets/lib/jquery/jquery.min.js"></script>
-    <script src="../Assets/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../Assets/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="../Assets/lib/jqvmap/jquery.vmap.min.js"></script>
-    <script src="../Assets/lib/jqvmap/maps/jquery.vmap.world.js"></script>
-    <script src="../Assets/lib/apexcharts/apexcharts.min.js"></script>
+   
 
-    <script src="../Assets/assets/js/script.js"></script>
-    <script src="../Assets/assets/js/db.data.js"></script>
-    <script src="../Assets/assets/js/db.analytics.js"></script>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

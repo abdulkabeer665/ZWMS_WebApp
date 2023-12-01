@@ -424,15 +424,15 @@ function divFunction(data) {
     var color = '';
     var colorArray = ['primary', 'success', 'orange', 'pink', 'info', 'indigo'];
     var responseCount = 0;
-    for (var i = 0; i < data.returnTable.length; i++) {
+    for (var i = 0; i <=4; i++) {
         responseCount = responseCount + data.returnTable[i]["count"];
     }
-    for (var j = 0; j < data.returnTable.length; j++) {
+    for (var j = 0; j <=4; j++) {
         countArray[j] = (data.returnTable[j]["count"] / responseCount) * 100;
         countArray[j] = Math.round(countArray[j] / 5) * 5;
         color = colorArray[j]
         $("#progressBarDiv").append('<div class="progress-bar bg-' + color + ' w-' + countArray[j].toLocaleString() + '" role="progressbar" aria-valuenow="' + countArray[j].toLocaleString() + '" aria-valuemin="0" aria-valuemax="100"></div>')
-        $("#performanceTable").append('<tbody><tr><td><div class="badge-dot bg-' + color + '"></div></td><td>' + data.returnTable[j]["name"] + '</td><td>' + data.returnTable[j]["count"].toLocaleString() + '</td><td>' + data.returnTable[j]["percentage"] + '%</td></tr></tbody>');
+        $("#performanceTable").append('<tbody><tr><td><div class="badge-dot bg-' + color + '"></div></td><td>' + data.returnTable[j]["name"] + '</td><td>' + data.returnTable[j]["count"].toLocaleString() + '</td><td>' + data.returnTable[j]["percentage"].toFixed(2) + '%</td></tr></tbody>');
     }    
    
 }

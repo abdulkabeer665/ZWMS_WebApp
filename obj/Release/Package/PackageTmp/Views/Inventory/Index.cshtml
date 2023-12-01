@@ -6,10 +6,12 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
     <script type="text/javascript" src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" defer></script>
-
+    <script src="~/Assets/assets/js/script.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
     <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+
+
 </head>
 <input type="hidden" id="url_local" value="@System.Configuration.ConfigurationManager.AppSettings["url_local"]" />
 <body>
@@ -17,6 +19,7 @@
         <h4>Inventory</h4>
 
         <div class="row">
+            <div class="loader" style="display: none;"></div>
 
             <div class="col-12">
                 <div class="card card-default">
@@ -26,8 +29,8 @@
                             <i class="fa fa-plus"></i> Add
                         </button>
                         @*<a href="https://datatables.net/examples/styling/hover.html" target="_blank" class="btn btn-outline-primary btn-sm text-uppercase">
-                                <i class=" mdi mdi-link mr-1"></i> Docs
-                            </a>*@
+                        <i class=" mdi mdi-link mr-1"></i> Docs
+                    </a>*@
                     </div>
                     <div class="card-body">
                         <div style="color:black" class="table-responsive hoverable-data-table">
@@ -37,8 +40,8 @@
                                         @*<th>Scale ID</th>*@
                                         <th style='display:none'>GUID</th>
                                         <th>Code</th>
-                                        <th>English Name</th>
-                                        <th>En Name</th>
+                                        <th>Inventory Name</th>
+                                        <th>Warehouse Name</th>
                                         <th>Inventory Date</th>
                                         @*<th style="display:none">LocId</th>*@
 
@@ -53,7 +56,7 @@
                     </div>
                 </div>
             </div>
-
+            </div>
         </div>
         @*modelpopup*@
         <div class="modal fade" id="modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLarge" aria-hidden="true">
@@ -70,23 +73,29 @@
 
                         <div class="row">
 
-
+                            <div class="col-sm-6" style="display:none;">
+                                <label>GUID</label>
+                                <input class="form-control" type="hidden" id="guid" disabled />
+                            </div>
 
                             <div class="col-sm-6 ">
                                 <label>Code</label>
-                                <input class="form-control" placeholder="" type="text" maxlength="100" id="code" disabled />
+                                <input class="form-control" placeholder="------------" title="System Generated Value" type="text" maxlength="100" id="code" disabled />
                             </div>
                             <div class="col-sm-6">
                                 <label>En Name</label>
-                                <input class="form-control" type="text"  id="enName" />
+                                <input class="form-control" placeholder="Insert Eng Name" type="text" id="enName" />
                             </div>
 
                         </div>
+
+                        <br />
+
                         <div class="row">
 
                             <div class="col-sm-6">
                                 <label>Ar Name</label>
-                                <input class="form-control" type="text" id="arName" />
+                                <input placeholder="Insert Ar Name" class="form-control" type="text" id="arName" />
                             </div>
 
                             <div class="col-sm-6">
@@ -97,6 +106,9 @@
                             </div>
 
                         </div>
+
+                        <br />
+
                         <div class="row">
                             <div class="col-sm-6">
                                 <label>Inventory Date</label>

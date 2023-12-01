@@ -85,7 +85,7 @@ var ichartCount = [];
 
 
 function responseFunction2(response) {
-    console.log(response)
+   // console.log(response)
     for (var i = 0; i < response.returnTable.length; i++) {
 
         iname[i] = response.returnTable[i]["iC_EngName"];
@@ -96,9 +96,9 @@ function responseFunction2(response) {
         //alert(name[i])
         //alert(totalcount[i])
         //alert(count[i])
-        console.log('================"' + i + '"================')
-        console.log("Total count : " + itotalcount[i])
-        console.log("count : " + icount[i])
+    //    console.log('================"' + i + '"================')
+    //    console.log("Total count : " + itotalcount[i])
+    //    console.log("count : " + icount[i])
         //variance[i] = (totalcount[i] + count[i]) / 2
         ivariance[i] = response.returnTable[i]["variance"];
         ivarianceadjustment[i] = ivariance[i]
@@ -111,8 +111,8 @@ function responseFunction2(response) {
         }
         ivariance[i] = Math.abs(ivariance[i])
     }
-    console.log("============aaaaaaaaaaaaaaaaaaaaaa================")
-    console.log(ivariance.length)
+    //console.log("============aaaaaaaaaaaaaaaaaaaaaa================")
+    //console.log(ivariance.length)
      
         for (var i = 0; i < ivariance.length-1; i++) {
           
@@ -134,8 +134,8 @@ function responseFunction2(response) {
 
 function responseFunction(response) {
    
-    console.log("affasfsaf")
-    console.log(response);
+    //console.log("affasfsaf")
+    //console.log(response);
    
  
 
@@ -150,9 +150,9 @@ function responseFunction(response) {
             //alert(name[i])
             //alert(totalcount[i])
             //alert(count[i])
-            console.log('================"' + i + '"================')
-            console.log("Total count : " + totalcount[i])
-            console.log("count : " + count[i])
+           // console.log('================"' + i + '"================')
+           // console.log("Total count : " + totalcount[i])
+           // console.log("count : " + count[i])
             //variance[i] = (totalcount[i] + count[i]) / 2
             variance[i] = ((count[i] - totalcount[i]) / totalcount[i]) * 100
             varianceadjustment[i] = variance[i]
@@ -193,9 +193,9 @@ function responseFunction(response) {
             //alert(name[i])
             //alert(totalcount[i])
             //alert(count[i])
-            console.log('================"' + i + '"================')
-            console.log("Total count : " + totalcount[i])
-            console.log("count : " + count[i])
+           // console.log('================"' + i + '"================')
+           // console.log("Total count : " + totalcount[i])
+          //  console.log("count : " + count[i])
             //variance[i] = (totalcount[i] + count[i]) / 2
             variance[i] = ((count[i] - totalcount[i]) / totalcount[i]) * 100
             varianceadjustment[i] = variance[i]
