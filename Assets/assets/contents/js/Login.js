@@ -3,9 +3,6 @@
 };
 $(document).ready(function () {
     sessionStorage.clear();
-
-  //  Common.Ajax('POST', $('#url_local').val() + "/api/Authentication/CreateAdmin", "{}", 'json');
-
 });
 
 $("#btnLogin").click(function () {
@@ -22,31 +19,22 @@ $("#btnLogin").click(function () {
             icon: "warning",
         });
     }
-    //else if (loginID == 'admin' && pass == 'pass') {
-    //    console.log("Correct password!")
-    //}
     else {
-        //alert("in else")
         Common.Ajax('POST', $('#url_local').val() + "/api/User/Login", "{ \"loginName\": \"" + loginName + "\",\"password\": \"" + pass + "\"}", 'json', EditRes);
     }
 })
 
 function EditRes(response) {
-    console.log(response["token"])
     var loginName = $("#loginName").val();
- 
-    //console.log(response.message)
     if (response.status == '200') {
-       
         sessionStorage.setItem("yourToken", response["token"]);
+        sessionStorage.setItem("loginUserGUID", response["guid"]);
         sessionStorage.setItem("loginName", loginName);
         window.location.href = $("#front_URL").val() + "/Home/Index";
-
     }
     else {
         swal("Username or Password is wrong", {
             icon: "warning",
         });
-        /*alert(response.message)*/
     }
 }

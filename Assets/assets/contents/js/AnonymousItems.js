@@ -3,7 +3,6 @@ var loginName = sessionStorage.getItem('loginName')
 
 $(window).on('load', function () {
 
-    console.log("here ==== Authorization : Bearer " + yourToken);
     //Common.Ajax('POST', $('#url_local').val() + "/api/Warehouse/GetAllWarehouses", "{ \"GET\": 1 }", 'json', FillGridHandler });
     $('.loader').show(); 
     $.ajax({
@@ -31,7 +30,6 @@ $(window).on('load', function () {
 
 function FillGridHandler(response) {
    
-    console.log("=================>");
     console.log(response);
 
     var btnedit_ = 0;
@@ -43,6 +41,7 @@ function FillGridHandler(response) {
         $('#' + btnadd_).prop('disabled', false);
     }
 };
+
 function Bindbody(json, tablename, edit_rights, delete_rights) {
 
     //  console.log(json[0])
@@ -64,6 +63,7 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
         tr = $('<tr/>');
         //tr.append("<td style='display: none;'>" + json[i].id + "</td>");
         tr.append("<td  style='display: none;'>" + json[i].guid + "</td>");
+        tr.append("<td>" + json[i].barcode + "</td>");
         tr.append("<td>" + json[i].itemName + "</td>");
         tr.append("<td>" + json[i].inventoryName + "</td>");
         tr.append("<td>" + json[i].deviceName + "</td>");
@@ -86,6 +86,7 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
             "dom": '<"row justify-content-between top-information"lf>rt<"row justify-content-between bottom-information"ip><"clear">'
         });
 }
+
 $('#btnadd').click(function () {
     //$('#btnsave').text($('#hdnsave').val());
     //$('#btnsave').prop('title', 'Save');

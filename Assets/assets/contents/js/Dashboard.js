@@ -8,16 +8,24 @@ $(window).on('load', function () {
     else {
         $("#loginName").text(loginName);
         filldropdowninventory()
-        filldropdowncategory()
+        filldropdownDivisions()
         loadinventcount()
         loadanonymouscount()
         loadselection()
         startTimer()
         VarianceInfo()
         loadinventorycountbycategory()
+        loadCategoryInventoryVariance();
+        loadItemVarianceByInventoryGUID()
     }
     
 });
+
+function FillGridHandlerAllInvent(response) {
+    $("#slab1").text(response.table1[0]["totalItemsCount"])
+    $("#slab2").text(response.returnTable[0]["foundInventoryItemsCount"])
+};
+
 function filldropdowninventory() {
     $.ajax({
         url: $('#url_local').val() + "/api/Inventory/GetAllInventories",
@@ -44,9 +52,10 @@ function filldropdowninventory() {
     })
     
 };
-function filldropdowncategory() {
+
+function filldropdownDivisions() {
     $.ajax({
-        url: $('#url_local').val() + "/api/Dashboard/GetItemCategories",
+        url: $('#url_local').val() + "/api/Dashboard/GetItemDivisions",
         type: 'GET',
         contentType: 'application/json', // Set the content type based on your API requirements
         data: JSON.stringify({ }), // Adjust the payload format based on your API
@@ -56,26 +65,39 @@ function filldropdowncategory() {
         success: function (data) {
             // Handle the successful response
             ddlHandler2(data);
+            ddlHandler3("");
         },
         error: function (jqXHR, textStatus, errorThrown) {
             // Handle the error
             console.log('AJAX Error: ' + textStatus, errorThrown);
             console.log(jqXHR.responseText); // Log the response for more details
         }
+    });
+};
 
-    })
-}
 function ddlHandler(response) {
     fillddls('inventories', 'All Inventories', response)
-}
+};
+
 function ddlHandler2(response) {
-    fillddls2('categories', 'All Categories', response.returnTable)
-}
+    fillddls2('divisions', 'All Divisions', response.returnTable)
+};
+
+function ddlHandler3(response) {
+    if (response == "") {
+        fillddls3('categories', 'All Categories', response)
+    }
+    else {
+        fillddls3('categories', 'All Categories', response.returnTable)
+    }
+};
+
 $("#inventories").change(function () {
- 
+
     loadinventselectedcount()
     loadanonymouscount()
-})
+});
+
 function fillddls(name, selecttext, data) {
     $("#" + name).empty();
     var s = '<option value="0">' + selecttext + '</option>';
@@ -88,7 +110,8 @@ function fillddls(name, selecttext, data) {
     });
     $("#" + name).html(s);
 
-}
+};
+
 function fillddls2(name, selecttext, data) {
     $("#" + name).empty();
     var s = '<option value="0">' + selecttext + '</option>';
@@ -96,12 +119,24 @@ function fillddls2(name, selecttext, data) {
     //    s += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
     //}
     $.each(data, function (index, item) {
-        s += '<option value="' + item.guid + '">' + item.engName + '</option>';
-
+        s += '<option value="' + item.engName + '">' + item.engName + '</option>';
     });
     $("#" + name).html(s);
 
-}
+};
+
+function fillddls3(name, selecttext, data) {
+    $("#" + name).empty();
+    var s = '<option value="0">' + selecttext + '</option>';
+    //for (var i = 0; i < data.length; i++) {
+    //    s += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+    //}
+    $.each(data, function (index, item) {
+        s += '<option value="' + item.engName + '">' + item.engName + '</option>';
+    });
+    $("#" + name).html(s);
+};
+
 function loadinventcount() { 
 
     if ($("#inventories option:selected").text() == "All Inventories" || $("#inventories option:selected").text() == "") {
@@ -160,7 +195,8 @@ function loadinventcount() {
 
         })
     }
-}
+};
+
 function loadinventselectedcount() {
     $.ajax({
         url: $('#url_local').val() + "/api/Dashboard/GetAllInventoryItemsCount",
@@ -185,11 +221,8 @@ function loadinventselectedcount() {
         }
 
     })
-}
-function FillGridHandlerAllInvent(response) {
-    $("#slab1").text(response.table1[0]["totalItemsCount"])
-    $("#slab2").text(response.returnTable[0]["foundInventoryItemsCount"])
 };
+
 function loadanonymouscount() {
     if ($("#inventories option:selected").text() == "All Inventories" || $("#inventories option:selected").text() == "") {
 
@@ -242,10 +275,12 @@ function loadanonymouscount() {
             }
         })
     }
-}
+};
+
 function FillGridHandlerAllAnonymous(response) {
     $("#slab3").text(response.returnTable[0]["foundAnonymousItems"])
 };
+
 function startTimer() {
 
     timer = setInterval(function () {
@@ -254,19 +289,49 @@ function startTimer() {
         loadselection()
         VarianceInfo()
         loadinventorycountbycategory()
+        loadCategoryInventoryVariance();
+        loadItemVarianceByInventoryGUID()
     }, 5000);
 
-}
+};
 
 $("#selection").change(function () {
     loadselection()
 });
 
-$("#categories").change(function () {
-    loadinventorycountbycategory()
+$("#divisions").change(function () {
+    $.ajax({
+        url: $('#url_local').val() + "/api/Dashboard/GetItemCategoriesAgainstDivision",
+        type: 'POST',
+        contentType: 'application/json', // Set the content type based on your API requirements
+        data: JSON.stringify({
+            "divisionCode": $("#divisions").val(),
+        }), // Adjust the payload format based on your API
+        headers: {
+            'Authorization': 'Bearer ' + yourToken
+        },
+        success: function (data) {
+            // Handle the successful response
+            ddlHandler3(data);
+            loadinventorycountbycategory();
+            //loadCategoryInventoryVariance();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // Handle the error
+            console.log('AJAX Error: ' + textStatus, errorThrown);
+            console.log(jqXHR.responseText); // Log the response for more details
+        }
+
+    })
 });
+
+$("#categories").change(function () {
+    loadinventorycountbycategory();
+    loadCategoryInventoryVariance();
+});
+
 function loadinventorycountbycategory() {
-    
+
     if ($("#categories option:selected").text() == "All Categories" || $("#categories option:selected").text() == "" || $("#categories option:selected").text() == "0") {
 
         $.ajax({
@@ -317,19 +382,141 @@ function loadinventorycountbycategory() {
 
         })
     }
-}
+};
+
+function loadCategoryInventoryVariance() {
+    var cat = $("#categories").val();
+    if (cat == null || cat == '0') {
+        cat = '';
+    }
+    
+    var inv = $("#inventories").val()
+    if (inv == null || inv == '0') {
+        inv = ''
+    };
+
+    $.ajax({
+        url: $('#url_local').val() + "/api/Dashboard/GetVarianceAgainstCategoryAndInventory",
+        type: 'POST',
+        contentType: 'application/json', // Set the content type based on your API requirements
+        data: JSON.stringify({
+            "itemCategory": cat,
+            "inventoryGUID": inv,
+        }), // Adjust the payload format based on your API
+        headers: {
+            'Authorization': 'Bearer ' + yourToken
+        },
+        success: function (data) {
+            // Handle the successful response
+            FillGridCategoryInventoryVariance(data);
+            $('#CategoryInventoryVariance').removeClass('loader');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // Handle the error
+            console.log('AJAX Error: ' + textStatus, errorThrown);
+            console.log(jqXHR.responseText); // Log the response for more details
+        }
+    
+    })
+};
+
+function loadItemVarianceByInventoryGUID() {
+    if ($("#inventories option:selected").text() == "All Inventories" || $("#inventories option:selected").text() == "" || $("#inventories option:selected").text() == "0") {
+
+        $.ajax({
+            url: $('#url_local').val() + "/api/Dashboard/GetItemVarianceAgainstInventory",
+            type: 'POST',
+            contentType: 'application/json', // Set the content type based on your API requirements
+            data: JSON.stringify({
+                "all": 1
+            }), // Adjust the payload format based on your API
+            headers: {
+                'Authorization': 'Bearer ' + yourToken
+            },
+            success: function (data) {
+                // Handle the successful response
+                FillGridItemVariance(data);
+                $('#itemsVariance').removeClass('loader');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // Handle the error
+                console.log('AJAX Error: ' + textStatus, errorThrown);
+                console.log(jqXHR.responseText); // Log the response for more details
+            }
+
+        })
+    }
+    else {
+
+        $.ajax({
+            url: $('#url_local').val() + "/api/Dashboard/GetItemVarianceAgainstInventory",
+            type: 'POST',
+            contentType: 'application/json', // Set the content type based on your API requirements
+            data: JSON.stringify({
+                "inventoryGUID": $("#inventories").val(),
+            }), // Adjust the payload format based on your API
+            headers: {
+                'Authorization': 'Bearer ' + yourToken
+            },
+            success: function (data) {
+                // Handle the successful response
+                FillGridItemVariance(data);
+                $('#itemsVariance').removeClass('loader');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // Handle the error
+                console.log('AJAX Error: ' + textStatus, errorThrown);
+                console.log(jqXHR.responseText); // Log the response for more details
+            }
+
+        })
+    }
+};
+
 function FillGridHandlerAllCategories(response) {
+
     $("#categorywiseInventory").empty();
     if (response.returnTable.length == 0) {
         $('#categorywiseInventory').append('<tr><td><div class="d-flex align-items-center fw-medium"></div></td><td>No Data Found</td><td></td></tr>');
     }
     else {
         for (i = 0; i < response.returnTable.length; i++) {
-            $('#categorywiseInventory').append('<tr><td><div class="d-flex align-items-center fw-medium"><i class="ri-chrome-line fs-24 lh-1 me-2"></i>' + response.returnTable[i].inventoryName + '</div></td><td>' + response.returnTable[i].foundItems + '</td><td>' + response.returnTable[i].totalItems + '</td></tr>');
+            $('#categorywiseInventory').append('<tr><td><div class="d-flex align-items-center fw-medium">' + response.returnTable[i].inventoryName + '</div></td><td>' + response.returnTable[i].foundItems + '</td><td>' + response.returnTable[i].totalItems + '</td></tr>');
+            //$('#categorywiseInventory').append('<tr><td><div class="d-flex align-items-center fw-medium"><i class="ri-chrome-line fs-24 lh-1 me-2"></i>' + response.returnTable[i].inventoryName + '</div></td><td>' + response.returnTable[i].foundItems + '</td><td>' + response.returnTable[i].totalItems + '</td></tr>');
         }
     }
     
 };
+
+function FillGridItemVariance(response) {
+
+    $("#itemsVariance").empty();
+    if (response.returnTable.length == 0) {
+        $('#itemsVariance').append('<tr><td><div class="d-flex align-items-center fw-medium"></div></td><td>No Data Found</td><td></td></tr>');
+    }
+    else {
+        for (i = 0; i < response.returnTable.length; i++) {
+            $('#itemsVariance').append('<tr><td><div style="font-size: 12px;" class="d-flex align-items-center fw-medium">' + response.returnTable[i].itemDesc + '</div></td><td style="padding-right: 8px;">' + response.returnTable[i].systemQty + '</td><td style="padding-right: 20px;">' + response.returnTable[i].physicalCount + '</td><td>' + response.returnTable[i].variance + '</td></tr>');
+            //$('#itemsVariance').append('<tr><td><div style="font-size: 12px;" class="d-flex align-items-center fw-medium"><i class="ri-chrome-line fs-24 lh-1 me-2"></i>' + response.returnTable[i].itemDesc + '</div></td><td style="padding-right: 8px;">' + response.returnTable[i].systemQty + '</td><td style="padding-right: 20px;">' + response.returnTable[i].physicalCount + '</td><td>' + response.returnTable[i].variance + '</td></tr>');
+        }
+    }
+
+};
+
+function FillGridCategoryInventoryVariance(response) {
+    $("#CategoryInventoryVariance").empty();
+    if (response.returnTable.length == 0) {
+        $('#CategoryInventoryVariance').append('<tr><td><div class="d-flex align-items-center fw-medium"></div></td><td>No Data Found</td><td></td></tr>');
+    }
+    else {
+        for (i = 0; i < response.returnTable.length; i++) {
+            //$('#CategoryInventoryVariance').append('<tr><td><div class="d-flex align-items-center fw-medium">' + response.returnTable[i].location + '</div></td><td>' + response.returnTable[i].categoryName + '</td><td>' + response.returnTable[i].systemQty + '</td><td>' + response.returnTable[i].physicalCount + '</td><td>' + response.returnTable[i].variance + '</td></tr>');
+            $('#CategoryInventoryVariance').append('<tr><td><div class="d-flex align-items-center fw-medium"><i class="ri-map-pin-line fs-15 lh-1 me-1"></i>' + response.returnTable[i].location + '</div></td><td>' + response.returnTable[i].categoryName + '</td><td>' + response.returnTable[i].systemQty + '</td><td>' + response.returnTable[i].physicalCount + '</td><td>' + response.returnTable[i].variance + '</td></tr>');
+        }
+    }
+
+};
+
 function loadselection() {
     if ($("#selection").val() == "Inventory") {
         $("#myselect").text("Anonymous Items found in Inventories")
@@ -386,13 +573,15 @@ function loadselection() {
         })
     }
 
-}
+};
+
 function FillGridHandlerSelection(response) {
     $('#mylist').empty();
     for (i = 0; i < response.returnTable.length; i++) {
         $('#mylist').append("<tr><td><span class='badge-dot bg-twitter me-2'></span> <span class='fw-medium'>" + response.returnTable[i].name + "</span></td><td>" + response.returnTable[i].count +"</td></tr>");
     }        
 };
+
 function VarianceInfo() {
 
     $.ajax({
@@ -417,6 +606,7 @@ function VarianceInfo() {
     })
 
 };
+
 function divFunction(data) {
     $('#performanceTable').empty();
     $('#progressBarDiv').empty();
@@ -424,10 +614,10 @@ function divFunction(data) {
     var color = '';
     var colorArray = ['primary', 'success', 'orange', 'pink', 'info', 'indigo'];
     var responseCount = 0;
-    for (var i = 0; i <=4; i++) {
+    for (var i = 0; i < data.returnTable.length; i++) {
         responseCount = responseCount + data.returnTable[i]["count"];
     }
-    for (var j = 0; j <=4; j++) {
+    for (var j = 0; j < data.returnTable.length; j++) {
         countArray[j] = (data.returnTable[j]["count"] / responseCount) * 100;
         countArray[j] = Math.round(countArray[j] / 5) * 5;
         color = colorArray[j]
@@ -435,6 +625,30 @@ function divFunction(data) {
         $("#performanceTable").append('<tbody><tr><td><div class="badge-dot bg-' + color + '"></div></td><td>' + data.returnTable[j]["name"] + '</td><td>' + data.returnTable[j]["count"].toLocaleString() + '</td><td>' + data.returnTable[j]["percentage"].toFixed(2) + '%</td></tr></tbody>');
     }    
    
-}
+};
 
+//region "Refresh Buttons are here"
+
+$("#itemWiseVarianceRefreshButton").click(function () {
+    //$(".loader").show();
+    $("#itemsVariance").empty();
+    loadItemVarianceByInventoryGUID();
+});
+
+$("#CategoryOrInventoryRefreshButton").click(function () {
+    $("#CategoryInventoryVariance").empty();
+    loadCategoryInventoryVariance()
+});
+
+$("#categorywiseInventoryRefreshButton").click(function () {
+    $("#categorywiseInventory").empty();
+    loadinventorycountbycategory();
+});
+
+$("").click(function () {
+
+//loadselection()
+});
+
+//endregion
 

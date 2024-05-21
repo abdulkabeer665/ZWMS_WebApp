@@ -124,7 +124,9 @@
     <Compile Include="Controllers\AnonymousItemsController.cs" />
     <Compile Include="Controllers\DevicesConfigurationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\InventoryPeriodsController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\WarehouseController.cs" />
     <Compile Include="Global.asax.cs">
@@ -136,11 +138,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\assets\contents\js\AnonymousItems.js" />
+    <Content Include="Assets\assets\contents\js\BookStockInventory.js" />
     <Content Include="Assets\assets\contents\js\Dashboard.js" />
     <Content Include="Assets\assets\contents\js\Dashboard_charts.js" />
     <Content Include="Assets\assets\contents\js\DevicesConfiguration.js" />
     <Content Include="Assets\assets\contents\js\GenericAjax.js" />
     <Content Include="Assets\assets\contents\js\Inventory.js" />
+    <Content Include="Assets\assets\contents\js\InventoryPeriods.js" />
+    <Content Include="Assets\assets\contents\js\MasterData.js" />
     <Content Include="Assets\assets\contents\js\Warehouse.js" />
     <Content Include="Assets\assets\contents\js\Login.js" />
     <Content Include="Assets\assets\contents\js\sweetalert.min.js" />
@@ -9071,6 +9076,9 @@
     <Content Include="Views\AnonymousItems\Index.cshtml" />
     <Content Include="Views\DevicesConfiguration\Index.cshtml" />
     <Content Include="Views\AdminTools\Index.cshtml" />
+    <Content Include="Views\Import\MasterData.cshtml" />
+    <Content Include="Views\InventoryPeriods\Index.cshtml" />
+    <Content Include="Views\Import\BookStockInventoryData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

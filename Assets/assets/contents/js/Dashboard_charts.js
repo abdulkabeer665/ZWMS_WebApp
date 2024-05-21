@@ -3,19 +3,31 @@ var yourToken = sessionStorage.getItem('yourToken')
 $(window).on('load', function () {
 
     varianceChart();
-    itemvarianceChart()
+    itemvarianceChart();
+
+    //setInterval(() => {
+    //    varianceChart();
+    //    itemvarianceChart();
+    //}, 5000);
 });
+
+//setInterval(() => {
+//    varianceChart();
+//    itemvarianceChart();
+//}, 5000);
 
 function varianceChart() {
 
    varianceAPI()
 
 };
+
 function itemvarianceChart() {
 
     itemvarianceAPI()
 
 };
+
 function varianceAPI() {
     $.ajax({
         url: $('#url_local').val() + "/api/Dashboard/GetVarianceInfo",
@@ -38,7 +50,8 @@ function varianceAPI() {
 
     })
 
-}
+};
+
 function itemvarianceAPI() {
     $.ajax({
         url: $('#url_local').val() + "/api/Dashboard/GetAllInventoryItemsForCategoryBarChart",
@@ -61,7 +74,8 @@ function itemvarianceAPI() {
 
     })
 
-}
+};
+
 var name = []
 var totalcount = []
 var count = []
@@ -85,7 +99,7 @@ var ichartCount = [];
 
 
 function responseFunction2(response) {
-   // console.log(response)
+
     for (var i = 0; i < response.returnTable.length; i++) {
 
         iname[i] = response.returnTable[i]["iC_EngName"];
@@ -113,31 +127,26 @@ function responseFunction2(response) {
     }
     //console.log("============aaaaaaaaaaaaaaaaaaaaaa================")
     //console.log(ivariance.length)
-     
-        for (var i = 0; i < ivariance.length-1; i++) {
-          
-            ichartCount[i] = ivariance[i];
-            ichartLabel[i] = response.returnTable[i]["iC_EngName"]
-            if (ichartCount[i] < 20) {
-                ichartColor[i] = "#5cb85c"
-            }
-            if (ichartCount[i] >= 20 && ichartCount[i] < 50) {
-                ichartColor[i] = "#f0ad4e"
-            }
-            if (ichartCount[i] >= 50) {
-                ichartColor[i] = "#d9534f"
-            }
-        };
 
-        createChart2()
-    }
+    for (var i = 0; i < ivariance.length; i++) {
+    //for (var i = 0; i < ivariance.length-1; i++) {
+        ichartCount[i] = ivariance[i];
+        ichartLabel[i] = response.returnTable[i]["iC_EngName"]
+        if (ichartCount[i] < 20) {
+            ichartColor[i] = "#5cb85c"
+        }
+        if (ichartCount[i] >= 20 && ichartCount[i] < 50) {
+            ichartColor[i] = "#f0ad4e"
+        }
+        if (ichartCount[i] >= 50) {
+            ichartColor[i] = "#d9534f"
+        }
+    };
+
+    createChart2()
+};
 
 function responseFunction(response) {
-   
-    //console.log("affasfsaf")
-    //console.log(response);
-   
- 
 
     if ($("#varianceselect option:selected").text() == "By Items") {
         for (var i = 0; i < response.returnTable.length; i++) {
@@ -244,7 +253,8 @@ function responseFunction(response) {
     };
 
    createChart()
-}
+};
+
 var chart1 = null
 var chart2 = null
 function createChart() {
@@ -353,7 +363,7 @@ function createChart() {
 
     });
     return chart1;
-    }
+};
 
 function createChart2() {
         'use strict'
@@ -457,7 +467,8 @@ function createChart2() {
 
         });
         return chart2;
-    }
+};
+
 $("#varianceselect").change(function () {
    name = []
    totalcount = []
@@ -467,8 +478,8 @@ $("#varianceselect").change(function () {
    varianceadjustmenttext = []
    chartColor = [];
    chartLabel = [];
-    chartCount = [];
-    debugger
+   chartCount = [];
+   //debugger
   
     varianceAPI()
  

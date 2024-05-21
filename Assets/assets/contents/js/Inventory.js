@@ -7,6 +7,7 @@ $(window).on('load', function () {
     loadGridAjax();
 
     filldropdownWarehouse();
+    filldropdownInventoryPeriod();
 });
 
 function loadGridAjax() {
@@ -35,7 +36,6 @@ function loadGridAjax() {
 
     })
 }
-
 
 $('#cls').click(function () {
     //$('#btnsave').text($('#hdnsave').val());
@@ -66,6 +66,7 @@ function FillGridHandler(response) {
         $('#' + btnadd_).prop('disabled', false);
     }
 };
+
 function Bindbody(json, tablename, edit_rights, delete_rights) {
    
       //console.log(json)
@@ -88,6 +89,7 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
         //tr.append("<td style='display: none;'>" + json[i].id + "</td>");
         tr.append("<td  style='display: none;'>" + json[i].guid + "</td>");
         tr.append("<td>" + json[i].code + "</td>");
+        tr.append("<td>" + json[i].inventoryPeriodDesc + "</td>");
         tr.append("<td>" + json[i].engName + "</td>");
         tr.append("<td>" + json[i].engName1 + "</td>");
         tr.append("<td>" + json[i].inventoryDate + "</td>");
@@ -107,6 +109,7 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
             "dom": '<"row justify-content-between top-information"lf>rt<"row justify-content-between bottom-information"ip><"clear">'
         });
 }
+
 $('#btnadd').click(function () {
     $('#code').val('');
     $('#enName').val('');
@@ -119,8 +122,10 @@ $('#btnadd').click(function () {
     //$('#HieLevelCode').val('');
     //$('#exampleModalLargetext').text("Level Creation");
     //('#HieLevelDesc').val('');
+    $('#invPeriodSelect').val(0);
     $('#modal-lg').modal('show');
 });
+
 function filldropdownWarehouse() {
   
     $.ajax({
@@ -143,11 +148,42 @@ function filldropdownWarehouse() {
         }
     });
 
-}
+};
+
+function filldropdownInventoryPeriod() {
+
+    $.ajax({
+        url: $('#url_local').val() + "/api/InventoryPeriods/GetAllInventoryPeriods",
+        type: 'POST',
+        contentType: 'application/json', // Set the content type based on your API requirements
+        data: JSON.stringify({ "GET": 1 }), // Adjust the payload format based on your API
+        headers: {
+            'Authorization': 'Bearer ' + yourToken
+        },
+        success: function (data) {
+            // Handle the successful response
+
+            ddInventoryPeriodHandler(data);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // Handle the error
+            console.log('AJAX Error: ' + textStatus, errorThrown);
+            console.log(jqXHR.responseText); // Log the response for more details
+        }
+    });
+
+};
+
 function ddlHandler(response) {
     // debugger;
     fillddls('warehouse', 'Please Select Warehouse', response)
-}
+};
+
+function ddInventoryPeriodHandler(response) {
+    // debugger;
+    fillddInventoryPeriod('invPeriodSelect', 'Please Select Inventory Period', response)
+};
+
 function fillddls(name, selecttext, data) {
     //console.log("$$$$$$$$$$$$ " + data)
     $("#" + name).empty();
@@ -160,7 +196,22 @@ function fillddls(name, selecttext, data) {
 
     });
     $("#" + name).html(s);
-}
+};
+
+function fillddInventoryPeriod(name, selecttext, data) {
+    //console.log("$$$$$$$$$$$$ " + data)
+    $("#" + name).empty();
+    var s = '<option value="0">' + selecttext + '</option>';
+    //for (var i = 0; i < data.length; i++) {
+    //    s += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+    //}
+    $.each(data, function (index, item) {
+        s += '<option value="' + item.inventoryPeriodID + '">' + item.inventoryPeriodDesc + '</option>';
+
+    });
+    $("#" + name).html(s);
+};
+
 $("#warehouse").change(function () {
     //debugger
     var ddvalue = $('#warehouse').val()
@@ -188,6 +239,7 @@ $("#warehouse").change(function () {
         }
     });
 });
+
 function ddlHandler2(response) {
     console.log(response)
     if (response.message.includes("already has prepared")) {
@@ -217,6 +269,10 @@ $('#btnsave').click(function () {
         alert("Warehouse must be selected.")
         return;
     }
+    else if ($('#invPeriodSelect').val() == 0) {
+        alert("Inventory Period must be selected.")
+        return;
+    }
     else if ($('#dateInput').val() == '')
     {
         alert("Date must be enter.")
@@ -235,12 +291,14 @@ $('#btnsave').click(function () {
                 data: JSON.stringify({
                     "add": 1,
                     "engName": $('#enName').val(),
+                    "name": $('#arName').val(),
                     "warehouseGUID": $('#warehouse').val(),
                     "name": $('#arName').val(),
                     "code": $('#code').val(),
                     "inventoryDate": currentDateValue,
                     "createdBy": loginName,
-                    "lastEditBy": loginName
+                    "lastEditBy": loginName,
+                    "inventoryPeriodID": $('#invPeriodSelect').val(),
 
                 }), // Adjust the payload format based on your API
                 headers: {
@@ -273,7 +331,8 @@ $('#btnsave').click(function () {
                     "inventoryDate": currentDateValue,
                     "status" : "Prepared",
                     "notes": "",
-                    "lastEditBy": loginName
+                    "lastEditBy": loginName,
+                    "inventoryPeriodID": $('#invPeriodSelect').val(),
 
                 }), // Adjust the payload format based on your API
                 headers: {
@@ -293,6 +352,7 @@ $('#btnsave').click(function () {
         }
     }
 })
+
 function SaveHandler(response) {
     //$('#loader').hide();
     //debugger
@@ -305,7 +365,8 @@ function SaveHandler(response) {
             button: "OK",
         }).then((exist) => {
             if (exist) {
-                loadGridAjax();
+                /*loadGridAjax();*/
+                window.location.href = '';
             }
         })
     }
@@ -319,7 +380,8 @@ function SaveHandler(response) {
                 if (Save) {
 
                     $('#modal-lg').modal('hide');
-                    loadGridAjax();
+                    //loadGridAjax();
+                    window.location.href = '';
                 }
             })
 
@@ -364,12 +426,11 @@ function editResponseHandler(response) {
     $("#arName").val(response[0]["name"]);
     $("#guid").val(response[0]["guid"]);
     $("#warehouse").val(response[0]["warehouseGUID"]);
+    $("#invPeriodSelect").val(response[0]["inventoryPeriodID"]);
     $("#dateInput").val(onlyDate);
-
     $('#modal-lg').modal('show');
     $('#btnsave').prop('title', 'Update');
     $('#btnsave').text($('#hdnupdate').val());
-
 };
 
 function Delete(res) {

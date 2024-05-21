@@ -40,6 +40,7 @@
                                         @*<th>Scale ID</th>*@
                                         <th style='display:none'>GUID</th>
                                         <th>Code</th>
+                                        <th>Inventory Period</th>
                                         <th>Inventory Name</th>
                                         <th>Warehouse Name</th>
                                         <th>Inventory Date</th>
@@ -73,6 +74,16 @@
 
                         <div class="row">
 
+                            <div class="col-sm-6">
+                                <label>Inventory Period</label>
+                                <select style="max-width: 400px;" id="invPeriodSelect" class="form-control"></select>
+                            </div>
+
+                        </div>
+                        <hr />
+
+                        <div class="row">
+
                             <div class="col-sm-6" style="display:none;">
                                 <label>GUID</label>
                                 <input class="form-control" type="hidden" id="guid" disabled />
@@ -102,7 +113,7 @@
                                 <label>Warehouse</label>
                                 <select style="max-width: 400px;" id="warehouse" class="form-control">
                                 </select>
-                              
+
                             </div>
 
                         </div>
@@ -117,7 +128,7 @@
                         </div>
 
                         @*<input type="checkbox" id="active">
-                            <label for="active"> Active</label><br>*@
+        <label for="active"> Active</label><br>*@
                     </div>
 
                     <div class="modal-footer">
