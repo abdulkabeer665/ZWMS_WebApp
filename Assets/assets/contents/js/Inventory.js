@@ -93,13 +93,13 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
         tr.append("<td>" + json[i].engName + "</td>");
         tr.append("<td>" + json[i].engName1 + "</td>");
         tr.append("<td>" + json[i].inventoryDate + "</td>");
-        //if (json[i].scalestatus == "1") {
-        //    tr.append("<td>Active</td>");
-        //}
-        //else {
-        //    tr.append("<td>Inactive</td>");
-        //}
-        tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button></td>");
+        tr.append("<td>" + json[i].status + "</td>");
+        if (json[i].status == "Prepared") {
+            tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button><button style='margin-left: 5px;' class='btn btn-success'> <i  class=\"fa fa-paper-plane\"  title=\"Post\"   onclick=Post('" + json[i].guid + "')></i> </button></td>");
+        }
+        else {
+            tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button><button disabled style='margin-left: 5px;' class='btn btn-success'> <i  class=\"fa fa-paper-plane\"  title=\"Post\"   onclick=Post('" + json[i].guid + "')></i> </button></td>");
+        }
         //tr.append("<td>" + Edit_R + Delete_R + "</td>");
         // console.log(Edit_R)
         $("#" + tablename + ' tbody').append(tr);
@@ -536,6 +536,47 @@ function Delete(res) {
 
 
                     }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // Handle the error
+                    console.log('AJAX Error: ' + textStatus, errorThrown);
+                    console.log(jqXHR.responseText); // Log the response for more details
+                }
+            });
+        } else {
+            swal("Cancelled", "Your record is safe!", "error");
+        }
+    })
+};
+
+function Post(res) {
+    swal({
+        title: "Are you sure?",
+        text: "You won't revert to 'Prepared' this inventory again!",
+        icon: "warning",
+        buttons: [
+            'No, cancel it!',
+            'Yes, I am sure!'
+        ],
+        dangerMode: true,
+    }).then(function (isConfirm) {
+        if (isConfirm) {
+            $('.loader').show();
+
+            $.ajax({
+                url: $('#url_local').val() + "/api/Inventory/UpdateInventoryStatus",
+                type: 'POST',
+                contentType: 'application/json', // Set the content type based on your API requirements
+                data: JSON.stringify({
+                    "inventoryGUID": res,
+                    "status" : "Posted"
+
+                }), // Adjust the payload format based on your API
+                headers: {
+                    'Authorization': 'Bearer ' + yourToken
+                },
+                success: function (data) {
+                    SaveHandler(data)
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     // Handle the error

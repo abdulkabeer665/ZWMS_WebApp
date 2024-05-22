@@ -15,7 +15,8 @@ function loadGridAjax() {
         type: 'POST',
         contentType: 'application/json', // Set the content type based on your API requirements
         data: JSON.stringify({
-            "GET": 1
+            "GET": 1,
+            "Web": 1
 
         }), // Adjust the payload format based on your API
         headers: {

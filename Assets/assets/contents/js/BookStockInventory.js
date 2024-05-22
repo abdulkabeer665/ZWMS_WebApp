@@ -5,6 +5,7 @@ const disableBTN = document.getElementById('sendDataBtn');
 $(document).ready(function () {
     disableBTN.disabled = true;
     filldropdownInventoryPeriod()
+    loadWarehouseDDL('');
 });
 
 function filldropdownInventoryPeriod() {
@@ -13,7 +14,7 @@ function filldropdownInventoryPeriod() {
         url: $('#url_local').val() + "/api/InventoryPeriods/GetAllInventoryPeriods",
         type: 'POST',
         contentType: 'application/json', // Set the content type based on your API requirements
-        data: JSON.stringify({ "GET": 1 }), // Adjust the payload format based on your API
+        data: JSON.stringify({ "GET": 1, "Web": 1 }), // Adjust the payload format based on your API
         headers: {
             'Authorization': 'Bearer ' + yourToken
         },
@@ -158,7 +159,7 @@ document.getElementById('sendDataBtn').addEventListener('click', function () {
         return;
     }
     else
-    if (invPerLocationSelection < 1) {
+    if (invPerLocationSelection = 0) {
         alert("Please Select Location")
         return;
     }
@@ -181,7 +182,9 @@ document.getElementById('sendDataBtn').addEventListener('click', function () {
                 // Map the filtered data to the desired structure
                 var requestData = filteredData.map(row => ({
                     "item_Code": row[0], // Assuming 'Item ID' is at index 1 in the original data
-                    "item_BookStock": row[1],
+                    "BookStockInventory": row[1],
+                    "inventoryPeriodID": invPerSelection,
+                    "warehouseGUID": $("#invPeriodwiseLocation").val(),
                     "createdBy": loginUserGUID,
                     "lastEditBy": loginUserGUID
                 }));
@@ -197,16 +200,17 @@ document.getElementById('sendDataBtn').addEventListener('click', function () {
 });
 
 function sendDataToAPI(data) {
+    debugger
     $.ajax({
-        url: $('#url_local').val() + "/api/Import/MasterData", // Get the API endpoint URL
+        url: $('#url_local').val() + "/api/Import/BookStockInventory", // Get the API endpoint URL
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({ importMasterData: data }),
+        data: JSON.stringify({ importBookStockInventory: data }),
         headers: { 'Authorization': 'Bearer ' + yourToken },
         success: function (response) {
             //console.log('Data sent successfully');
             //console.log(response); // Log the response from the server
-            importMasterDataResponse(response);
+            importResponse(response);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.error('Error sending data to API:', errorThrown);
@@ -214,9 +218,10 @@ function sendDataToAPI(data) {
     });
 };
 
-function importMasterDataResponse(response) {
+function importResponse(response) {
+    debugger
     $('body').css('opacity', '1');
-    var reponseMessage = response[0]['message'];
+    var reponseMessage = response.message;
     if (reponseMessage.includes("Already")) {
         swal({
             title: reponseMessage + "...",

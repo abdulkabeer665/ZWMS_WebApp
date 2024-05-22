@@ -137,6 +137,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\assets\contents\js\AllItems.js" />
     <Content Include="Assets\assets\contents\js\AnonymousItems.js" />
     <Content Include="Assets\assets\contents\js\BookStockInventory.js" />
     <Content Include="Assets\assets\contents\js\Dashboard.js" />
@@ -9079,6 +9080,7 @@
     <Content Include="Views\Import\MasterData.cshtml" />
     <Content Include="Views\InventoryPeriods\Index.cshtml" />
     <Content Include="Views\Import\BookStockInventoryData.cshtml" />
+    <Content Include="Views\Home\AllItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

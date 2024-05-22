@@ -1,5 +1,6 @@
 ﻿var yourToken;
 var loginName;
+
 $(window).on('load', function () {
     yourToken = sessionStorage.getItem('yourToken');
     loginName = sessionStorage.getItem('loginName');
@@ -29,7 +30,8 @@ function loadGridAjax() {
             console.log(jqXHR.responseText); // Log the response for more details
         }
     });
-}
+};
+
 function FillGridHandler(response) {
 
     var btnedit_ = 0;
@@ -41,6 +43,7 @@ function FillGridHandler(response) {
         $('#' + btnadd_).prop('disabled', false);
     }
 };
+
 function Bindbody(json, tablename, edit_rights, delete_rights) {
     var tr;
     var Edit_R;
@@ -67,17 +70,19 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
         $("#" + tablename + ' tbody').append(tr);
     }
     $("#" + tablename).DataTable(
-        {
-            "dom": '<"row justify-content-between top-information"lf>rt<"row justify-content-between bottom-information"ip><"clear">'
-        });
-}
+    {
+        "dom": '<"row justify-content-between top-information"lf>rt<"row justify-content-between bottom-information"ip><"clear">'
+    });
+};
 
 $('#cls').click(function () {
     $('#modal-lg').modal('hide');
 });
+
 $('#btnclose').click(function () {
     $('#modal-lg').modal('hide');
 });
+
 function Edit(value) {
     var table = $('#tblDevices').DataTable();
     var data = table.row(value).data();
@@ -122,6 +127,7 @@ $('#btnsave').click(function () {
         });
     }
 });
+
 function confirmUpdate(response) {
     if (response.status == "200") {
         $.ajax({
@@ -156,6 +162,7 @@ function confirmUpdate(response) {
         saveHandlerInvalidKey(response)
     }
 };
+
 function Delete(value) {
     swal({
         title: "Are you sure?",
@@ -198,6 +205,7 @@ function Delete(value) {
         }
     })
 };
+
 function saveHandlerInvalidKey(response) {
     
     swal({
@@ -209,7 +217,8 @@ function saveHandlerInvalidKey(response) {
             loadGridAjax()
         }
     })
-}
+};
+
 function SaveHandler(response) {
     $('#modal-lg').modal('hide');
 
@@ -238,4 +247,4 @@ function SaveHandler(response) {
         })
 
     }
-}
+};

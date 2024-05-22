@@ -26,5 +26,9 @@ namespace ZWMS_WebApp.Controllers
 
             return View();
         }
+        public ActionResult AllItems()
+        {
+            return View();
+        }
     }
 }
