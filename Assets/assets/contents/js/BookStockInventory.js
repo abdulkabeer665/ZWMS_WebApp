@@ -103,7 +103,7 @@ document.getElementById('customFile').addEventListener('change', function (event
                 originalData = results.data; // Store the original parsed data
                 // Custom headers
                 var customHeaders = [
-                    'Sr No', 'Item ID', 'Book Stock', 'Status'
+                    'Sr No', 'Item ID', 'Book Stock', 'Unit Cost', 'Status'
                 ];
 
                 // Remove blank rows
@@ -178,11 +178,12 @@ document.getElementById('sendDataBtn').addEventListener('click', function () {
                 $('body').css('opacity', '0.5');
                 $('.loader').show();
                 var filteredData = originalData.filter(row => !row.some(param => param === undefined));
-
+                debugger
                 // Map the filtered data to the desired structure
                 var requestData = filteredData.map(row => ({
                     "item_Code": row[0], // Assuming 'Item ID' is at index 1 in the original data
                     "BookStockInventory": row[1],
+                    "UnitCostPrice": row[2],
                     "inventoryPeriodID": invPerSelection,
                     "warehouseGUID": $("#invPeriodwiseLocation").val(),
                     "createdBy": loginUserGUID,

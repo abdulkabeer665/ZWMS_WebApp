@@ -150,6 +150,7 @@
     <Content Include="Assets\assets\contents\js\Warehouse.js" />
     <Content Include="Assets\assets\contents\js\Login.js" />
     <Content Include="Assets\assets\contents\js\sweetalert.min.js" />
+    <Content Include="Assets\assets\css\Dashboard.css" />
     <Content Include="Assets\assets\css\style.css" />
     <Content Include="Assets\assets\css\style.min.css" />
     <Content Include="Assets\assets\img\app1.png" />

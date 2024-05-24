@@ -11,7 +11,7 @@
     <script src="~/Assets/lib/apexcharts/apexcharts.min.js"></script>
     <script src="~/Assets/assets/js/script.js"></script>
     <script src="~/Assets/assets/js/db.data.js"></script>
-
+    <link href="~/Assets/assets/css/Dashboard.css" rel="stylesheet" />
 </head>
 <input type="hidden" id="url_local" value="@System.Configuration.ConfigurationManager.AppSettings["url_local"]" />
 <div class="col-sm-3"><input type="hidden" id="front_URL" value="@System.Configuration.ConfigurationManager.AppSettings["url_local_front"]" /></div>
@@ -49,7 +49,6 @@
                         <div class="row">
 
                             <div class="col-7">
-                                @*<div class="loader" style="display: none;"></div>*@
                                 <h3 id="slab1" class="card-value mb-1 loaderforslabs"></h3>
                                 <label class="card-title fw-medium text-dark mb-1">Total Items</label>
                                 @*<span class="d-block text-muted fs-11 ff-secondary lh-4">No. of clicks to ad that consist of a single impression.</span>*@
@@ -153,7 +152,7 @@
                         <h6 class="card-title">@*Sessions By Location*@</h6>
 
                         <div class="col-sm-4">
-                            <a href="../Home/AllItems"><h5 style="margin-right: -7px; color: #41505F">Item-wise Variance:</h5></a>
+                            <a href="../Home/AllItems"><h5 class="hover-text" style="margin-right: -7px; color: #41505F">Item-wise Variance:</h5></a>
                         </div>
                         <div class="col-sm-4" style="margin-left: 10px;">
 
@@ -163,7 +162,7 @@
                         </div>
                         <nav class="nav nav-icon nav-icon-sm ms-auto">
                             <a id="itemWiseVarianceRefreshButton" style="cursor: pointer;" class="nav-link"><i class="ri-refresh-line"></i></a>
-                            <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+                            @*<a style="cursor: pointer" class="nav-link"><i class="ri-more-2-fill"></i></a>*@
                         </nav>
                     </div>
                     @*card-header*@
@@ -211,7 +210,7 @@
                         </div>
                         <nav class="nav nav-icon nav-icon-sm ms-auto">
                             <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
-                            <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+                            @*<a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>*@
                         </nav>
                     </div><!-- card-header -->
 
@@ -244,8 +243,8 @@
                         <select style="max-width: 200px; margin-left:5px ;margin-bottom:3px" id="divisions" class="form-control"></select>
                         <select style="max-width: 200px; margin-left:5px ;margin-bottom:3px" id="categories" class="form-control"></select>
                         <nav class="nav nav-icon nav-icon-sm ms-auto">
-                            <a id="categorywiseInventoryRefreshButton" class="nav-link"><i class="ri-refresh-line"></i></a>
-                            <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+                            <a id="categorywiseInventoryRefreshButton" style="cursor: pointer;" class="nav-link"><i class="ri-refresh-line"></i></a>
+                            @*<a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>*@
                         </nav>
                     </div><!-- card-header -->
                     <div class="card-body pt-0">
@@ -283,8 +282,8 @@
 
                         </div>
                         <nav class="nav nav-icon nav-icon-sm ms-auto">
-                            <a id="CategoryOrInventoryRefreshButton" class="nav-link"><i class="ri-refresh-line"></i></a>
-                            <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+                            <a id="CategoryOrInventoryRefreshButton" style="cursor: pointer;" class="nav-link"><i class="ri-refresh-line"></i></a>
+                            @*<a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>*@
                         </nav>
                     </div>
                     @*card-header*@
