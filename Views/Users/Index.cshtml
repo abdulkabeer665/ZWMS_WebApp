@@ -1,0 +1,161 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <script type="text/javascript" src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" defer></script>
+    <script src="~/Assets/assets/js/script.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+</head>
+<input type="hidden" id="url_local" value="@System.Configuration.ConfigurationManager.AppSettings["url_local"]" />
+<body>
+    <div class="loader" style="display: none;"></div>
+    <div class="main main-app p-3 p-lg-4">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-default">
+                    <div class="card-header card-header-border-bottom d-flex justify-content-between">
+                        <h2>Users</h2>
+                            <button disabled type="submit" id="btnadd" class="btn btn-primary" style="margin-right: 5px; float:right" data-toggle="modal" data-target="#modal-lg">
+                                <i class="fa fa-plus"></i> Add
+                            </button>
+                        @*<a href="https://datatables.net/examples/styling/hover.html" target="_blank" class="btn btn-outline-primary btn-sm text-uppercase">
+                            <i class=" mdi mdi-link mr-1"></i> Docs
+                        </a>*@
+                    </div>
+                    <div class="card-body">
+                        <div style="color:black" class="table-responsive hoverable-data-table">
+                            <table id="tblUsers" class="table table-hover nowrap table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style='display:none'>GUID</th>
+                                        <th>Code</th>
+                                        <th>English Name</th>
+                                        <th>Name</th>
+                                        <th>Login Name</th>
+                                        <th style='display:none'>Role ID</th>
+                                        <th>Role</th>
+                                        @*<th style='display:none'>Password</th>*@
+                                        <th style='display:none'>Status</th>
+                                        <th style='display:none'>Notes</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        @*modelpopup*@
+        <div class="modal fade" id="modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLarge" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header header">
+                        <button type="button" id="cls" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h2 class="modal-title" id="exampleModalLarge2" style="color:white">Scale</h2>
+
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" maxlength="100" id="userGUID" />
+                        <div class="row">
+
+                            <div class="col-sm-6 ">
+                                <label>Code:</label>
+                                <input class="form-control" placeholder="Insert Code here" type="text" maxlength="100" id="code" />
+                            </div>
+                            <div class="col-sm-6" style="padding-top: 30px;">
+                                @*<input class="form-control" placeholder="Insert Code here" type="checkbox" maxlength="100" id="active" />*@
+                                <input type="checkbox" id="active"/>
+                                <span>Active</span>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Role:</label>
+                                <select style="max-width: 400px;" id="role" class="form-control">
+                                </select>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Login Name:</label>
+                                <input class="form-control" type="text" maxlength="128" placeholder="Insert Login Name Here" id="loginID" />
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Eng Name:</label>
+                                <input class="form-control" type="text" maxlength="15" placeholder="Insert English Name here" id="engName" />
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Name:</label>
+                                <input class="form-control" placeholder="Insert Name Here" type="text" id="name" />
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6" style="display: none;" id="hideDiv1">
+                                <label>Password:</label>
+                                <div class="input-group">
+                                    <input class="form-control" type="password" maxlength="128" placeholder="Insert Password Here" id="password" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="passwordToggle">
+                                            <i class="ri-eye-close-line"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6" style="display: none;" id="hideDiv2">
+                                <label>Confirm Password:</label>
+                                <div class="input-group">
+                                    <input class="form-control" type="password" maxlength="128" placeholder="Insert Confirm Password Here" id="confirmPassword" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="confirmPasswordToggle">
+                                            <i class="ri-eye-close-line"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="passwordError" style="color: red;"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>Notes:</label>
+                                <textarea class="form-control" id="notes"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="btnclose" class="btn btn-danger btn-pill" data-dismiss="modal">Close</button>
+                        <button type="button" id="btnsave" title="Save" class="btn btn-primary btn-pill">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../Assets/assets/contents/js/Users.js"></script>
+    <script src="../Assets/assets/contents/js/GenericAjax.js"></script>
+    <script src="../Assets/assets/contents/js/sweetalert.min.js"></script>
+</body>

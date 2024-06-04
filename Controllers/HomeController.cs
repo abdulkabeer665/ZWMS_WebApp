@@ -8,6 +8,7 @@ namespace ZWMS_WebApp.Controllers
 {
     public class HomeController : Controller
     {
+        [HandleError]
         public ActionResult Index()
         {
             return View();
@@ -27,6 +28,11 @@ namespace ZWMS_WebApp.Controllers
             return View();
         }
         public ActionResult AllItems()
+        {
+            return View();
+        }
+
+        public ActionResult CategoryWiseItems()
         {
             return View();
         }
