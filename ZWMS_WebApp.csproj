@@ -142,6 +142,7 @@
   <ItemGroup>
     <Content Include="Assets\assets\contents\js\AllItems.js" />
     <Content Include="Assets\assets\contents\js\AnonymousItems.js" />
+    <Content Include="Assets\assets\contents\js\BookStockData.js" />
     <Content Include="Assets\assets\contents\js\BookStockInventory.js" />
     <Content Include="Assets\assets\contents\js\CategoryWiseItems.js" />
     <Content Include="Assets\assets\contents\js\Dashboard.js" />
@@ -152,6 +153,7 @@
     <Content Include="Assets\assets\contents\js\Inventory.js" />
     <Content Include="Assets\assets\contents\js\InventoryPeriods.js" />
     <Content Include="Assets\assets\contents\js\MasterData.js" />
+    <Content Include="Assets\assets\contents\js\ToastHandler.js" />
     <Content Include="Assets\assets\contents\js\Users.js" />
     <Content Include="Assets\assets\contents\js\Warehouse.js" />
     <Content Include="Assets\assets\contents\js\Login.js" />
@@ -9092,6 +9094,7 @@
     <Content Include="Views\Home\CategoryWiseItems.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Export\Index.cshtml" />
+    <Content Include="Views\Home\BookStockData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

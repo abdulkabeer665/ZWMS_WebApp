@@ -36,5 +36,9 @@ namespace ZWMS_WebApp.Controllers
         {
             return View();
         }
+        public ActionResult BookStockData()
+        {
+            return View();
+        }
     }
 }
