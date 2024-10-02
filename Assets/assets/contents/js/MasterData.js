@@ -18,66 +18,104 @@ document.getElementById('customFile').addEventListener('change', function (event
     var file = event.target.files[0];
     var reader = new FileReader();
 
+    if (file === undefined) {
+        $('body').css('opacity', '1');
+        $('.loader').hide();
+        return;
+    }
+
     reader.onload = function (e) {
         var content = e.target.result;
+
         // Parse the tab-delimited file without headers
-        var results = Papa.parse(content, {
+        Papa.parse(content, {
             delimiter: "\t",
             header: false,
             complete: function (results) {
                 originalData = results.data; // Store the original parsed data
+
                 // Custom headers
                 var customHeaders = [
-                    'Sr No', 'Item ID', 'Description', 'Category',
+                    'Sr No', 'Status', 'Item ID', 'Description', 'Category',
                     'Package Type', 'Package Size', 'Qty Per Pack',
                     'Barcode', 'Selling Price', 'Cost Price',
-                    'Book Stock', 'Item Type', 'Status'
+                    'Book Stock', 'Item Type'
                 ];
-                
-                // Remove blank rows
+
+                // Remove blank rows and rows where Selling Price or Cost Price are non-numeric
                 originalData = originalData.filter(row => {
-                    return Object.values(row).every(cell => {
+                    const sellingPrice = row[8];
+                    const costPrice = row[9];
+                    const isSellingPriceNumeric = !isNaN(parseFloat(sellingPrice)) && isFinite(sellingPrice);
+                    const isCostPriceNumeric = !isNaN(parseFloat(costPrice)) && isFinite(costPrice);
+
+                    return row.every(cell => {
                         if (typeof cell === 'string') {
                             return cell.trim() !== '';
                         } else {
                             return !!cell;
                         }
-                    });
+                    }) && isSellingPriceNumeric && isCostPriceNumeric;
                 });
 
                 // Map rows to objects with custom headers
                 var data = originalData.map((row, rowIndex) => {
-                    //var data = results.data.map((row, rowIndex) => {
-
                     let obj = { 'Sr No': rowIndex + 1 };
-                    customHeaders.slice(1, -1).forEach((header, index) => {
+                    customHeaders.slice(2).forEach((header, index) => {
                         obj[header] = row[index];
                     });
-                    //if (row.length != 11) {
-                    obj['Status'] = 'Success';
-                    //}
+                    // Adding Status based on length of row
+                    if (row.length == customHeaders.length - 2) {
+                        obj['Status'] = 'Success';
+                    } else {
+                        obj['Status'] = 'Error';
+                    }
                     return obj;
                 });
+
+                if (data.length == 0) {
+                    swal("Cancelled", "File format is not correct!", "error");
+                }
+                else {
+                    disableBTN.disabled = false;
+                }
+
+                // Check if the DataTable is already initialized
+                if ($.fn.DataTable.isDataTable('#data-table')) {
+                    $('#data-table').DataTable().clear().destroy();
+                }
 
                 // Initialize DataTable
                 $('#data-table').DataTable({
                     data: data,
                     columns: customHeaders.map(header => ({ title: header, data: header })),
                     columnDefs: [
-                        /*{ targets: [6, 8, 9], className: 'dt-right' } // Right-align specific columns*/
                         { targets: [6, 8, 9], className: 'dt-right' }, // Right-align specific columns
                         { targets: [0, 2], className: 'description-column' } // Apply custom class to description column
-                    ]
+                    ],
+                    createdRow: function (row, data, dataIndex) {
+                        if (data.Status === 'Error') {
+                            $('td', row).eq(1).css({
+                                'color': 'red',
+                                'font-weight': 'bold'
+                            });
+                        } else if (data.Status === 'Success') {
+                            $('td', row).eq(1).css({
+                                'color': 'green',
+                                'font-weight': 'bold'
+                            });
+                        }
+                    }
                 });
+
+                // Reset opacity and hide loader
+                $('body').css('opacity', '1');
+                $('.loader').hide();
             }
         });
     };
 
     reader.readAsText(file);
-    $('body').css('opacity', '1');
-    disableBTN.disabled = false;
-    $('.loader').hide();
-
 });
 
 //endregion
@@ -96,9 +134,20 @@ document.getElementById('sendDataBtn').addEventListener('click', function () {
         dangerMode: true,
     }).then(function (isConfirm) {
         if (isConfirm) {
+
             $('body').css('opacity', '0.5');
             $('.loader').show();
-            var filteredData = originalData.filter(row => !row.some(param => param === undefined));
+
+            // Filter out rows where Status is 'Error'
+            var filteredData = originalData.filter(row => {
+                let statusIndex = 1; // Assuming Status is the second column
+                var len = row.length;
+
+                if (len == 11) {
+                    return row[statusIndex] !== 'Error' && !row.some(param => param === undefined);
+                };
+
+            });
 
             // Map the filtered data to the desired structure
             var requestData = filteredData.map(row => ({
@@ -126,17 +175,31 @@ document.getElementById('sendDataBtn').addEventListener('click', function () {
                 "lastEditBy": loginUserGUID
             }));
 
-            sendDataToAPI(requestData);
-        }
-        else {
+            if (requestData.length > 0) {
+                sendDataToAPI(requestData);
+            }
+            else {
+                $('body').css('opacity', '1');
+                $('.loader').hide();
+                swal("Cancelled", "The data won't be import due to error!", "error");
+                return;
+            }
+
+        } else {
+            $('body').css('opacity', '1');
+            $('.loader').hide();
             swal("Cancelled", "The data is not imported!", "error");
+
         }
 
-    })
-
+        // Reset opacity and hide loader
+        $('body').css('opacity', '1');
+        $('.loader').hide();
+    });
 });
 
 function sendDataToAPI(data) {
+
     $.ajax({
         url: $('#url_local').val() + "/api/Import/MasterData", // Get the API endpoint URL
         type: 'POST',
@@ -144,7 +207,7 @@ function sendDataToAPI(data) {
         data: JSON.stringify({ importMasterData: data }),
         headers: { 'Authorization': 'Bearer ' + yourToken },
         success: function (response) {
-            //console.log('Data sent successfully');
+
             //console.log(response); // Log the response from the server
             importMasterDataResponse(response);
         },

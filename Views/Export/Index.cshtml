@@ -47,6 +47,14 @@
                                 <label>Device:</label>
                                 <select id="devicesDD" class="form-control"></select>
                             </div>
+                            @*<div class="col-sm-4">
+            <label>Filter:</label>
+            <select id="filterDD" class="form-control">
+                <option value="Select">Select</option>
+                <option value="Summary">Summary</option>
+                <option value="Items">Items</option>
+            </select>
+        </div>*@
                             <div class="col-sm-4">
 
                             </div>
@@ -55,34 +63,129 @@
                             </div>
                         </div>
 
-                        <div style="color:black" class="table-responsive hoverable-data-table">
-                            <table id="tblExportData" class="table table-hover nowrap table-striped table-bordered" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Store</th>
-                                        <th>Item No</th>
-                                        <th>Item Description</th>
-                                        <th>Product Group</th>
-                                        <th>BIN</th>
-                                        <th>Package Type</th>
-                                        <th>Pack Size</th>
-                                        <th>Qty Per UOM</th>
-                                        <th>UPC</th>
-                                        <th>Retail Price</th>
-                                        <th>Cost Price</th>
-                                        <th>Book Stock</th>
-                                        <th>Phy Stock</th>
-                                        <th>DateTime</th>
-                                        <th>Bin Code</th>
-                                        <th>LOT Expiry</th>
-                                        <th>Device Code</th>
-                                    </tr>
-                                </thead>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="tab1-tab" data-bs-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Summed Up Scans</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="tab2-tab" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">Individual Scans</a>
+                            </li>
+                        </ul>
 
-                                <tbody>
-                                </tbody>
-                            </table>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                                <!-- Tab 1 Content -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card card-default">
+                                            <div class="card-header card-header-border-bottom d-flex justify-content-between">
+                                                @*<h2>Item-wise Variance</h2>*@
+                                            </div>
+                                            <div class="card-body">
+                                                <div style="color:black" class="table-responsive hoverable-data-table">
+                                                    <table id="tblExportDataSum" class="table table-hover nowrap table-striped table-bordered" style="width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Store</th>
+                                                                <th>Item No</th>
+                                                                <th>Item Description</th>
+                                                                <th>Product Group</th>
+                                                                <th>BIN</th>
+                                                                <th>Package Type</th>
+                                                                <th>Pack Size</th>
+                                                                <th>Qty Per UOM</th>
+                                                               @* <th>UPC</th>*@
+                                                                <th>Retail Price</th>
+                                                                <th>Cost Price</th>
+                                                                <th>Book Stock</th>
+                                                                <th>Phy Stock</th>
+                                                                <th>DateTime</th>
+                                                                <th>Bin Code</th>
+                                                                <th>LOT Expiry</th>
+                                                                <th>Device Code</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                                <!-- Tab 2 Content -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card card-default">
+                                            <div class="card-header card-header-border-bottom d-flex justify-content-between">
+                                                @*<h2>Item-wise Variance Indivisual</h2>*@
+                                            </div>
+                                            <div class="card-body">
+                                                <div style="color:black" class="table-responsive hoverable-data-table">
+                                                    <table id="tblExportData" class="table table-hover nowrap table-striped table-bordered" style="width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Store</th>
+                                                                <th>Item No</th>
+                                                                <th>Item Description</th>
+                                                                <th>Product Group</th>
+                                                                <th>BIN</th>
+                                                                <th>Package Type</th>
+                                                                <th>Pack Size</th>
+                                                                <th>Qty Per UOM</th>
+                                                                <th>UPC</th>
+                                                                <th>Retail Price</th>
+                                                                <th>Cost Price</th>
+                                                                <th>Book Stock</th>
+                                                                <th>Phy Stock</th>
+                                                                <th>DateTime</th>
+                                                                <th>Bin Code</th>
+                                                                <th>LOT Expiry</th>
+                                                                <th>Device Code</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        @*<div style="color:black" class="table-responsive hoverable-data-table">
+            <table id="tblExportData" class="table table-hover nowrap table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Store</th>
+                        <th>Item No</th>
+                        <th>Item Description</th>
+                        <th>Product Group</th>
+                        <th>BIN</th>
+                        <th>Package Type</th>
+                        <th>Pack Size</th>
+                        <th>Qty Per UOM</th>
+                        <th>UPC</th>
+                        <th>Retail Price</th>
+                        <th>Cost Price</th>
+                        <th>Book Stock</th>
+                        <th>Phy Stock</th>
+                        <th>DateTime</th>
+                        <th>Bin Code</th>
+                        <th>LOT Expiry</th>
+                        <th>Device Code</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                </tbody>
+            </table>
+        </div>*@
                     </div>
                 </div>
             </div>

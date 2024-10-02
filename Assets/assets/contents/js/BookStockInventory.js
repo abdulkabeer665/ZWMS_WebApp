@@ -87,6 +87,7 @@ function fillddWarehouse(name, selecttext, data) {
 var originalData; // Variable to store the original parsed data
 
 document.getElementById('customFile').addEventListener('change', function (event) {
+    debugger
     $('body').css('opacity', '0.5');
     $('.loader').show();
     var file = event.target.files[0];
@@ -158,44 +159,44 @@ document.getElementById('sendDataBtn').addEventListener('click', function () {
         return;
     }
     else
-    if (invPerLocationSelection = 0) {
-        alert("Please Select Location")
-        return;
-    }
-    else {
-        swal({
-            title: "Are you sure?",
-            text: "You want to Import Master Data!",
-            icon: "warning",
-            buttons: [
-                'No, cancel it!',
-                'Yes, I am sure!'
-            ],
-            dangerMode: true,
-        }).then(function (isConfirm) {
-            if (isConfirm) {
-                $('body').css('opacity', '0.5');
-                $('.loader').show();
-                var filteredData = originalData.filter(row => !row.some(param => param === undefined));
-                // Map the filtered data to the desired structure
-                var requestData = filteredData.map(row => ({
-                    "item_Code": row[0], // Assuming 'Item ID' is at index 1 in the original data
-                    "BookStockInventory": row[1],
-                    "UnitCostPrice": row[2],
-                    "inventoryPeriodID": invPerSelection,
-                    "warehouseGUID": $("#invPeriodwiseLocation").val(),
-                    "createdBy": loginUserGUID,
-                    "lastEditBy": loginUserGUID
-                }));
+        if (invPerLocationSelection = 0) {
+            alert("Please Select Location")
+            return;
+        }
+        else {
+            swal({
+                title: "Are you sure?",
+                text: "You want to Import Master Data!",
+                icon: "warning",
+                buttons: [
+                    'No, cancel it!',
+                    'Yes, I am sure!'
+                ],
+                dangerMode: true,
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    $('body').css('opacity', '0.5');
+                    $('.loader').show();
+                    var filteredData = originalData.filter(row => !row.some(param => param === undefined));
+                    // Map the filtered data to the desired structure
+                    var requestData = filteredData.map(row => ({
+                        "item_Code": row[0], // Assuming 'Item ID' is at index 1 in the original data
+                        "BookStockInventory": row[1],
+                        "UnitCostPrice": row[2],
+                        "inventoryPeriodID": invPerSelection,
+                        "warehouseGUID": $("#invPeriodwiseLocation").val(),
+                        "createdBy": loginUserGUID,
+                        "lastEditBy": loginUserGUID
+                    }));
 
-                sendDataToAPI(requestData);
+                    sendDataToAPI(requestData);
 
-            }
-            else {
-                swal("Cancelled", "The data is not imported!", "error");
-            }        
-        })
-    }
+                }
+                else {
+                    swal("Cancelled", "The data is not imported!", "error");
+                }
+            })
+        }
 });
 
 function sendDataToAPI(data) {
