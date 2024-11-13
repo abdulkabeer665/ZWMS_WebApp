@@ -4,11 +4,11 @@ var roleGUID;
 var menuID;
 
 $(window).on('load', function () {
-    yourToken = sessionStorage.getItem('yourToken');
-    loginName = sessionStorage.getItem('loginName');
-    loginUserGUID = sessionStorage.getItem('loginUserGUID');
-    roleGUID = sessionStorage.getItem('RoleID');
-    menuID = sessionStorage.getItem('menuID');
+    yourToken = localStorage.getItem('yourToken');
+    loginName = localStorage.getItem('loginName');
+    loginUserGUID = localStorage.getItem('loginUserGUID');
+    roleGUID = localStorage.getItem('RoleID');
+    menuID = localStorage.getItem('menuID');
     $('.loader').show();
     loadGridAjax();
     loadRoles();

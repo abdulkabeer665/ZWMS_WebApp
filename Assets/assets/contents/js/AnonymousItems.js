@@ -1,11 +1,11 @@
-﻿var yourToken = sessionStorage.getItem('yourToken');
-var loginName = sessionStorage.getItem('loginName');
+﻿var yourToken = localStorage.getItem('yourToken');
+var loginName = localStorage.getItem('loginName');
 var roleGUID;
 var menuID;
 
 $(window).on('load', function () {
-    roleGUID = sessionStorage.getItem('RoleID');
-    menuID = sessionStorage.getItem('menuID');
+    roleGUID = localStorage.getItem('RoleID');
+    menuID = localStorage.getItem('menuID');
     //Common.Ajax('POST', $('#url_local').val() + "/api/Warehouse/GetAllWarehouses", "{ \"GET\": 1 }", 'json', FillGridHandler });
     $('.loader').show(); 
     $.ajax({

@@ -4,10 +4,10 @@ var roleGUID;
 var menuID;
 $(window).on('load', function () {
     $('.loader').show();
-    yourToken = sessionStorage.getItem('yourToken');
-    loginName = sessionStorage.getItem('loginName');
-    roleGUID = sessionStorage.getItem('RoleID');
-    menuID = sessionStorage.getItem('menuID');
+    yourToken = localStorage.getItem('yourToken');
+    loginName = localStorage.getItem('loginName');
+    roleGUID = localStorage.getItem('RoleID');
+    menuID = localStorage.getItem('menuID');
     filldropdownWarehouseType();
     filldropdownWarehouse();
     loadGridAjax();

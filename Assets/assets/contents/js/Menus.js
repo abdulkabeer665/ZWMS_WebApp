@@ -3,11 +3,17 @@ var loginName;
 var roleGUID;
 $(window).on('load', function () {
 
-    yourToken = sessionStorage.getItem('yourToken');
-    loginName = sessionStorage.getItem('loginName');
-    roleGUID = sessionStorage.getItem('RoleID');
+    yourToken = localStorage.getItem('yourToken');
+    loginName = localStorage.getItem('loginName');
+    roleGUID = localStorage.getItem('RoleID');
     
-    getAllMenus(roleGUID);
+    if (loginName == "" || loginName == null) {
+        
+        window.location.href = $("#front_URL").val() + "/Login/Index";
+    }
+    else {
+        getAllMenus(roleGUID);
+    }
 
 });
 
@@ -70,5 +76,16 @@ function MenuHandler(response) {
 };
 
 function storeMenuID(value) {
-    sessionStorage.setItem('menuID', value);
+    localStorage.setItem('menuID', value);
 };
+
+$("#logOutBtn").click(function () {
+    
+    // Log out and clear localStorage
+    localStorage.clear();
+
+    window.history.forward();
+
+    window.onunload = function () { null };
+
+})

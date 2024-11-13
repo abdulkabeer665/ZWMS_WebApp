@@ -1,4 +1,4 @@
-var yourToken = sessionStorage.getItem('yourToken')
+var yourToken = localStorage.getItem('yourToken')
 
 $(window).on('load', function () {
     varianceChart();

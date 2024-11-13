@@ -1,5 +1,5 @@
-﻿var loginUserGUID = sessionStorage.getItem('loginUserGUID');
-var yourToken = sessionStorage.getItem('yourToken')
+﻿var loginUserGUID = localStorage.getItem('loginUserGUID');
+var yourToken = localStorage.getItem('yourToken')
 const disableBTN = document.getElementById('sendDataBtn');
 
 $(document).ready(function () {

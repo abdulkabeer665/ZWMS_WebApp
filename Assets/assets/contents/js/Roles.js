@@ -1,7 +1,7 @@
-﻿var yourToken = sessionStorage.getItem('yourToken');
-var loginName = sessionStorage.getItem('loginName');
-roleGUID = sessionStorage.getItem('RoleID');
-menuID = sessionStorage.getItem('menuID');
+﻿var yourToken = localStorage.getItem('yourToken');
+var loginName = localStorage.getItem('loginName');
+roleGUID = localStorage.getItem('RoleID');
+menuID = localStorage.getItem('menuID');
 
 $(window).on('load', function () {
 
@@ -206,8 +206,8 @@ function Edit(loopValue) {
 function Rights(value, loopValue) {
     var table = $('#tblRoles').DataTable();
     var data = table.row(loopValue).data();
-    sessionStorage.setItem("editRoleID", value);
-    sessionStorage.setItem("roleName", data[2]);
+    localStorage.setItem("editRoleID", value);
+    localStorage.setItem("roleName", data[2]);
     window.location.href = $('#url_local_front').val() + "/Roles/RoleRights";
 };
 

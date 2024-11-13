@@ -2,8 +2,8 @@
 var loginName;
 
 $(window).on('load', function () {
-    yourToken = sessionStorage.getItem('yourToken');
-    loginName = sessionStorage.getItem('loginName');
+    yourToken = localStorage.getItem('yourToken');
+    loginName = localStorage.getItem('loginName');
     showLoader();
     filldropdownWarehouse()
     hideLoader();

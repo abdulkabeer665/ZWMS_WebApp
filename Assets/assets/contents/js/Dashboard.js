@@ -1,7 +1,10 @@
-﻿var yourToken = sessionStorage.getItem('yourToken')
-var loginName = sessionStorage.getItem('loginName')
+﻿
+
 
 $(window).on('load', function () {
+    
+    var yourToken = localStorage.getItem('yourToken')
+    var loginName = localStorage.getItem('loginName')
     if (loginName == "" || loginName == null) {
         window.location.href = $("#front_URL").val() + "/Login/Index";
     }
@@ -19,7 +22,6 @@ $(window).on('load', function () {
         loadItemVarianceByGUIDs();
         filldropdowninventory()
     }
-    
 });
 
 function FillGridHandlerAllInvent(response) {

@@ -42,7 +42,7 @@ function checkAPIServerisUP() {
     });
 };
 $(document).ready(function () {
-    sessionStorage.clear();
+    localStorage.clear();
 });
 $("#btnLogin").click(function () {
     
@@ -70,11 +70,11 @@ function EditRes(response) {
     
     var loginName = $("#loginName").val();
     if (response.status == 200) {
-
-        sessionStorage.setItem("yourToken", response["token"]);
-        sessionStorage.setItem("loginUserGUID", response["guid"]);
-        sessionStorage.setItem("RoleID", response["roleID"]);
-        sessionStorage.setItem("loginName", loginName);
+        
+        localStorage.setItem("yourToken", response["token"]);
+        localStorage.setItem("loginUserGUID", response["guid"]);
+        localStorage.setItem("RoleID", response["roleID"]);
+        localStorage.setItem("loginName", loginName);
         window.location.href = $("#front_URL").val() + "/Home/Index";
         $(".loader").hide();
         $("#mainDIV").removeClass('bg');
