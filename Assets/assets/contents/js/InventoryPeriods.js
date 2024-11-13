@@ -1,13 +1,13 @@
-﻿var yourToken = sessionStorage.getItem('yourToken');
-var loginName = sessionStorage.getItem('loginName');
+﻿var yourToken = localStorage.getItem('yourToken');
+var loginName = localStorage.getItem('loginName');
 var roleGUID;
 var menuID;
 
 $(window).on('load', function () {
 
     $('.loader').show();
-    roleGUID = sessionStorage.getItem('RoleID');
-    menuID = sessionStorage.getItem('menuID');
+    roleGUID = localStorage.getItem('RoleID');
+    menuID = localStorage.getItem('menuID');
     $('.datepicker').datepicker();
     loadGridAjax();
 

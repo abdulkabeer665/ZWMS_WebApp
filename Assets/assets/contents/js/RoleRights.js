@@ -1,16 +1,16 @@
-﻿var yourToken = sessionStorage.getItem('yourToken');
-var loginName = sessionStorage.getItem('loginName');
-roleGUID = sessionStorage.getItem('RoleID');
-roleNameA = sessionStorage.getItem('roleName');
+﻿var yourToken = localStorage.getItem('yourToken');
+var loginName = localStorage.getItem('loginName');
+roleGUID = localStorage.getItem('RoleID');
+roleNameA = localStorage.getItem('roleName');
 $("#roleName").text(roleNameA);  // Use .text() to set the text content
-menuID = sessionStorage.getItem('menuID');
+menuID = localStorage.getItem('menuID');
 var json = {
     data: []
 };
 
 $(window).on('load', function () {
 
-    var editRoleID = sessionStorage.getItem("editRoleID");
+    var editRoleID = localStorage.getItem("editRoleID");
     
     loadRights(editRoleID);
 

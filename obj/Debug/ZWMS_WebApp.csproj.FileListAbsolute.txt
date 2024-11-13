@@ -405,16 +405,6 @@ D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\bin\roslyn\vbc.exe.config
 D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\bin\roslyn\vbc.rsp
 D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\bin\roslyn\VBCSCompiler.exe
 D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\bin\roslyn\VBCSCompiler.exe.config
-D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\bin\System.Web.Helpers.xml
-D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\bin\System.Web.Mvc.xml
-D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\bin\System.Web.Optimization.xml
-D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\bin\System.Web.Razor.xml
-D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\bin\System.Web.WebPages.xml
-D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\bin\System.Web.WebPages.Deployment.xml
-D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\bin\System.Web.WebPages.Razor.xml
-D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\bin\Newtonsoft.Json.xml
-D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\bin\Antlr3.Runtime.pdb
-D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\obj\Debug\ZWMS_WebApp.csproj.AssemblyReference.cache
 D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\obj\Debug\ZWMS_WebApp.csproj.CoreCompileInputs.cache
 D:\Projects\Jeddah\Al Jazeera\ZWMS\Live\Frontend\obj\Debug\ZWMS_Web.83650E27.Up2Date

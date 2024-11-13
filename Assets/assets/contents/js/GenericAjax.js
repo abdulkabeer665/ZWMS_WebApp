@@ -1,4 +1,5 @@
-﻿var Common;
+﻿
+var Common;
 
 Common = {
 

@@ -4,8 +4,8 @@ var loginName;
 $(window).on('load', function () {
 
     $('.loader').show();
-    yourToken = sessionStorage.getItem('yourToken');
-    loginName = sessionStorage.getItem('loginName');
+    yourToken = localStorage.getItem('yourToken');
+    loginName = localStorage.getItem('loginName');
  
     $('.loader').hide();
 
