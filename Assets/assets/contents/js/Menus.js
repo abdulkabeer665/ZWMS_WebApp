@@ -13,6 +13,7 @@ $(window).on('load', function () {
     }
     else {
         getAllMenus(roleGUID);
+
     }
 
 });
