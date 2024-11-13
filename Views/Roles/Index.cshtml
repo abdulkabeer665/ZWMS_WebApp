@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <script type="text/javascript" src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" defer></script>
+    <script src="~/Assets/assets/js/script.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+
+
+</head>
+<input type="hidden" id="url_local" value="@System.Configuration.ConfigurationManager.AppSettings["url_local"]" />
+<input type="hidden" id="url_local_front" value="@System.Configuration.ConfigurationManager.AppSettings["url_local_front"]" />
+<body>
+    <div class="main main-app p-3 p-lg-4">
+
+        <div class="row">
+            <div class="loader" style="display: none;"></div>
+
+            <div class="col-12">
+                <div class="card card-default">
+                    <div class="card-header card-header-border-bottom d-flex justify-content-between">
+                        <h2>App Roles</h2>
+                        <button type="submit" id="btnadd" class="btn btn-primary" style="margin-right: 5px; float:right" data-toggle="modal" data-target="#modal-lg">
+                            <i class="fa fa-plus"></i> Add
+                        </button>
+                        @*<a href="https://datatables.net/examples/styling/hover.html" target="_blank" class="btn btn-outline-primary btn-sm text-uppercase">
+                                <i class=" mdi mdi-link mr-1"></i> Docs
+                            </a>*@
+                    </div>
+                    <div class="card-body">
+                        <div style="color:black" class="table-responsive hoverable-data-table">
+                            <table id="tblRoles" class="table table-hover nowrap table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        @*<th>Scale ID</th>*@
+                                        <th style='display:none'>GUID</th>
+                                        <th>Code</th>
+                                        <th>Role Name</th>
+                                        <th>Arabic Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*modelpopup*@
+    <div class="modal fade" id="modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLarge" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header header">
+                    <h2 class="modal-title" id="exampleModalLarge2">Add Role</h2>
+                    <button type="button" id="cls" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-sm-6" style="display:none;">
+                            <label>GUID</label>
+                            <input class="form-control" type="hidden" id="guid" disabled />
+                        </div>
+
+                        <div class="col-sm-6 ">
+                            <label>Code</label>
+                            <input class="form-control" placeholder="Insert Code" title="System Generated Value" type="text" maxlength="100" id="code" />
+                        </div>
+                        <div class="col-sm-6">
+                            <label>En Name</label>
+                            <input class="form-control" placeholder="Insert Eng Name" type="text" id="enName" />
+                        </div>
+
+                    </div>
+
+                    <br />
+
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <label>Ar Name</label>
+                            <input placeholder="Insert Ar Name" class="form-control" type="text" id="arName" />
+                        </div>
+
+                    </div>
+
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label>Notes</label>
+                            <textarea placeholder="Insert Notes" class="form-control" type="text" id="notes"></textarea>
+
+                        </div>
+                    </div>
+
+                    <br />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="btnclose" class="btn btn-danger btn-pill" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnsave" title="Save" class="btn btn-primary btn-pill">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../Assets/assets/contents/js/Roles.js"></script>
+    <script src="../Assets/assets/contents/js/MenuOptions.js"></script>
+    <script src="../Assets/assets/contents/js/GenericAjax.js"></script>
+    <script src="../Assets/assets/contents/js/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>

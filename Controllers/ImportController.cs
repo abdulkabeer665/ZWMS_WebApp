@@ -17,5 +17,9 @@ namespace ZWMS_WebApp.Controllers
         {
             return View();
         }
+        public ActionResult GetImportMasterData()
+        {
+            return View();
+        }
     }
 }

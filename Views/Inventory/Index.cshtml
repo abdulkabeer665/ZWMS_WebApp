@@ -25,12 +25,12 @@
                 <div class="card card-default">
                     <div class="card-header card-header-border-bottom d-flex justify-content-between">
                         <h2>Inventory</h2>
-                        <button type="submit" id="btnadd" class="btn btn-primary" style="margin-right: 5px; float:right" data-toggle="modal" data-target="#modal-lg">
+                        <button type="submit" id="btnadd" class="btn btn-primary" style="margin-right: 5px; float:right; display: none" data-toggle="modal" data-target="#modal-lg">
                             <i class="fa fa-plus"></i> Add
                         </button>
                         @*<a href="https://datatables.net/examples/styling/hover.html" target="_blank" class="btn btn-outline-primary btn-sm text-uppercase">
-                        <i class=" mdi mdi-link mr-1"></i> Docs
-                    </a>*@
+                                <i class=" mdi mdi-link mr-1"></i> Docs
+                            </a>*@
                     </div>
                     <div class="card-body">
                         <div style="color:black" class="table-responsive hoverable-data-table">
@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
     </div>
     @*modelpopup*@
     <div class="modal fade" id="modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLarge" aria-hidden="true">
@@ -129,7 +129,7 @@
                     </div>
 
                     @*<input type="checkbox" id="active">
-    <label for="active"> Active</label><br>*@
+                        <label for="active"> Active</label><br>*@
                 </div>
 
                 <div class="modal-footer">
@@ -140,6 +140,7 @@
         </div>
     </div>
     <script src="../Assets/assets/contents/js/Inventory.js"></script>
+    <script src="../Assets/assets/contents/js/MenuOptions.js"></script>
     <script src="../Assets/assets/contents/js/GenericAjax.js"></script>
     <script src="../Assets/assets/contents/js/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>

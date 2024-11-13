@@ -23,7 +23,7 @@ $(window).on('load', function () {
 });
 
 function FillGridHandlerAllInvent(response) {
-
+    
     if (response.returnTable[0]["foundInventoryItemsCount"] == null || response.returnTable[0]["foundInventoryItemsCount"] == "0") {
         $("#slab2").text("0");
     } else {
@@ -50,11 +50,12 @@ function filldropdowninventory() {
     else {
 
         $.ajax({
-            url: $('#url_local').val() + "/api/Inventory/GetAllInventoriesByWarehouseGUID",
+            url: $('#url_local').val() + "/api/Inventory/GetAllInventoriesByWarehouseGUIDandInventoryPeriod",
             type: 'POST',
             contentType: 'application/json', // Set the content type based on your API requirements
             data: JSON.stringify({
-                "WarehouseGUID": $("#invPeriodwiseLocation").val()
+                "warehouseGUID": $("#invPeriodwiseLocation").val(),
+                "inventoryPeriodID": $("#invPeriodDD").val()
 
             }), // Adjust the payload format based on your API
             headers: {
@@ -153,6 +154,7 @@ function fillddls3(name, selecttext, data) {
 };
 
 function loadinventcount() {
+    
     if (($("#inventories option:selected").text() == "All Inventories" || $("#inventories option:selected").text() == "") && ($("#invPeriodwiseLocation option:selected").text() == "All Locations" || $("#invPeriodwiseLocation option:selected").text() == "")) {
       
         $.ajax({
@@ -349,9 +351,11 @@ $("#categories").change(function () {
 });
 
 function loadinventorycountbycategory() {
-
+    
     var cat = $("#categories option:selected").text();
     var div = $("#divisions option:selected").text();
+    var location = $("#invPeriodwiseLocation option:selected").text();
+    var inventory = $("#inventories option:selected").text();
     var qty = $("#varianceBy").val();
 
     if (( div == "All Divisions" || div == "" || div == "0")) {
@@ -362,7 +366,9 @@ function loadinventorycountbycategory() {
             contentType: 'application/json', // Set the content type based on your API requirements
             data: JSON.stringify({
                 "all" : 1,
-                "qty": qty
+                "qty": qty,
+                //"location": location,
+                "inventory": inventory
             }), // Adjust the payload format based on your API
             headers: {
                 'Authorization': 'Bearer ' + yourToken
@@ -388,7 +394,9 @@ function loadinventorycountbycategory() {
             contentType: 'application/json', // Set the content type based on your API requirements
             data: JSON.stringify({
                 "divisionGUID": div,
-                "qty": qty
+                "qty": qty,
+                //"location": location,
+                "inventory": inventory
             }), // Adjust the payload format based on your API
             headers: {
                 'Authorization': 'Bearer ' + yourToken
@@ -409,6 +417,7 @@ function loadinventorycountbycategory() {
 };
 
 function loadCategoryInventoryVariance() {
+    
     var cat = $("#categories").val();
     if (cat == null || cat == '0') {
         cat = '';
@@ -522,6 +531,7 @@ function loadItemVarianceByGUIDs() {
                 'Authorization': 'Bearer ' + yourToken
             },
             success: function (data) {
+                
                 // Handle the successful response
                 FillGridItemVariance(data);
                 $('#itemsVariance').removeClass('loader');
@@ -571,7 +581,8 @@ function FillGridHandlerAllCategories(response) {
     }
     else {
         for (i = 0; i < response.returnTable.length; i++) {
-            $('#categorywiseInventory').append('<tr><td><div class="d-flex align-items-center fw-medium">' + response.returnTable[i].location + '</div></td><td>' + response.returnTable[i].division + '</td><td>' + response.returnTable[i].systemData + '</td><td>' + response.returnTable[i].physicalData + '</td><td>' + parseFloat(response.returnTable[i].varianceData).toFixed(2) + '</td></tr>');
+            
+            $('#categorywiseInventory').append('<tr><td><div class="d-flex align-items-center fw-medium">' + response.returnTable[i].location + '</div></td><td>' + response.returnTable[i].division + '</td><td>' + parseFloat(response.returnTable[i].systemData).toFixed(2) + '</td><td>' + parseFloat(response.returnTable[i].physicalData).toFixed(2) + '</td><td>' + parseFloat(response.returnTable[i].physicalData - response.returnTable[i].systemData).toFixed(2) + '</td></tr>');
             //$('#categorywiseInventory').append('<tr><td><div class="d-flex align-items-center fw-medium"><i class="ri-chrome-line fs-24 lh-1 me-2"></i>' + response.returnTable[i].inventoryName + '</div></td><td>' + response.returnTable[i].foundItems + '</td><td>' + response.returnTable[i].totalItems + '</td></tr>');
         }
     }
@@ -595,6 +606,7 @@ function FillGridItemVariance(response) {
 };
 
 function FillGridCategoryInventoryVariance(response) {
+    
     $("#CategoryInventoryVariance").empty();
     if (response.returnTable.length == 0) {
         $('#CategoryInventoryVariance').append('<tr><td><div class="d-flex align-items-center fw-medium"></div></td><td>No Data Found</td><td></td></tr>');
@@ -605,7 +617,6 @@ function FillGridCategoryInventoryVariance(response) {
             $('#CategoryInventoryVariance').append('<tr><td><div class="d-flex align-items-center fw-medium"><i class="ri-map-pin-line fs-15 lh-1 me-1"></i>' + response.returnTable[i].location + '</div></td><td>' + response.returnTable[i].category + '</td><td>' + response.returnTable[i].systemData + '</td><td>' + response.returnTable[i].physicalData + '</td><td>' + parseFloat(response.returnTable[i].varianceData).toFixed(2) + '</td></tr>');
         }
     }
-
 };
 
 function loadselection() {

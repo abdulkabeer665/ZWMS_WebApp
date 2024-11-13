@@ -34,23 +34,56 @@
         position: relative; /* Ensure the loader is positioned relative to this container */
         }
 
-        .loader {
+        /*.loader {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            border: 8px solid #f3f3f3; /* Light grey */
-            border-top: 8px solid #3498db; /* Blue */
-            border-radius: 50%;
+            border: 8px solid #f3f3f3;*/ /* Light grey */
+            /*border-top: 8px solid #3498db;*/ /* Blue */
+            /*border-radius: 50%;
             width: 60px;
             height: 60px;
             animation: spin 2s linear infinite;
-            z-index: 1000; /* Make sure it is on top of the table */
-        }
+            z-index: 1000;*/ /* Make sure it is on top of the table */
+        /*}
 
         @@keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }*/
+
+        /* body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+  }*/
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(1px); /* Add a blur effect */
         }
 
     </style>
@@ -73,10 +106,13 @@
                                     <input type="file" class="custom-file-input" id="customFile" accept=".txt,.tsv" style="padding-top: 22px; padding-left: 20px;">
                                 </div>
                             </div>
-                            <div class="col-sm-4" style="padding: 20px;">
-
+                            <div class="col-sm-1" style="padding: 20px;">
+                                
                             </div>
-                            <div class="col-sm-4" style="text-align: right; padding-top: 20px; padding-right: 30px;">
+                            <div class="col-sm-5"  style="text-align: right; padding-top: 20px; padding-right: 30px; margin-right: -40px; ">
+                                <button type="button" class="btn btn-danger" id="clearDataBtn">Clear Master Data</button>
+                            </div>
+                            <div class="col-sm-2" style="text-align: right; padding-top: 20px; padding-right: 30px;">
                                 <button type="button" class="btn btn-success" id="sendDataBtn">Import Master Data</button>
                             </div>
                         </div>
@@ -88,7 +124,10 @@
                     <pre id="file-content"></pre>
                     <div class="card-body" style="margin-top: -30px;">
                         <div style="color:black" class="table-responsive hoverable-data-table">
-                            <div class="loader" style="display: none;"></div>
+                            <div class="loader-container" style="display:none">
+                                <div class="loader" style="display:block"></div>
+                            </div>
+                            @*<div class="loader" style="display: none;"></div>*@
                             <table id="data-table" class="display" style="width:100%">
                             </table>
                         </div>

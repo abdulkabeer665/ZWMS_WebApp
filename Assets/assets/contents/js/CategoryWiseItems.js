@@ -32,7 +32,7 @@ function loadGridAjax() {
 };
 
 function Bindbody(json, tablename) {
-    debugger
+    
     var tr;
     // Define column name to index mapping
     var columnMapping = {

@@ -1,2 +1,4 @@
 
 *.vsidx
+/obj/Debug/Package/PackageTmp
+/obj/Release/Package/PackageTmp

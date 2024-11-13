@@ -45,6 +45,7 @@ $(document).ready(function () {
     sessionStorage.clear();
 });
 $("#btnLogin").click(function () {
+    
     $("#mainDIV").addClass('bg');
     $(".loader").show();
     var loginName = $("#loginName").val();
@@ -62,43 +63,6 @@ $("#btnLogin").click(function () {
         $("#mainDIV").removeClass('bg');
     }
     else {
-        //debugger
-        //$.ajax({
-        //    url: $('#url_local').val() + "/api/User/LoginWeb",
-        //    method: "POST",
-        //    data: {
-        //        loginName: loginName,
-        //        password: pass
-        //    },
-        //    success: function (response) {
-        //        // Handle success
-        //        console.log(response);
-        //    },
-        //    error: function (jqXHR, textStatus, errorThrown) {
-
-        //        //console.log("text status", textStatus)
-        //        //console.log("error Thrown", errorThrown)
-        //        //console.log("jqXHR status", jqXHR.status)
-        //        EditRes(jqXHR);
-
-        //        //Add this after the complete deployment.
-        //        //if (jqXHR.status === 0) {
-        //        //    alert('Cannot connect.\nVerify Network.');
-        //        //} else if (jqXHR.status === 404) {
-        //        //    alert('Requested page not found. [404]');
-        //        //} else if (jqXHR.status === 500) {
-        //        //    alert('Internal Server Error [500].');
-        //        //} else if (textStatus === 'parsererror') {
-        //        //    alert('Requested JSON parse failed.');
-        //        //} else if (textStatus === 'timeout') {
-        //        //    alert('Time out error.');
-        //        //} else if (textStatus === 'abort') {
-        //        //    alert('Ajax request aborted.');
-        //        //} else {
-        //        //    alert('Uncaught Error.\n' + jqXHR.responseText);
-        //        //}
-        //    }
-        //});
         Common.Ajax('POST', $('#url_local').val() + "/api/User/LoginWeb", "{ \"loginName\": \"" + loginName + "\",\"password\": \"" + pass + "\"}", 'json', EditRes);
     }
 });
@@ -106,8 +70,10 @@ function EditRes(response) {
     
     var loginName = $("#loginName").val();
     if (response.status == 200) {
+
         sessionStorage.setItem("yourToken", response["token"]);
         sessionStorage.setItem("loginUserGUID", response["guid"]);
+        sessionStorage.setItem("RoleID", response["roleID"]);
         sessionStorage.setItem("loginName", loginName);
         window.location.href = $("#front_URL").val() + "/Home/Index";
         $(".loader").hide();

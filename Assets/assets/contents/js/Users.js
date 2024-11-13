@@ -1,10 +1,14 @@
 ﻿var yourToken;
 var loginName;
+var roleGUID;
+var menuID;
 
 $(window).on('load', function () {
     yourToken = sessionStorage.getItem('yourToken');
     loginName = sessionStorage.getItem('loginName');
     loginUserGUID = sessionStorage.getItem('loginUserGUID');
+    roleGUID = sessionStorage.getItem('RoleID');
+    menuID = sessionStorage.getItem('menuID');
     $('.loader').show();
     loadGridAjax();
     loadRoles();
@@ -13,8 +17,8 @@ $(window).on('load', function () {
 
 function loadRoles() {
     $.ajax({
-        url: $('#url_local').val() + "/api/Roles/GetAllRoles",
-        type: 'POST',
+        url: $('#url_local').val() + "/api/Roles/GetAllAppRoles",
+        type: 'GET',
         contentType: 'application/json', // Set the content type based on your API requirements
         data: JSON.stringify({ "GET": 1 }), // Adjust the payload format based on your API
         headers: {
@@ -33,6 +37,7 @@ function loadRoles() {
 };
 
 function ddlHandler(response) {
+
     fillddls('role', 'Please Select Role', response)
 };
 
@@ -40,7 +45,7 @@ function fillddls(name, selecttext, data) {
     $("#" + name).empty();
     var s = '<option value="0">' + selecttext + '</option>';
     $.each(data, function (index, item) {
-        s += '<option value="' + item.guid + '">' + item.engName + '</option>';
+        s += '<option value="' + item.guid + '">' + item.roleName + '</option>';
     });
     $("#" + name).html(s);
 };
@@ -49,10 +54,10 @@ $('#btnadd').click(function () {
     var checkbox = document.getElementById('active');
     checkbox.checked = true;
 
-    var element = document.getElementById('hideDiv1');
-    element.style.display = 'block';
-    var element1 = document.getElementById('hideDiv2');
-    element1.style.display = 'block';
+    ////var element = document.getElementById('hideDiv1');
+    ////element.style.display = 'block';
+    //var element1 = document.getElementById('hideDiv2');
+    //element1.style.display = 'block';
 
     $('#code').val('');
     $('#engName').val('');
@@ -91,35 +96,41 @@ function loadGridAjax() {
 
 function FillGridHandler(response) {
 
-    var btnedit_ = 1;
-    var btndel_ = 1;
-    var hasrigth = 1;
+    var btnedit_ = 0;
+    var btndel_ = 0;
     var btnadd_ = "btnadd";
+    // Call getMenuOptions and pass a callback function to execute on success
+    getMenuOptions(roleGUID, menuID, yourToken, function (rights) {
+        
+        // Bind the body after getMenuOptions completes successfully
+        Bindbody(response, 'tblUsers', rights["Edit"], rights["Delete"]);
 
-    Bindbody(response, 'tblUsers', btnedit_, btndel_);
-    if (btnadd_ == "btnadd" && hasrigth == 1) {
-        $('#' + btnadd_).prop('disabled', false);
-        //$('#' + btnadd_).css('display', 'block');
-    }
+        // Handle btnadd_ based on hasRight and btnadd_ status
+        if (btnadd_ == "btnadd" && rights["Add"] == 1) {
+
+            //$('#' + btnadd_).prop('disabled', false);
+            $('#' + btnadd_).css('display', 'block');
+        }
+    });
 };
 
 function Bindbody(json, tablename, edit_rights, delete_rights) {
     
     var tr;
-    var Edit_R;
-    var Delete_R;
+    var Edit_R = "";
+    var Delete_R = "";
     $("#" + tablename).DataTable().destroy();
     $("#" + tablename + ' tbody').empty();
-    //debugger
+    
     for (var i = 0; i < json.length; i++) {
         if (edit_rights == 1) {
-            Edit_R = "<i class=\"fa fa-edit\" style='cursor: pointer;' title=\"Edit\" onclick=Edit('" + i + "')></i> ";
-            //Edit_R = "<i class=\"fa fa-edit\" style='cursor: pointer;' title=\"Edit\" onclick=Edit('" + json[i].guid + "')></i> ";
+            //Edit_R = "<i class=\"fa fa-edit\" style='cursor: pointer;' title=\"Edit\" onclick=Edit('" + i + "')></i> ";
+            Edit_R = "<button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button>";
         }
         if (delete_rights == 1) {
-            Delete_R = "<i  class=\"fa fa-trash\" style='cursor: pointer;' title=\"Delete\" onclick=Delete('" + json[i].guid + "')></i>";
+            //Delete_R = "<i  class=\"fa fa-trash\" style='cursor: pointer;' title=\"Delete\" onclick=Delete('" + json[i].guid + "')></i>";
+            Delete_R = "<button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button>";
         }
-        /*debugger*/
         tr = $('<tr/>');
         tr.append("<td  style='display: none;'>" + json[i].guid + "</td>");
         tr.append("<td>" + json[i].code + "</td>");
@@ -133,18 +144,19 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
         tr.append("<td  style='display: none;'>" + json[i].notes + "</td>");
         tr.append("<td>" + json[i].statusName + "</td>");
 
-        if (Edit_R == undefined && Delete_R != undefined) {
-            tr.append("<td style='padding-top: 5px !important'><button class='btn btn-danger'> " + Delete_R + "</button></td>");
-        }
-        else if (Delete_R == undefined && Edit_R != undefined) {
-            tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  " + Edit_R + "</button></td>");
-        }
-        else if (Delete_R == undefined && Edit_R == undefined) {
-            tr.append("<td></td>");
-        }
-        else {
-            tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  " + Edit_R + "</button> <button class='btn btn-danger'> " + Delete_R + "</button></td>");
-        }
+        //if (Edit_R == undefined && Delete_R != undefined) {
+        //    tr.append("<td style='padding-top: 5px !important'><button class='btn btn-danger'> " + Delete_R + "</button></td>");
+        //}
+        //else if (Delete_R == undefined && Edit_R != undefined) {
+        //    tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  " + Edit_R + "</button></td>");
+        //}
+        //else if (Delete_R == undefined && Edit_R == undefined) {
+        //    tr.append("<td></td>");
+        //}
+        //else {
+        //    tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  " + Edit_R + "</button> <button class='btn btn-danger'> " + Delete_R + "</button></td>");
+        //}
+        tr.append("<td style='padding-top: 5px !important'>" + Edit_R + " " + Delete_R + "</td>");
         //tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button></td>");
 
         $("#" + tablename + ' tbody').append(tr);
@@ -184,7 +196,7 @@ $('#btnsave').click(function () {
         return;
     }
     else {
-debugger
+
         var flag = $('#btnsave').attr('title');
         if (flag == "Update") {
             $.ajax({
@@ -253,11 +265,11 @@ debugger
 });
 
 function Edit(value) {
-    debugger
-    var element = document.getElementById('hideDiv1');
-    element.style.display = 'none';
-    var element1 = document.getElementById('hideDiv2');
-    element1.style.display = 'none';
+    
+    //var element = document.getElementById('hideDiv1');
+    //element.style.display = 'none';
+    //var element1 = document.getElementById('hideDiv2');
+    //element1.style.display = 'none';
     var checkbox = document.getElementById('active');
     var table = $('#tblUsers').DataTable();
     var data = table.row(value).data();
@@ -385,13 +397,13 @@ function validatePasswordConfirmation() {
         passwordError.style.color = 'red'; // Change color to green
     } else {
         // Check if password meets length requirement
-        if (password.length < 8) {
-            passwordError.textContent = 'Password must be at least 8 characters long';
-            passwordError.style.color = 'red'; // Change color to green
-        } else {
+        //if (password.length < 8) {
+        //    passwordError.textContent = 'Password must be at least 8 characters long';
+        //    passwordError.style.color = 'red'; // Change color to green
+        //} else {
             passwordError.textContent = 'Password matched';
             passwordError.style.color = 'green'; // Change color to green
-        }
+        //}
     }
 }
 

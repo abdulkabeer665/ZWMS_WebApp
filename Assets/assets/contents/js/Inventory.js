@@ -1,11 +1,15 @@
-﻿var yourToken = sessionStorage.getItem('yourToken')
-var loginName = sessionStorage.getItem('loginName')
+﻿var yourToken = sessionStorage.getItem('yourToken');
+var loginName = sessionStorage.getItem('loginName');
+var roleGUID;
+var menuID;
+
 $(window).on('load', function () {
 
     $('.loader').show();
     $('.datepicker').datepicker();
     loadGridAjax();
-
+    roleGUID = sessionStorage.getItem('RoleID');
+    menuID = sessionStorage.getItem('menuID');
     filldropdownWarehouse();
     filldropdownInventoryPeriod();
 });
@@ -59,15 +63,23 @@ function FillGridHandler(response) {
 
     var btnedit_ = 0;
     var btndel_ = 0;
-    var btnadd_ = "";
+    var btnadd_ = "btnadd";
 
-    Bindbody(response, 'tblInventory', "1", "1");
-    if (btnadd_ == "btnadd" && hasrigth == 1) {
-        $('#' + btnadd_).prop('disabled', false);
-    }
+    getMenuOptions(roleGUID, menuID, yourToken, function (rights) {
+        
+        // Bind the body after getMenuOptions completes successfully
+        Bindbody(response, 'tblInventory', rights["Edit"], rights["Delete"], rights["Post"]);
+
+        // Handle btnadd_ based on hasRight and btnadd_ status
+        if (btnadd_ == "btnadd" && rights["Add"] == 1) {
+
+            //$('#' + btnadd_).prop('disabled', false);
+            $('#' + btnadd_).css('display', 'block');
+        }
+    });
 };
 
-function Bindbody(json, tablename, edit_rights, delete_rights) {
+function Bindbody(json, tablename, edit_rights, delete_rights, post_rights) {
 
     var columnMapping = {
         "guid": 0,
@@ -80,22 +92,29 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
     };
 
     var tr;
-    var Edit_R;
-    var Delete_R;
+    var Edit_R = "";
+    var Delete_R = "";
+    var Post_R = "";
     $("#" + tablename).DataTable().destroy();
     $("#" + tablename + ' tbody').empty();
     for (var i = 0; i < json.length; i++) {
-        //console.log("================"+json.length)
         if (edit_rights == 1) {
-            //    console.log("in edit")
-            Edit_R = "<i class=\"fas fa-edit\" style='cursor: pointer;' title=\"Edit\" onclick=Edit('" + json[i].guid + "')></i> ";
+            //Edit_R = "<i class=\"fas fa-edit\" style='cursor: pointer;' title=\"Edit\" onclick=Edit('" + json[i].guid + "')></i> ";
+            Edit_R = "<button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button>";
         }
         if (delete_rights == 1) {
-            Delete_R = "<i  class=\"far fa-trash-alt\" style='cursor: pointer;' title=\"Delete\" onclick=Delete('" + json[i].guid + "')></i>";
+            //Delete_R = "<i  class=\"far fa-trash-alt\" style='cursor: pointer;' title=\"Delete\" onclick=Delete('" + json[i].guid + "')></i>";
+            Delete_R = "<button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button>";
         }
-
+        if (post_rights == 1) {
+            if (json[i].status == "Prepared") {
+                Post_R = "<button class='btn btn-success'> <i  class=\"fa fa-paper-plane\"  title=\"Post\"   onclick=Post('" + json[i].guid + "')></i> </button>";
+            }
+            else {
+                Post_R = "<button disabled class='btn btn-success'> <i  class=\"fa fa-paper-plane\"  title=\"Post\"   onclick=Post('" + json[i].guid + "')></i> </button>";
+            }
+        }
         tr = $('<tr/>');
-        //tr.append("<td style='display: none;'>" + json[i].id + "</td>");
         tr.append("<td  style='display: none;'>" + json[i].guid + "</td>");
         tr.append("<td>" + json[i].code + "</td>");
         tr.append("<td>" + json[i].inventoryPeriodDesc + "</td>");
@@ -103,14 +122,13 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
         tr.append("<td>" + json[i].engName1 + "</td>");
         tr.append("<td>" + json[i].inventoryDate + "</td>");
         tr.append("<td>" + json[i].status + "</td>");
-        if (json[i].status == "Prepared") {
-            tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button><button style='margin-left: 5px;' class='btn btn-success'> <i  class=\"fa fa-paper-plane\"  title=\"Post\"   onclick=Post('" + json[i].guid + "')></i> </button></td>");
-        }
-        else {
-            tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button><button disabled style='margin-left: 5px;' class='btn btn-success'> <i  class=\"fa fa-paper-plane\"  title=\"Post\"   onclick=Post('" + json[i].guid + "')></i> </button></td>");
-        }
-        //tr.append("<td>" + Edit_R + Delete_R + "</td>");
-        // console.log(Edit_R)
+        //if (json[i].status == "Prepared") {
+        //    tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button><button style='margin-left: 5px;' class='btn btn-success'> <i  class=\"fa fa-paper-plane\"  title=\"Post\"   onclick=Post('" + json[i].guid + "')></i> </button></td>");
+        //}
+        //else {
+        //    tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button><button disabled style='margin-left: 5px;' class='btn btn-success'> <i  class=\"fa fa-paper-plane\"  title=\"Post\"   onclick=Post('" + json[i].guid + "')></i> </button></td>");
+        //}
+        tr.append("<td style='padding-top: 5px !important'>" + Edit_R + " " + Delete_R + " " + Post_R + "</td>");
         $("#" + tablename + ' tbody').append(tr);
     };
     var orderColumn = columnMapping["engName"]; // Use the column name to get the index
@@ -173,7 +191,7 @@ function filldropdownInventoryPeriod() {
         },
         success: function (data) {
             // Handle the successful response
-            debugger
+            
             ddInventoryPeriodHandler(data);
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -186,12 +204,10 @@ function filldropdownInventoryPeriod() {
 };
 
 function ddlHandler(response) {
-    // debugger;
     fillddls('warehouse', 'Please Select Warehouse', response)
 };
 
 function ddInventoryPeriodHandler(response) {
-    // debugger;
     fillddInventoryPeriod('invPeriodSelect', 'Please Select Inventory Period', response)
 };
 
@@ -210,13 +226,8 @@ function fillddls(name, selecttext, data) {
 };
 
 function fillddInventoryPeriod(name, selecttext, data) {
-    //console.log("$$$$$$$$$$$$ " + data)
-    debugger
     $("#" + name).empty();
     var s = '<option value="0">' + selecttext + '</option>';
-    //for (var i = 0; i < data.length; i++) {
-    //    s += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
-    //}
     $.each(data, function (index, item) {
         s += '<option value="' + item.inventoryPeriodID + '">' + item.inventoryPeriodDesc + '</option>';
 
@@ -225,7 +236,6 @@ function fillddInventoryPeriod(name, selecttext, data) {
 };
 
 $("#warehouse").change(function () {
-    debugger
     var ddvalue = $('#warehouse').val()
 
     $.ajax({
@@ -253,7 +263,7 @@ $("#warehouse").change(function () {
 });
 
 function ddlHandler2(response) {
-    debugger
+    
     //This logic is removed because the customer can create multiple inventories for a location event the previous is in Prepared Mode --------- Dated: 28/05/2024
     //console.log(response)
     //if (response.message.includes("already has prepared")) {
@@ -273,7 +283,7 @@ function ddlHandler2(response) {
 }
 
 $('#btnsave').click(function () {
-    debugger
+    
     if ($('#enName').val() == '') {
         alert("Eng Name must be enter.")
         return;
@@ -296,7 +306,7 @@ $('#btnsave').click(function () {
         var flag = $('#btnsave').attr('title');
         var currentDateValue = $('#dateInput').val();
         if (flag == "Save") {
-            debugger    //Insert krne p layout dark ho rahi h
+                //Insert krne p layout dark ho rahi h
 
             $.ajax({
                 url: $('#url_local').val() + "/api/Inventory/InsertInventory",
@@ -368,9 +378,6 @@ $('#btnsave').click(function () {
 })
 
 function SaveHandler(response) {
-    //$('#loader').hide();
-    //debugger
-    //$('#modal-lg').modal('hide');
     var str = response.message;
     if (str.includes("Already")) {
         swal({
@@ -379,7 +386,6 @@ function SaveHandler(response) {
             button: "OK",
         }).then((exist) => {
             if (exist) {
-                /*loadGridAjax();*/
                 window.location.href = '';
             }
         })
@@ -389,20 +395,17 @@ function SaveHandler(response) {
             title: response.message + "...",
             icon: "success",
             button: "OK",
+        }).then((Save) => {
+            if (Save) {
+                $('#modal-lg').modal('hide');
+                window.location.href = '';
+            }
         })
-            .then((Save) => {
-                if (Save) {
-
-                    $('#modal-lg').modal('hide');
-                    //loadGridAjax();
-                    window.location.href = '';
-                }
-            })
-
     }
 };
 
 function Edit(value) {
+    
     var table = $('#tblInventory').DataTable();
     var data = table.row(value).data();
     var invGUID = data[0];
@@ -428,7 +431,6 @@ function Edit(value) {
             console.log('AJAX Error: ' + textStatus, errorThrown);
             console.log(jqXHR.responseText); // Log the response for more details
         }
-
     })
 };
 
@@ -459,7 +461,7 @@ function Delete(res) {
         dangerMode: true,
     }).then(function (isConfirm) {
         if (isConfirm) {
-            //debugger
+            
             $.ajax({
                 url: $('#url_local').val() + "/api/Inventory/DeleteInventory",
                 type: 'POST',
@@ -472,11 +474,19 @@ function Delete(res) {
                     'Authorization': 'Bearer ' + yourToken
                 },
                 success: function (data) {
-                    //debugger
-                    // Handle the successful response
-                    //console.log(data)
-                    //console.log(data.message.includes("There are 0"))
-                    if (data.message.includes("There are 0")) {
+
+                    if (data.message.includes("Posted inventory won't be deleted")) {
+                        swal({
+                            title: data.message + "...",
+                            icon: "warning",
+                            button: "OK",
+                        }).then((exist) => {
+                            if (exist) {
+                                window.location.href = '';
+                            }
+                        })
+                    }
+                    else if (data.message.includes("There are 0")) {
                         $.ajax({
                             url: $('#url_local').val() + "/api/Inventory/DeleteInventory",
                             type: 'POST',
@@ -516,16 +526,16 @@ function Delete(res) {
                             dangerMode: true,
                         }).then(function (isConfirm) {
                             if (isConfirm) {
-                                //debugger
+
                                 $.ajax({
                                     url: $('#url_local').val() + "/api/Inventory/DeleteInventory",
                                     type: 'POST',
                                     contentType: 'application/json', // Set the content type based on your API requirements
                                     data: JSON.stringify({
                                         "inventoryGUID": res,
-                                        "update": res,
-                                        "delete": res,
-                                        "sure": res
+                                        "update": 1,
+                                        "delete": 1,
+                                        "sure": 1
 
                                     }), // Adjust the payload format based on your API
                                     headers: {
@@ -564,6 +574,7 @@ function Delete(res) {
 };
 
 function Post(res) {
+    
     swal({
         title: "Are you sure?",
         text: "You won't revert to 'Prepared' this inventory again!",
@@ -576,30 +587,75 @@ function Post(res) {
     }).then(function (isConfirm) {
         if (isConfirm) {
             $('.loader').show();
-
+            
+            
             $.ajax({
-                url: $('#url_local').val() + "/api/Inventory/UpdateInventoryStatus",
+                url: $('#url_local').val() + "/api/Inventory/GetInventoryByGUID",
                 type: 'POST',
                 contentType: 'application/json', // Set the content type based on your API requirements
                 data: JSON.stringify({
-                    "inventoryGUID": res,
-                    "status" : "Posted"
+                    "getByGUID": 1,
+                    "inventoryGUID": res
 
                 }), // Adjust the payload format based on your API
                 headers: {
                     'Authorization': 'Bearer ' + yourToken
                 },
                 success: function (data) {
-                    SaveHandler(data)
+                    
+                    var locationGUID = data[0]["warehouseGUID"];
+                    var inventoryPeriodID = data[0]["inventoryPeriodID"];
+                    var archiveDate = getSQLDateTime();
+                   
+                    $.ajax({
+                        url: $('#url_local').val() + "/api/Inventory/UpdateInventoryStatus",
+                        type: 'POST',
+                        contentType: 'application/json', // Set the content type based on your API requirements
+                        data: JSON.stringify({
+                            "inventoryGUID": res,
+                            "warehouseGUID": locationGUID,
+                            "inventoryPeriodID": inventoryPeriodID,
+                            "archiveDate": archiveDate
+                        }), // Adjust the payload format based on your API
+                        headers: {
+                            'Authorization': 'Bearer ' + yourToken
+                        },
+                        success: function (data) {
+                            SaveHandler(data)
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            // Handle the error
+                            console.log('AJAX Error: ' + textStatus, errorThrown);
+                            console.log(jqXHR.responseText); // Log the response for more details
+                        }
+                    });
+
+                    //$('.loader').hide();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     // Handle the error
                     console.log('AJAX Error: ' + textStatus, errorThrown);
                     console.log(jqXHR.responseText); // Log the response for more details
                 }
-            });
-        } else {
+            })
+        }
+        else {
             swal("Cancelled", "Your record is safe!", "error");
         }
     })
 };
+
+function getSQLDateTime() {
+    const now = new Date();
+    
+    const pad = (num) => num.toString().padStart(2, '0');
+    const year = now.getFullYear();
+    const month = pad(now.getMonth() + 1);
+    const day = pad(now.getDate());
+    const hours = pad(now.getHours());
+    const minutes = pad(now.getMinutes());
+    const seconds = pad(now.getSeconds());
+    const milliseconds = now.getMilliseconds().toString().padStart(3, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
+}

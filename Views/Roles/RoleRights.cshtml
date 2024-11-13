@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "RoleRights";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <script type="text/javascript" src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" defer></script>
+    <script src="~/Assets/assets/js/script.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+
+
+</head>
+<input type="hidden" id="url_local" value="@System.Configuration.ConfigurationManager.AppSettings["url_local"]" />
+<input type="hidden" id="url_local_front" value="@System.Configuration.ConfigurationManager.AppSettings["url_local_front"]" />
+<body>
+    <div class="main main-app p-3 p-lg-4">
+        <div class="row">
+            <div class="col-sm-11">
+                <div style="display: flex; align-items: center;">
+                    <h4 style="margin: 0;">Role:</h4>
+                    <h5 style="margin: 0; padding-left: 5px;" id="roleName"></h5>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <div style="display: flex; align-items: center;">
+                    <button class="form-control btn btn-primary" id="btnSubmit">Submit</button>
+                </div>
+            </div>
+        </div>
+        @*<div class="row">
+            <div class="col-sm-12">
+                <input type="checkbox" /> Select All:
+            </div>
+        </div>*@
+        
+        <div style="margin-top:10px" id="rightsDIV"></div>
+    </div>
+    <script src="../Assets/assets/contents/js/Roles.js"></script>
+    <script src="../Assets/assets/contents/js/RoleRights.js"></script>
+    <script src="../Assets/assets/contents/js/MenuOptions.js"></script>
+    <script src="../Assets/assets/contents/js/GenericAjax.js"></script>
+    <script src="../Assets/assets/contents/js/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>

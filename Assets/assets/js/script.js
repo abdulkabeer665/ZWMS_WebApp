@@ -28,14 +28,14 @@ $('body').on('click', '.main-backdrop', function () {
 $('.sidebar .nav-label').on('click', function (e) {
     e.preventDefault();
 
-    console.log('Clicked'); // Log to see if the click event is triggered
+    //console.log('Clicked'); // Log to see if the click event is triggered
 
     var target = $(this).next('.nav-sidebar');
-    console.log(target); // Log to verify if the target element is selected correctly
+    //console.log(target); // Log to verify if the target element is selected correctly
 
     target.slideToggle(function () {
         psSidebar.update();
-        console.log('Sidebar Toggled'); // Log to check if the toggle is happening
+        //console.log('Sidebar Toggled'); // Log to check if the toggle is happening
     });
 
 });

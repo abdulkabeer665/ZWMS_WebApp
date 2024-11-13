@@ -7,6 +7,7 @@ $(window).on('load', function () {
     yourToken = sessionStorage.getItem('yourToken');
     loginName = sessionStorage.getItem('loginName');
     loadDevicesDD();
+    
     loadInventoriesDD();
     $('.loader').hide();
 
@@ -15,6 +16,7 @@ $(window).on('load', function () {
 });
 
 function Bindbody(json, tablename) {
+    
     var tr;
     $("#" + tablename).DataTable().destroy();
     $("#" + tablename + ' tbody').empty();
@@ -37,7 +39,8 @@ function Bindbody(json, tablename) {
         tr.append("<td>" + (json[i].bincode != null ? json[i].bincode : "") + "</td>");
         tr.append("<td>" + (json[i].lotExpiry != null && json[i].lotExpiry !== "" ? json[i].lotExpiry : "") + "</td>");
 
-        tr.append("<td>" + json[i].deviceCode + "</td>");
+        tr.append("<td>" + json[i].deviceName + "</td>");
+        tr.append("<td>" + json[i].userName + "</td>");
         $("#" + tablename + ' tbody').append(tr);
     };
 
@@ -48,7 +51,8 @@ function Bindbody(json, tablename) {
             {
                 text: 'Export Data',
                 action: function (e, dt, button, config) {
-
+                    
+                    
                     var data = dt.buttons.exportData();
                     var tsv = '';
                     var csvContent = '';
@@ -92,7 +96,7 @@ function Bindbody(json, tablename) {
                             var res = getSerialNo(data);
                             var txtFileName, csvFileName;
                             res = res + 1;
-
+                            
                             if (dev == "0") {
                                 txtFileName = "_" + invName + "_" + res + ".txt";
                                 csvFileName = "_" + invName + "_" + res + ".csv";
@@ -125,6 +129,7 @@ function Bindbody(json, tablename) {
                                 if (value === "txt") {
                                     saveAs(tsvBlob, txtFileName);
                                 } else if (value === "csv") {
+
                                     saveAs(csvBlob, csvFileName);
                                 }
 
@@ -243,9 +248,10 @@ function fillDDs(elementID, firstElement, response) {
 };
 
 $("#inventoriesDD").change(function () {
+    
     var inv = $("#inventoriesDD").val();
     var dev = $("#devicesDD").val();
-    debugger
+    
     genericFunction(inv, dev,"Ind");
     genericFunction(inv, dev,"Sum");
 
@@ -281,7 +287,7 @@ $("#inventoriesDD").change(function () {
 
 function genericFunction(inv, dev, Flag) {
     
-    debugger
+    
     if (Flag == "Ind") {
         $.ajax({
             url: $('#url_local').val() + "/api/Export/ExportDataAgainstInvOrDeviceID",
@@ -338,7 +344,7 @@ function getSerialNo(data) {
 };
 
 $("#devicesDD").change(function () {
-    debugger
+    
     var inv = $("#inventoriesDD").val();
     var dev = $("#devicesDD").val();
     var invName = $("#inventoriesDD option:selected").text();
@@ -355,7 +361,6 @@ $("#devicesDD").change(function () {
 $("#filterDD").change(function () {
     var inv = $("#inventoriesDD").val();
     var dev = $("#devicesDD").val();
-    debugger
     genericFunction(inv, dev);
 });
 
@@ -369,20 +374,22 @@ function Bindbody2(json, tablename) {
         tr.append("<td>" + json[i].itemNo + "</td>");
         tr.append("<td>" + json[i].itemDesc + "</td>");
         tr.append("<td>" + json[i].productGroup + "</td>");
-        tr.append("<td>" + (json[i].bin != null ? json[i].bin : "") + "</td>");
-        tr.append("<td>" + json[i].packageType + "</td>");
-        tr.append("<td>" + json[i].packSize + "</td>");
-        tr.append("<td>" + json[i].qtyPerUOM + "</td>");
+        //tr.append("<td>" + (json[i].bin != null ? json[i].bin : "") + "</td>");
+        //tr.append("<td>" + json[i].packageType + "</td>");
+        //tr.append("<td>" + json[i].packSize + "</td>");
+        //tr.append("<td>" + json[i].qtyPerUOM + "</td>");
        // tr.append("<td>" + json[i].upc + "</td>");
         tr.append("<td>" + parseFloat(json[i].retailPrice).toFixed(2) + "</td>");
         tr.append("<td>" + parseFloat(json[i].costPrice).toFixed(2) + "</td>");
-        tr.append("<td>" + json[i].bookStock + "</td>");
+        //tr.append("<td>" + json[i].bookStock + "</td>");
         tr.append("<td>" + json[i].phystock + "</td>");
         tr.append("<td>" + json[i].datetime + "</td>");
-        tr.append("<td>" + (json[i].bincode != null ? json[i].bincode : "") + "</td>");
-        tr.append("<td>" + (json[i].lotExpiry != null && json[i].lotExpiry !== "" ? json[i].lotExpiry : "") + "</td>");
+        //tr.append("<td>" + (json[i].bincode != null ? json[i].bincode : "") + "</td>");
+        //tr.append("<td>" + (json[i].lotExpiry != null && json[i].lotExpiry !== "" ? json[i].lotExpiry : "") + "</td>");
 
-        tr.append("<td>" + json[i].deviceCode + "</td>");
+        //tr.append("<td>" + json[i].deviceName + "</td>");
+        //tr.append("<td>" + json[i].userName + "</td>");
+
         $("#" + tablename + ' tbody').append(tr);
     };
 
@@ -394,7 +401,7 @@ function Bindbody2(json, tablename) {
             {
                 text: 'Export Data',
                 action: function (e, dt, button, config) {
-
+                    
                     var data = dt.buttons.exportData();
                     var tsv = '';
                     var csvContent = '';
@@ -416,7 +423,7 @@ function Bindbody2(json, tablename) {
                         alert("No records to export, please select the correct warehouse.");
                         return;
                     }
-
+                    
                     var inv = $("#inventoriesDD").val();
                     var invName = $("#inventoriesDD option:selected").text();
                     var dev = $("#devicesDD").val();
@@ -435,6 +442,7 @@ function Bindbody2(json, tablename) {
                             'Authorization': 'Bearer ' + yourToken
                         },
                         success: function (data) {
+                            
                             var res = getSerialNo(data);
                             var txtFileName, csvFileName;
                             res = res + 1;
@@ -471,6 +479,7 @@ function Bindbody2(json, tablename) {
                                 if (value === "txt") {
                                     saveAs(tsvBlob, txtFileName);
                                 } else if (value === "csv") {
+                                    
                                     saveAs(csvBlob, csvFileName);
                                 }
 

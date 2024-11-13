@@ -14,13 +14,15 @@ var originalData; // Variable to store the original parsed data
 
 document.getElementById('customFile').addEventListener('change', function (event) {
     $('body').css('opacity', '0.5');
-    $('.loader').show();
+    //$('.loader').show();
+    showLoader();
     var file = event.target.files[0];
     var reader = new FileReader();
 
     if (file === undefined) {
         $('body').css('opacity', '1');
-        $('.loader').hide();
+        //$('.loader').hide();
+        hideLoader();
         return;
     }
 
@@ -110,7 +112,8 @@ document.getElementById('customFile').addEventListener('change', function (event
 
                 // Reset opacity and hide loader
                 $('body').css('opacity', '1');
-                $('.loader').hide();
+                //$('.loader').hide();
+                hideLoader();
             }
         });
     };
@@ -134,9 +137,10 @@ document.getElementById('sendDataBtn').addEventListener('click', function () {
         dangerMode: true,
     }).then(function (isConfirm) {
         if (isConfirm) {
-
+            
             $('body').css('opacity', '0.5');
-            $('.loader').show();
+            //$('.loader').show();
+            showLoader();
 
             // Filter out rows where Status is 'Error'
             var filteredData = originalData.filter(row => {
@@ -170,7 +174,7 @@ document.getElementById('sendDataBtn').addEventListener('click', function () {
                 "itemSKU_BookStock": parseInt(row[9]), // Assuming 'Book Stock' is at index 10 in the original data
                 "itemSKU_PackSize": row[4], // Assuming 'Package Size' is at index 5 in the original data
                 "itemSKU_CostPrice": parseFloat(row[8]), // Assuming 'Cost Price' is at index 9 in the original data
-                "itemSKU_PiecesQty": parseInt(row[5]), // Assuming 'Qty Per Pack' is at index 6 in the original data
+                "itemSKU_PiecesQty": parseFloat(row[5]), // Assuming 'Qty Per Pack' is at index 6 in the original data
                 "createdBy": loginUserGUID,
                 "lastEditBy": loginUserGUID
             }));
@@ -180,21 +184,24 @@ document.getElementById('sendDataBtn').addEventListener('click', function () {
             }
             else {
                 $('body').css('opacity', '1');
-                $('.loader').hide();
+                //$('.loader').hide();
+                hideLoader();
                 swal("Cancelled", "The data won't be import due to error!", "error");
                 return;
             }
 
         } else {
             $('body').css('opacity', '1');
-            $('.loader').hide();
+            //$('.loader').hide();
+            hideLoader();
             swal("Cancelled", "The data is not imported!", "error");
 
         }
 
-        // Reset opacity and hide loader
-        $('body').css('opacity', '1');
-        $('.loader').hide();
+        //// Reset opacity and hide loader
+        //$('body').css('opacity', '1');
+        ////$('.loader').hide();
+        //hideLoader();
     });
 });
 
@@ -236,15 +243,84 @@ function importMasterDataResponse(response) {
             title: reponseMessage + "...",
             icon: "success",
             button: "OK",
+        }).then((Save) => {
+            if (Save) {
+                //$('.loader').hide();
+                hideLoader();
+                location.href = '';
+            }
         })
-            .then((Save) => {
-                if (Save) {
-                    $('.loader').hide();
-                    location.href = '';
-                }
-            })
 
     }
 };
 
 //endregion
+
+$("#clearDataBtn").click(function () {
+    swal({
+        title: "Are you sure?",
+        text: "You want to Clear Master Data!",
+        icon: "warning",
+        buttons: [
+            'No, cancel it!',
+            'Yes, I am sure!'
+        ],
+        dangerMode: true,
+    }).then(function (isConfirm) {
+        if (isConfirm) {
+            
+            $('body').css('opacity', '0.5');
+            //$('.loader').show();
+            showLoader();
+            clearMasterData();
+            setTimeout(showSwal, 3000);
+            return;
+        }
+        else {
+            $('body').css('opacity', '1');
+            //$('.loader').hide();
+            hideLoader();
+            swal("Cancelled", "Your data is safe!", "error");
+            return;
+        }
+
+        // Reset opacity and hide loader
+        $('body').css('opacity', '1');
+        //$('.loader').hide();
+        hideLoader();
+    });
+});
+
+function clearMasterData() {
+    $.ajax({
+        url: $('#url_local').val() + "/api/Import/ClearMasterData", // Get the API endpoint URL
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ }),
+        headers: { 'Authorization': 'Bearer ' + yourToken },
+        success: function (response) {
+
+            return true;
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            return false;
+        }
+    });
+    
+};
+
+function showSwal() {
+    $('body').css('opacity', '1');
+    //$('.loader').hide();
+    hideLoader();
+    swal("Success", "Master deleted successfully.", "success");
+}
+
+function showLoader() {
+
+    document.querySelector('.loader-container').style.display = 'block';
+};
+
+function hideLoader() {
+    document.querySelector('.loader-container').style.display = 'none';
+};

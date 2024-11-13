@@ -32,7 +32,8 @@
                                         <th>Item Description</th>
                                         <th>Inventory Name</th>
                                         <th>Device Name</th>
-                                        <th style='display:none'>Image</th>
+                                        <th style="display: none;">ItemQty</th>
+                                        <th style="display: none;">Image</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -57,25 +58,46 @@
                         <h2 class="modal-title" id="exampleModalLarge2" style="color:white">Scale</h2>
 
                     </div>
-                    <div class="loader" style="display: none;"></div>
                     <div class="modal-body">
 
                         <div class="row">
-                            <div class="col-sm-6 ">
+                            <div class="col-sm-6 " style="display: none;">
                                 <label>GUID</label>
                                 <input class="form-control" placeholder="" type="text" maxlength="100" id="guid" />
-                            </div>
-                            <div class="col-sm-6">
-                                <label>Image</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
+                                <label>Barcode</label>
+                                <input class="form-control" type="text" id="barcode" />
+                            </div>
+                            <div class="col-sm-6">
                                 <label>En Name</label>
                                 <input class="form-control" type="text" id="name" />
                             </div>
-                            <div class="col-sm-6 ">
-                                <img id="img" style="width:40%" />
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Item Qty</label>
+                                <input class="form-control" type="number" id="itemQty" />
+                            </div>
+                            <div class="col-sm-6">
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="loader" style="display: none;"></div>
+                                <input id="image" style="display: none;" />
+                                <img id="img" style="width:60%; margin-top: 20px;" />
+                            </div>
+                            <div class="col-sm-4">
+
                             </div>
                         </div>
                     </div>
@@ -88,6 +110,7 @@
         </div>
     </div>
     <script src="../Assets/assets/contents/js/AnonymousItems.js"></script>
+    <script src="../Assets/assets/contents/js/MenuOptions.js"></script>
     <script src="../Assets/assets/contents/js/GenericAjax.js"></script>
     <script src="../Assets/assets/contents/js/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>

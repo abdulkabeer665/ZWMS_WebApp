@@ -13,5 +13,10 @@ namespace ZWMS_WebApp.Controllers
         {
             return View();
         }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
     }
 }

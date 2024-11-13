@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewBag.Title = "GetImportMasterData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <script type="text/javascript" src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" defer></script>
+    <script src="~/Assets/assets/js/script.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+
+    <style>
+       /* body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }*/
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(1px); /* Add a blur effect */
+        }
+    </style>
+
+</head>
+<input type="hidden" id="url_local" value="@System.Configuration.ConfigurationManager.AppSettings["url_local"]" />
+<body>
+    <div class="main main-app p-3 p-lg-4">
+        @*<h4>Inventory</h4>*@
+
+        <div class="row">
+            <div class="loader-container" style="display:none">
+                <div class="loader" style="display:block"></div>
+            </div>
+
+            <div class="col-12">
+                <div class="card card-default">
+                    <div class="card-header card-header-border-bottom d-flex justify-content-between">
+                        <h2>Imported Master Data</h2>
+
+                    </div>
+                    <div class="card-body">
+                        <div style="color:black" class="table-responsive hoverable-data-table">
+                            <table id="tblMasterData" class="table table-hover nowrap table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Item Code</th>
+                                        <th>Item Name</th>
+                                        <th>Category</th>
+                                        <th>Package Type Code</th>
+                                        <th>Package Type</th>
+                                        <th>Pack Size</th>
+                                        <th>Pieces Qty</th>
+                                        <th>Barcode</th>
+                                        <th>Selling Price</th>
+                                        <th>Cost Price</th>
+                                        @*<th>Book Stock</th>*@
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../Assets/assets/contents/js/GetImportMasterData.js"></script>
+    <script src="../Assets/assets/contents/js/GenericAjax.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>

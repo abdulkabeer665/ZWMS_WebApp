@@ -230,7 +230,7 @@ function responseFunction2(response) {
     imaxPhysicalQty = Math.max(...iPhysicalQty);
 
     imaxOverallQty = Math.max(imaxSystemQty, imaxPhysicalQty);
-    debugger
+    
     // Add a buffer to the maximum value
     var bufferPercentage = 0.2; // 10% buffer
     imaxWithBuffer = Math.round(imaxOverallQty * (1 + bufferPercentage));

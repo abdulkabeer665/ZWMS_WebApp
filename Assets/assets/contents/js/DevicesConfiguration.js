@@ -1,9 +1,13 @@
 ﻿var yourToken;
 var loginName;
+var roleGUID;
+var menuID;
 
 $(window).on('load', function () {
     yourToken = sessionStorage.getItem('yourToken');
     loginName = sessionStorage.getItem('loginName');
+    roleGUID = sessionStorage.getItem('RoleID');
+    menuID = sessionStorage.getItem('menuID');
     $('.loader').show();
 
     loadGridAjax();
@@ -36,28 +40,26 @@ function FillGridHandler(response) {
 
     var btnedit_ = 0;
     var btndel_ = 0;
-    var btnadd_ = "";
-
-    Bindbody(response, 'tblDevices', "1", "1");
-    if (btnadd_ == "btnadd" && hasrigth == 1) {
-        $('#' + btnadd_).prop('disabled', false);
-    }
+    getMenuOptions(roleGUID, menuID, yourToken, function (rights) {
+        Bindbody(response, 'tblDevices', rights["Edit"], rights["Delete"]);
+    });
 };
 
 function Bindbody(json, tablename, edit_rights, delete_rights) {
     var tr;
-    var Edit_R;
-    var Delete_R;
+    var Edit_R = "";
+    var Delete_R = "";
     $("#" + tablename).DataTable().destroy();
     $("#" + tablename + ' tbody').empty();
     for (var i = 0; i < json.length; i++) {
         if (edit_rights == 1) {
-            Edit_R = "<i class=\"fas fa-edit\" style='cursor: pointer;' title=\"Edit\" onclick=Edit('" + json[i].guid + "')></i> ";
+            //Edit_R = "<i class=\"fas fa-edit\" style='cursor: pointer;' title=\"Edit\" onclick=Edit('" + json[i].guid + "')></i> ";
+            Edit_R = "<button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + json[i].guid + "')></i></button>";
         }
         if (delete_rights == 1) {
-            Delete_R = "<i  class=\"far fa-trash-alt\" style='cursor: pointer;' title=\"Delete\" onclick=Delete('" + json[i].guid + "')></i>";
+            //Delete_R = "<i  class=\"far fa-trash-alt\" style='cursor: pointer;' title=\"Delete\" onclick=Delete('" + json[i].guid + "')></i>";
+            Delete_R = "<button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button>";
         }
-
         tr = $('<tr/>');
         tr.append("<td  style='display: none;'>" + json[i].guid + "</td>");
         tr.append("<td>" + json[i].code + "</td>");
@@ -65,7 +67,8 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
         tr.append("<td style='display: none;'>" + json[i].name + "</td>");
         tr.append("<td>" + json[i].hardwareID + "</td>");
         tr.append("<td>" + json[i].licKey + "</td>");
-        tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button></td>");
+        //tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button></td>");
+        tr.append("<td style='padding-top: 5px !important'>" + Edit_R + " " + Delete_R + "</td>");
         
         $("#" + tablename + ' tbody').append(tr);
     }

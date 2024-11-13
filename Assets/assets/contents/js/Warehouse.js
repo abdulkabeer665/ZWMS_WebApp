@@ -1,9 +1,13 @@
 ﻿var yourToken;
 var loginName;
+var roleGUID;
+var menuID;
 $(window).on('load', function () {
     $('.loader').show();
     yourToken = sessionStorage.getItem('yourToken');
     loginName = sessionStorage.getItem('loginName');
+    roleGUID = sessionStorage.getItem('RoleID');
+    menuID = sessionStorage.getItem('menuID');
     filldropdownWarehouseType();
     filldropdownWarehouse();
     loadGridAjax();
@@ -31,52 +35,53 @@ function loadGridAjax() {
         }
     });
 }
+
 function FillGridHandler(response) {
-    //console.log("=================>");
-    //console.log(response);
-    //debugger
 
     var btnedit_ = 0;
     var btndel_ = 0;
-    var btnadd_ = "";
+    var btnadd_ = "btnadd";
+    // Call getMenuOptions and pass a callback function to execute on success
 
-    Bindbody(response, 'tblWarehouse', "1", "1");
-    if (btnadd_ == "btnadd" && hasrigth == 1) {
-        $('#' + btnadd_).prop('disabled', false);
-    }
+    getMenuOptions(roleGUID, menuID, yourToken, function (rights) {
+        
+        // Bind the body after getMenuOptions completes successfully
+        Bindbody(response, 'tblWarehouse', rights["Edit"], rights["Delete"]);
+
+        // Handle btnadd_ based on hasRight and btnadd_ status
+        if (btnadd_ == "btnadd" && rights["Add"] == 1) {
+            
+            //$('#' + btnadd_).prop('disabled', false);
+            $('#' + btnadd_).css('display', 'block');
+        }
+    });
 };
+
 function Bindbody(json, tablename, edit_rights, delete_rights) {
     var tr;
-    var Edit_R;
-    var Delete_R;
+    var Edit_R = "";
+    var Delete_R = "";
     $("#" + tablename).DataTable().destroy();
     $("#" + tablename + ' tbody').empty();
     for (var i = 0; i < json.length; i++) {
-        //console.log("================"+json.length)
         if (edit_rights == 1) {
-            //    console.log("in edit")
-            Edit_R = "<i class=\"fas fa-edit\" style='cursor: pointer;' title=\"Edit\" onclick=Edit('" + json[i].guid + "')></i> ";
+            Edit_R = "<button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button>";
+            //Edit_R = "<i class=\"fas fa-edit\" style='cursor: pointer;' title=\"Edit\" onclick=Edit('" + json[i].guid + "')></i> ";
         }
         if (delete_rights == 1) {
-            Delete_R = "<i  class=\"far fa-trash-alt\" style='cursor: pointer;' title=\"Delete\" onclick=Delete('" + json[i].guid + "')></i>";
+            Delete_R = "<button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button>";
+            //Delete_R = "<i  class=\"far fa-trash-alt\" style='cursor: pointer;' title=\"Delete\" onclick=Delete('" + json[i].guid + "')></i>";
         }
 
         tr = $('<tr/>');
-        //tr.append("<td style='display: none;'>" + json[i].id + "</td>");
         tr.append("<td  style='display: none;'>" + json[i].guid + "</td>");
         tr.append("<td>" + json[i].code + "</td>");
         tr.append("<td>" + json[i].warehouseEngName + "</td>");
         tr.append("<td>" + json[i].warehouseTypeEngName + "</td>");
-        //tr.append("<td>" + json[i].engName1 + "</td>");
-        //if (json[i].scalestatus == "1") {
-        //    tr.append("<td>Active</td>");
-        //}
-        //else {
-        //    tr.append("<td>Inactive</td>");
-        //}
-        tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button></td>");
-        //tr.append("<td>" + Edit_R + Delete_R + "</td>");
-        // console.log(Edit_R)
+        //tr.append("<td style='padding-top: 5px !important'>  </td>");
+        //tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].guid + "')></i> </button></td>");
+        tr.append("<td style='padding-top: 5px !important'>" + Edit_R + " " + Delete_R + "</td>");
+       
         $("#" + tablename + ' tbody').append(tr);
     }
     $("#" + tablename).DataTable(
@@ -84,6 +89,7 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
             "dom": '<"row justify-content-between top-information"lf>rt<"row justify-content-between bottom-information"ip><"clear">'
         });
 }
+
 $('#btnadd').click(function () {
 
     $('#code').val('');
@@ -124,6 +130,7 @@ $('#btnadd').click(function () {
 
     $('#modal-lg').modal('show');
 });
+
 $('#cls').click(function () {
     //$('#btnsave').text($('#hdnsave').val());
     //$('#btnsave').prop('title', 'Save');
@@ -132,6 +139,7 @@ $('#cls').click(function () {
     //('#HieLevelDesc').val('');
     $('#modal-lg').modal('hide');
 });
+
 $('#btnclose').click(function () {
     //$('#btnsave').text($('#hdnsave').val());
     //$('#btnsave').prop('title', 'Save');
@@ -142,11 +150,9 @@ $('#btnclose').click(function () {
 });
 
 function Edit(value) {
-    //debugger
-    //console.log(value)
+
     var table = $('#tblWarehouse').DataTable();
     var data = table.row(value).data();
-    //console.log(data)
 
     $.ajax({
         url: $('#url_local').val() + "/api/Warehouse/GetWarehouseByGUID",
@@ -174,7 +180,6 @@ function Edit(value) {
 };
 
 function getData(data) {
-    //console.log(data)
     $('#waretype').val(data[0]["warehouseTypeGUID"]);
     if (data[0]["parentWarehouseGUID"] == '00000000-0000-0000-0000-000000000000') {
         $('#mainWarehouseddl').val(0);
@@ -250,12 +255,9 @@ function dropdownHandler(res) {
 }
 
 function filldropdown(name, selecttext, data) {
-    //console.log(data)
     $("#" + name).empty();
     var s = '<option value="0">' + selecttext + '</option>';
-    //for (var i = 0; i < data.length; i++) {
-    //    s += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
-    //}
+    
     $.each(data, function (index, item) {
         s += '<option value="' + item.guid + '">' + item.engName + '</option>';
 
@@ -290,9 +292,7 @@ function dropdownWarehouseHandler(res) {
     filldllWarehouse('returnWarehouseddl', 'Please Select Warehouse', res)
 };
 
-
 function filldllWarehouse(name, selecttext, data) {
-    //console.log(data)
     $("#" + name).empty();
     var s = '<option value="0">' + selecttext + '</option>';
     $.each(data, function (index, item) {
@@ -303,7 +303,6 @@ function filldllWarehouse(name, selecttext, data) {
 };
 
 $("#btnsave").click(function () {
-
     var flag = $('#btnsave').attr('title');
     var currency = "", mainwarehouse = "", returnwarehouse = "";
 
@@ -328,14 +327,14 @@ $("#btnsave").click(function () {
         currency = 'B0DD6DE0-7012-408F-BFB3-719ABD115AE1'
     }
 
-    if ($("#mainWarehouseddl").val() == "0") {
+    if ($("#mainWarehouseddl").val() == "0" || $("#mainWarehouseddl").val() == null) {
         mainwarehouse = '00000000-0000-0000-0000-000000000000';
     }
     else {
         mainwarehouse = $("#mainWarehouseddl").val()
     }
 
-    if ($("#returnWarehouseddl").val() == "0") {
+    if ($("#returnWarehouseddl").val() == "0" || $("#returnWarehouseddl").val() == null) {
         returnwarehouse = '00000000-0000-0000-0000-000000000000';
     }
     else {
@@ -367,8 +366,6 @@ $("#btnsave").click(function () {
             lastEditBy: loginName
         };
 
-        //console.log(obj);
-
         $.ajax({
             url: $('#url_local').val() + "/api/Warehouse/UpdateWarehouse",
             type: 'POST',
@@ -378,7 +375,6 @@ $("#btnsave").click(function () {
                 'Authorization': 'Bearer ' + yourToken
             },
             success: function (data) {
-                //debugger
                 confirmUpdate(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -391,7 +387,6 @@ $("#btnsave").click(function () {
 });
 
 function confirmUpdate(response) {
-    //console.log(res);
 
     if (response.status == "200") {
         $('#modal-lg').modal('hide');
@@ -402,14 +397,11 @@ function confirmUpdate(response) {
             button: "OK",
         }).then((Save) => {
             if (Save) {
-                //debugger
                 loadGridAjax()
             }
         })
     }
     else {
-        //$('#modal-lg').modal('hide');
-        
         swal({
             title: response.message + "...",
             icon: "warning",
@@ -420,47 +412,71 @@ function confirmUpdate(response) {
 }
 
 function Delete(res) {
-    console.log(res);
-    //swal({
-    //    title: "Are you sure?",
-    //    text: data.message,
-    //    icon: "warning",
-    //    buttons: [
-    //        'No, cancel it!',
-    //        'Yes, Proceed!'
-    //    ],
-    //    dangerMode: true,
-    //}).then(function (isConfirm) {
-    //    if (isConfirm) {
-    //        //debugger
-    //        $.ajax({
-    //            url: $('#url_local').val() + "/api/Inventory/DeleteInventory",
-    //            type: 'POST',
-    //            contentType: 'application/json', // Set the content type based on your API requirements
-    //            data: JSON.stringify({
-    //                "inventoryGUID": res,
-    //                "update": res,
-    //                "delete": res,
-    //                "sure": res
+    swal({
+        title: "Are you sure?",
+        text: data.message,
+        icon: "warning",
+        buttons: [
+            'No, cancel it!',
+            'Yes, Proceed!'
+        ],
+        dangerMode: true,
+    }).then(function (isConfirm) {
+        if (isConfirm) {
+            $.ajax({
+                url: $('#url_local').val() + "/api/Warehouse/DeleteWarehouse",
+                type: 'POST',
+                contentType: 'application/json', // Set the content type based on your API requirements
+                data: JSON.stringify({
+                    "warehouseGUID": res,
+                    "update": 1,
+                    "delete": 1
 
-    //            }), // Adjust the payload format based on your API
-    //            headers: {
-    //                'Authorization': 'Bearer ' + yourToken
-    //            },
-    //            success: function (data) {
-    //                // Handle the successful response
+                }), // Adjust the payload format based on your API
+                headers: {
+                    'Authorization': 'Bearer ' + yourToken
+                },
+                success: function (data) {
+                    // Handle the successful response
 
-    //                SaveHandler(data);
-    //            },
-    //            error: function (jqXHR, textStatus, errorThrown) {
-    //                // Handle the error
-    //                console.log('AJAX Error: ' + textStatus, errorThrown);
-    //                console.log(jqXHR.responseText); // Log the response for more details
-    //            }
-    //        });
-    //    } else {
-    //        swal("Cancelled", "Your record is safe!", "error");
-    //    }
+                    DeleteHandler(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // Handle the error
+                    console.log('AJAX Error: ' + textStatus, errorThrown);
+                    console.log(jqXHR.responseText); // Log the response for more details
+                }
+            });
+        } else {
+            swal("Cancelled", "Your record is safe!", "error");
+        }
 
-    //})
-}
+    })
+};
+
+function DeleteHandler(response) {
+    var str = response.message;
+    if (str.includes("cannot be deleted")) {
+        swal({
+            title: response.message + "...",
+            icon: "warning",
+            button: "OK",
+        }).then((exist) => {
+            if (exist) {
+                window.location.href = '';
+            }
+        })
+    }
+    else {
+        swal({
+            title: response.message + "...",
+            icon: "success",
+            button: "OK",
+        }).then((Save) => {
+            if (Save) {
+                $('#modal-lg').modal('hide');
+                window.location.href = '';
+            }
+        })
+    }
+};

@@ -1,9 +1,13 @@
-﻿var yourToken = sessionStorage.getItem('yourToken')
-var loginName = sessionStorage.getItem('loginName')
+﻿var yourToken = sessionStorage.getItem('yourToken');
+var loginName = sessionStorage.getItem('loginName');
+var roleGUID;
+var menuID;
 
 $(window).on('load', function () {
 
     $('.loader').show();
+    roleGUID = sessionStorage.getItem('RoleID');
+    menuID = sessionStorage.getItem('menuID');
     $('.datepicker').datepicker();
     loadGridAjax();
 
@@ -48,32 +52,44 @@ function FillGridHandler(response) {
 
     var btnedit_ = 0;
     var btndel_ = 0;
-    var btnadd_ = "";
+    var btnadd_ = "btnadd";
 
-    Bindbody(response, 'tblInventory', "1", "1");
-    if (btnadd_ == "btnadd" && hasrigth == 1) {
-        $('#' + btnadd_).prop('disabled', false);
-    }
+    getMenuOptions(roleGUID, menuID, yourToken, function (rights) {
+
+        // Bind the body after getMenuOptions completes successfully
+        Bindbody(response, 'tblInventory', rights["Edit"], rights["Delete"]);
+
+        // Handle btnadd_ based on hasRight and btnadd_ status
+        if (btnadd_ == "btnadd" && rights["Add"] == 1) {
+
+            //$('#' + btnadd_).prop('disabled', false);
+            $('#' + btnadd_).css('display', 'block');
+        }
+    });
 };
 
 function Bindbody(json, tablename, edit_rights, delete_rights) {
     var tr;
-    var Edit_R;
-    var Delete_R;
+    var Edit_R = "";
+    var Delete_R = "";
+    
     $("#" + tablename).DataTable().destroy();
     $("#" + tablename + ' tbody').empty();
     for (var i = 0; i < json.length; i++) {
         if (edit_rights == 1) {
-            Edit_R = "<i class=\"fas fa-edit\" style='cursor: pointer;' title=\"Edit\" onclick=Edit('" + json[i].inventoryPeriodID + "')></i> ";
+            Edit_R = "<button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + json[i].inventoryPeriodID + "')></i></button>";
+            //Edit_R = "<i class=\"fas fa-edit\" style='cursor: pointer;' title=\"Edit\" onclick=Edit('" + json[i].inventoryPeriodID + "')></i> ";
         }
         if (delete_rights == 1) {
-            Delete_R = "<i  class=\"far fa-trash-alt\" style='cursor: pointer;' title=\"Delete\" onclick=Delete('" + json[i].inventoryPeriodID + "')></i>";
+            Delete_R = "<button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].inventoryPeriodID + "')></i> </button>";
+            //Delete_R = "<i  class=\"far fa-trash-alt\" style='cursor: pointer;' title=\"Delete\" onclick=Delete('" + json[i].inventoryPeriodID + "')></i>";
         }
         tr = $('<tr/>');
         tr.append("<td  style='display: none;'>" + json[i].inventoryPeriodID + "</td>");
         tr.append("<td>" + json[i].inventoryPeriodDesc + "</td>");
         tr.append("<td>" + json[i].creationDate + "</td>");
-        tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].inventoryPeriodID + "')></i> </button></td>");
+        //tr.append("<td style='padding-top: 5px !important'> <button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button> <button class='btn btn-danger'> <i  class=\"fa fa-trash\"  title=\"Delete\"   onclick=Delete('" + json[i].inventoryPeriodID + "')></i> </button></td>");
+        tr.append("<td style='padding-top: 5px !important'>" + Edit_R + " " + Delete_R + "</td>");
         $("#" + tablename + ' tbody').append(tr);
     }
     $("#" + tablename).DataTable({
@@ -98,7 +114,6 @@ $('#btnsave').click(function () {
         var flag = $('#btnsave').attr('title');
         var currentDateValue = $('#dateInput').val();
         if (flag == "Save") {
-           // debugger    //Insert krne p layout dark ho rahi h
 
             $.ajax({
                 url: $('#url_local').val() + "/api/InventoryPeriods/InsertInventoryPeriod",
@@ -160,7 +175,6 @@ $('#btnsave').click(function () {
 
 function SaveHandler(response) {
     //$('#loader').hide();
-    //debugger
     //$('#modal-lg').modal('hide');
     var str = response.message;
     if (str.includes("Already")) {
@@ -245,7 +259,6 @@ function Delete(res) {
         dangerMode: true,
     }).then(function (isConfirm) {
         if (isConfirm) {
-            //debugger
             $.ajax({
                 url: $('#url_local').val() + "/api/InventoryPeriods/DeleteInventoryPeriod",
                 type: 'POST',
@@ -258,7 +271,7 @@ function Delete(res) {
                     'Authorization': 'Bearer ' + yourToken
                 },
                 success: function (data) {
-                    SaveHandler(data);
+                    DeleteHandler(data);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     // Handle the error
@@ -270,4 +283,31 @@ function Delete(res) {
             swal("Cancelled", "Your record is safe!", "error");
         }
     })
+};
+
+function DeleteHandler(response) {
+    var str = response.message;
+    if (str.includes("cannot be deleted")) {
+        swal({
+            title: response.message + "...",
+            icon: "warning",
+            button: "OK",
+        }).then((exist) => {
+            if (exist) {
+                window.location.href = '';
+            }
+        })
+    }
+    else {
+        swal({
+            title: response.message + "...",
+            icon: "success",
+            button: "OK",
+        }).then((Save) => {
+            if (Save) {
+                $('#modal-lg').modal('hide');
+                window.location.href = '';
+            }
+        })
+    }
 };

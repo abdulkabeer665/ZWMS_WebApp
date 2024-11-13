@@ -4,7 +4,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project>
   <PropertyGroup>
-    <History>True|2024-08-27T09:21:10.7922580Z||;False|2024-08-27T14:20:35.5805481+05:00||;False|2024-08-27T14:14:55.0681897+05:00||;False|2024-08-27T14:11:44.6310002+05:00||;False|2024-08-27T14:10:36.7132149+05:00||;False|2024-08-27T14:07:20.0743492+05:00||;False|2024-08-27T14:07:00.2731115+05:00||;False|2024-08-27T14:06:20.1167630+05:00||;False|2024-08-27T14:05:41.5450365+05:00||;False|2024-08-27T14:04:14.0525046+05:00||;False|2024-08-27T14:01:36.0892026+05:00||;False|2024-08-27T14:00:48.0482261+05:00||;False|2024-08-27T13:59:29.0150936+05:00||;False|2024-08-27T13:57:58.9460781+05:00||;False|2024-08-27T13:57:09.8009973+05:00||;False|2024-08-27T13:56:25.8422862+05:00||;False|2024-08-27T13:54:55.6734031+05:00||;False|2024-08-27T13:54:08.1313283+05:00||;False|2024-08-27T13:53:07.6482159+05:00||;False|2024-08-27T13:52:40.6784856+05:00||;False|2024-08-27T13:52:17.3942548+05:00||;False|2024-08-27T13:51:46.2153547+05:00||;False|2024-08-27T13:51:03.1310038+05:00||;False|2024-08-27T13:50:24.0831162+05:00||;False|2024-08-27T13:49:39.9925656+05:00||;False|2024-08-27T13:47:49.3980221+05:00||;False|2024-08-27T13:46:09.8245941+05:00||;False|2024-08-27T13:45:32.8786280+05:00||;False|2024-08-27T13:44:58.5915967+05:00||;False|2024-08-27T13:44:14.7777494+05:00||;False|2024-08-27T13:38:32.7631927+05:00||;False|2024-08-27T13:34:22.2548748+05:00||;False|2024-08-27T13:34:06.2433485+05:00||;False|2024-08-27T13:33:48.5393125+05:00||;False|2024-08-27T13:33:25.9253179+05:00||;False|2024-08-27T13:33:13.8554809+05:00||;</History>
+    <History>True|2024-10-14T06:53:07.3703486Z;True|2024-10-14T11:38:56.8773904+05:00;True|2024-08-27T14:21:10.7922580+05:00;False|2024-08-27T14:20:35.5805481+05:00;False|2024-08-27T14:14:55.0681897+05:00;False|2024-08-27T14:11:44.6310002+05:00;False|2024-08-27T14:10:36.7132149+05:00;False|2024-08-27T14:07:20.0743492+05:00;False|2024-08-27T14:07:00.2731115+05:00;False|2024-08-27T14:06:20.1167630+05:00;False|2024-08-27T14:05:41.5450365+05:00;False|2024-08-27T14:04:14.0525046+05:00;False|2024-08-27T14:01:36.0892026+05:00;False|2024-08-27T14:00:48.0482261+05:00;False|2024-08-27T13:59:29.0150936+05:00;False|2024-08-27T13:57:58.9460781+05:00;False|2024-08-27T13:57:09.8009973+05:00;False|2024-08-27T13:56:25.8422862+05:00;False|2024-08-27T13:54:55.6734031+05:00;False|2024-08-27T13:54:08.1313283+05:00;False|2024-08-27T13:53:07.6482159+05:00;False|2024-08-27T13:52:40.6784856+05:00;False|2024-08-27T13:52:17.3942548+05:00;False|2024-08-27T13:51:46.2153547+05:00;False|2024-08-27T13:51:03.1310038+05:00;False|2024-08-27T13:50:24.0831162+05:00;False|2024-08-27T13:49:39.9925656+05:00;False|2024-08-27T13:47:49.3980221+05:00;False|2024-08-27T13:46:09.8245941+05:00;False|2024-08-27T13:45:32.8786280+05:00;False|2024-08-27T13:44:58.5915967+05:00;False|2024-08-27T13:44:14.7777494+05:00;False|2024-08-27T13:38:32.7631927+05:00;False|2024-08-27T13:34:22.2548748+05:00;False|2024-08-27T13:34:06.2433485+05:00;False|2024-08-27T13:33:48.5393125+05:00;False|2024-08-27T13:33:25.9253179+05:00;False|2024-08-27T13:33:13.8554809+05:00;</History>
     <LastFailureDetails />
     <_PublishTargetUrl>D:\Publish\ZWMS\Frontend</_PublishTargetUrl>
   </PropertyGroup>
@@ -13,25 +13,28 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/26/2024 11:11:00</publishTime>
     </File>
     <File Include=".vs/ZWMS_WebApp/v16/.suo">
-      <publishTime>08/01/2024 13:10:52</publishTime>
+      <publishTime>10/18/2024 17:01:31</publishTime>
     </File>
     <File Include=".vs/ZWMS_WebApp/v17/.suo">
-      <publishTime>08/27/2024 14:20:58</publishTime>
+      <publishTime>09/02/2024 16:56:24</publishTime>
     </File>
     <File Include="Assets/assets/contents/js/AllItems.js">
-      <publishTime>08/27/2024 11:44:22</publishTime>
+      <publishTime>10/18/2024 17:00:43</publishTime>
     </File>
     <File Include="Assets/assets/contents/js/AnonymousItems.js">
-      <publishTime>08/01/2024 13:10:52</publishTime>
+      <publishTime>10/07/2024 16:40:14</publishTime>
     </File>
     <File Include="Assets/assets/contents/js/BookStockData.js">
       <publishTime>08/19/2024 10:42:58</publishTime>
     </File>
     <File Include="Assets/assets/contents/js/BookStockInventory.js">
-      <publishTime>08/01/2024 13:10:52</publishTime>
+      <publishTime>09/02/2024 14:53:23</publishTime>
     </File>
     <File Include="Assets/assets/contents/js/CategoryWiseItems.js">
       <publishTime>08/01/2024 13:10:52</publishTime>
+    </File>
+    <File Include="Assets/assets/contents/js/ChangePassword.js">
+      <publishTime>10/02/2024 12:41:38</publishTime>
     </File>
     <File Include="Assets/assets/contents/js/Dashboard.js">
       <publishTime>08/01/2024 13:10:52</publishTime>
@@ -43,13 +46,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/01/2024 13:10:52</publishTime>
     </File>
     <File Include="Assets/assets/contents/js/ExportData.js">
-      <publishTime>08/27/2024 13:32:37</publishTime>
+      <publishTime>10/18/2024 11:24:31</publishTime>
     </File>
     <File Include="Assets/assets/contents/js/GenericAjax.js">
       <publishTime>08/01/2024 13:10:52</publishTime>
     </File>
     <File Include="Assets/assets/contents/js/Inventory.js">
-      <publishTime>08/01/2024 13:10:52</publishTime>
+      <publishTime>10/02/2024 13:00:22</publishTime>
     </File>
     <File Include="Assets/assets/contents/js/InventoryPeriods.js">
       <publishTime>08/01/2024 13:10:52</publishTime>
@@ -58,7 +61,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/21/2024 17:36:14</publishTime>
     </File>
     <File Include="Assets/assets/contents/js/MasterData.js">
-      <publishTime>08/01/2024 13:10:52</publishTime>
+      <publishTime>09/02/2024 14:47:18</publishTime>
     </File>
     <File Include="Assets/assets/contents/js/sweetalert.min.js">
       <publishTime>08/01/2024 13:10:52</publishTime>
@@ -67,7 +70,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/21/2024 17:35:36</publishTime>
     </File>
     <File Include="Assets/assets/contents/js/Users.js">
-      <publishTime>08/01/2024 13:10:52</publishTime>
+      <publishTime>10/18/2024 11:36:56</publishTime>
     </File>
     <File Include="Assets/assets/contents/js/Warehouse.js">
       <publishTime>08/01/2024 13:10:52</publishTime>
@@ -12970,13 +12973,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/01/2024 13:11:04</publishTime>
     </File>
     <File Include="bin/ZWMS_WebApp.dll">
-      <publishTime>08/27/2024 14:20:20</publishTime>
+      <publishTime>10/14/2024 11:38:46</publishTime>
     </File>
     <File Include="bin/ZWMS_WebApp.dll.config">
-      <publishTime>08/26/2024 11:29:16</publishTime>
+      <publishTime>10/18/2024 17:01:12</publishTime>
     </File>
     <File Include="bin/ZWMS_WebApp.pdb">
-      <publishTime>08/27/2024 14:20:20</publishTime>
+      <publishTime>10/14/2024 11:38:46</publishTime>
     </File>
     <File Include="Content/bootstrap-theme.css">
       <publishTime>08/01/2024 13:10:54</publishTime>
@@ -13714,13 +13717,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/01/2024 13:10:54</publishTime>
     </File>
     <File Include="Views/Export/Index.cshtml">
-      <publishTime>08/27/2024 12:20:42</publishTime>
+      <publishTime>10/18/2024 11:23:25</publishTime>
     </File>
     <File Include="Views/Home/About.cshtml">
       <publishTime>08/01/2024 13:10:54</publishTime>
     </File>
     <File Include="Views/Home/AllItems.cshtml">
-      <publishTime>08/27/2024 10:56:26</publishTime>
+      <publishTime>10/18/2024 11:10:13</publishTime>
     </File>
     <File Include="Views/Home/BookStockData.cshtml">
       <publishTime>08/19/2024 10:43:58</publishTime>
@@ -13732,7 +13735,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/01/2024 13:10:54</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>08/01/2024 13:10:54</publishTime>
+      <publishTime>10/02/2024 12:33:37</publishTime>
     </File>
     <File Include="Views/Import/BookStockInventoryData.cshtml">
       <publishTime>08/01/2024 13:10:54</publishTime>
@@ -13746,6 +13749,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Views/InventoryPeriods/Index.cshtml">
       <publishTime>08/01/2024 13:10:54</publishTime>
     </File>
+    <File Include="Views/Login/ChangePassword.cshtml">
+      <publishTime>10/02/2024 12:38:02</publishTime>
+    </File>
     <File Include="Views/Login/Index.cshtml">
       <publishTime>08/21/2024 17:30:50</publishTime>
     </File>
@@ -13753,10 +13759,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/01/2024 13:10:54</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>08/19/2024 10:44:33</publishTime>
+      <publishTime>10/02/2024 12:35:44</publishTime>
     </File>
     <File Include="Views/Users/Index.cshtml">
-      <publishTime>08/01/2024 13:10:54</publishTime>
+      <publishTime>10/18/2024 11:34:49</publishTime>
     </File>
     <File Include="Views/Warehouse/Index.cshtml">
       <publishTime>08/01/2024 13:10:54</publishTime>
@@ -13768,7 +13774,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/01/2024 13:10:54</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/27/2024 14:20:29</publishTime>
+      <publishTime>10/18/2024 17:01:38</publishTime>
     </File>
   </ItemGroup>
 </Project>
