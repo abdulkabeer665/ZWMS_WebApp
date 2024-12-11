@@ -3,20 +3,24 @@
   "WorkspaceRootPath": "D:\\Projects\\Jeddah\\Al Jazeera\\ZWMS\\Live\\Frontend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|d:\\projects\\jeddah\\al jazeera\\zwms\\live\\frontend\\assets\\assets\\contents\\js\\menus.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|solutionrelative:assets\\assets\\contents\\js\\menus.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|d:\\projects\\jeddah\\al jazeera\\zwms\\live\\frontend\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|d:\\projects\\jeddah\\al jazeera\\zwms\\live\\frontend\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|d:\\projects\\jeddah\\al jazeera\\zwms\\live\\frontend\\assets\\assets\\contents\\js\\inventoryperiods.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|solutionrelative:assets\\assets\\contents\\js\\inventoryperiods.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|d:\\projects\\jeddah\\al jazeera\\zwms\\live\\frontend\\assets\\assets\\contents\\js\\dashboard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|solutionrelative:assets\\assets\\contents\\js\\dashboard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|D:\\Projects\\Jeddah\\Al Jazeera\\ZWMS\\Live\\Frontend\\assets\\assets\\contents\\js\\menus.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|solutionrelative:assets\\assets\\contents\\js\\menus.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|D:\\Projects\\Jeddah\\Al Jazeera\\ZWMS\\Live\\Frontend\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|D:\\Projects\\Jeddah\\Al Jazeera\\ZWMS\\Live\\Frontend\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{17AE7C19-3EF1-4C61-8B01-942795EE4523}|ZWMS_WebApp.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -29,8 +33,25 @@
           "SelectedChildIndex": 1,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "InventoryPeriods.js",
+              "DocumentMoniker": "D:\\Projects\\Jeddah\\Al Jazeera\\ZWMS\\Live\\Frontend\\Assets\\assets\\contents\\js\\InventoryPeriods.js",
+              "RelativeDocumentMoniker": "Assets\\assets\\contents\\js\\InventoryPeriods.js",
+              "ToolTip": "D:\\Projects\\Jeddah\\Al Jazeera\\ZWMS\\Live\\Frontend\\Assets\\assets\\contents\\js\\InventoryPeriods.js",
+              "RelativeToolTip": "Assets\\assets\\contents\\js\\InventoryPeriods.js",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAuwE8AAACMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-12-05T03:45:16.518Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Projects\\Jeddah\\Al Jazeera\\ZWMS\\Live\\Frontend\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
@@ -38,25 +59,23 @@
               "RelativeToolTip": "Views\\Home\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-13T11:38:14.373Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-13T11:38:14.373Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Menus.js",
               "DocumentMoniker": "D:\\Projects\\Jeddah\\Al Jazeera\\ZWMS\\Live\\Frontend\\Assets\\assets\\contents\\js\\Menus.js",
               "RelativeDocumentMoniker": "Assets\\assets\\contents\\js\\Menus.js",
               "ToolTip": "D:\\Projects\\Jeddah\\Al Jazeera\\ZWMS\\Live\\Frontend\\Assets\\assets\\contents\\js\\Menus.js",
               "RelativeToolTip": "Assets\\assets\\contents\\js\\Menus.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-11-13T11:36:45.682Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-13T11:36:45.682Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "D:\\Projects\\Jeddah\\Al Jazeera\\ZWMS\\Live\\Frontend\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
@@ -64,18 +83,17 @@
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
               "ViewState": "AgIAADYAAAAAAAAAAAAAAFAAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-13T11:18:04.726Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-13T11:18:04.726Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Dashboard.js",
               "DocumentMoniker": "D:\\Projects\\Jeddah\\Al Jazeera\\ZWMS\\Live\\Frontend\\Assets\\assets\\contents\\js\\Dashboard.js",
               "RelativeDocumentMoniker": "Assets\\assets\\contents\\js\\Dashboard.js",
               "ToolTip": "D:\\Projects\\Jeddah\\Al Jazeera\\ZWMS\\Live\\Frontend\\Assets\\assets\\contents\\js\\Dashboard.js",
               "RelativeToolTip": "Assets\\assets\\contents\\js\\Dashboard.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2024-11-13T11:14:35.768Z",
               "EditorCaption": ""

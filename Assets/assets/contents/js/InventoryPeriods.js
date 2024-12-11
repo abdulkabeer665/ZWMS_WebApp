@@ -77,7 +77,7 @@ function Bindbody(json, tablename, edit_rights, delete_rights) {
     $("#" + tablename + ' tbody').empty();
     for (var i = 0; i < json.length; i++) {
         if (edit_rights == 1) {
-            Edit_R = "<button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + json[i].inventoryPeriodID + "')></i></button>";
+            Edit_R = "<button class='btn btn-primary'>  <i  class=\"fa fa-edit \"  title=\"Edit\"  onclick=Edit('" + i + "')></i></button>";
             //Edit_R = "<i class=\"fas fa-edit\" style='cursor: pointer;' title=\"Edit\" onclick=Edit('" + json[i].inventoryPeriodID + "')></i> ";
         }
         if (delete_rights == 1) {
