@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "BookStockInventoryData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<head>
+    <script src="../Assets/assets/js/jquery-3.6.1.js"></script>
+    @*<script src="https://code.jquery.com/jquery-3.6.1.js"></script>*@
+    <script type="text/javascript" src="../Assets/assets/js/jquery.dataTables.min.js" defer></script>
+    @*<script type="text/javascript" src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" defer></script>*@
+    <script src="../Assets/assets/js/script.js"></script>
+    <link rel="stylesheet" href="../Assets/assets/css/jquery.dataTables.min.css">
+    @*<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">*@
+    <link href="../Assets/assets/css/materialdesignicons.min.css" rel="stylesheet" />
+    @*<link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />*@
+    <link rel="stylesheet" href="../Assets/assets/css/font-awesome.css" />
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />*@
+    <script src="../Assets/assets/js/papaparse.min.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>*@
+
+    <style>
+        /* Reduce font size for the description column */
+        .description-column {
+            font-size: 12px; /* Adjust the font-size as needed */
+        }
+        /* Apply no-wrap to the entire table */
+        table.dataTable td {
+            white-space: nowrap;
+        }
+
+        table.dataTable th {
+            white-space: nowrap;
+        }
+
+        body {
+            transition: opacity 0.5s; /* Optional: Smooth transition for opacity change */
+        }
+
+        .table-responsive {
+            position: relative; /* Ensure the loader is positioned relative to this container */
+        }
+
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+            z-index: 1000; /* Make sure it is on top of the table */
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+</head>
+<input type="hidden" id="url_local" value="@System.Configuration.ConfigurationManager.AppSettings["url_local"]" />
+<body>
+
+    <div class="main main-app p-3 p-lg-4">
+        <h4>Import Book Stock Inventory Data:</h4>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-default">
+
+                    <form>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <input type="file" class="custom-file-input" id="customFile" accept=".txt,.tsv" style="padding-top: 22px; padding-left: 20px;">
+                                </div>
+                            </div>
+                            <div class="col-sm-4" style="padding: 20px;">
+
+                            </div>
+                            <div class="col-sm-4" style="text-align: right; padding-top: 20px; padding-right: 30px;">
+                                <button type="button" class="btn btn-success" id="sendDataBtn">Import Book Stock Data</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-sm-4" style="padding-top: 10px; padding-left: 20px;">
+                                <label>Inventory Period</label>
+                                <select style="max-width: 400px;" id="invPeriodSelect" class="form-control"></select>
+                            </div>
+
+                            <div class="col-sm-4" style="padding-top: 10px; padding-left: 20px;">
+                                <label>Location:</label>
+                                <select style="max-width: 400px;" id="invPeriodwiseLocation" class="form-control"></select>
+                            </div>
+                            <div class="col-sm-4" style="padding-top: 10px; padding-left: 20px;">
+                                <label>Inventory:</label>
+                                <select style="max-width: 400px;" id="inventoryDD" class="form-control"></select>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <hr />
+                    <div class="d-flex gap-3" style="margin-left: 10px;">
+                        <p class="mb-0">Success record Counts: <strong id="successCount">0</strong></p>
+                        <p class="mb-0">Error record Counts: <strong id="errorCount">0</strong></p>
+                    </div>
+                    <pre id="file-content"></pre>
+                    <div class="card-body" style="margin-top: -30px;">
+                        <div style="color:black" class="table-responsive hoverable-data-table">
+                            <div class="loader" style="display: none;"></div>
+                            <table id="data-table" class="display" style="width:100%">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="../Assets/assets/contents/js/BookStockInventory.js"></script>
+    <script src="../Assets/assets/js/papaparse.min.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>*@
+    <script src="../Assets/assets/contents/js/GenericAjax.js"></script>
+    <script src="../Assets/assets/contents/js/sweetalert.min.js"></script>
+    <script src="../Assets/assets/js/bootstrap-datepicker.min.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>*@
+    <link rel="stylesheet" href="../Assets/assets/css/bootstrap-datepicker.min.css">
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">*@
+    <script src="../Assets/assets/js/bootstrap.min.js"></script>
+    @*<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>*@
+
+</body>

@@ -1,0 +1,12 @@
+﻿.hover-text {
+    color: #41505F !important; /* Initial text color */
+    /*transition: color 0.2s ease;*/ /* Smooth transition for color change */
+    transition: color 0.2s ease, transform 0.3s ease; /* Smooth transition for color and transform */
+}
+
+    /* Style when the text is hovered */
+    .hover-text:hover {
+        /*color: #EE8A12 !important;*/ /* Text color on hover */
+        color: dodgerblue !important; /* Text color on hover */
+        transform: scale(1.1); /* Slightly increase the size for pop-up effect */
+    }

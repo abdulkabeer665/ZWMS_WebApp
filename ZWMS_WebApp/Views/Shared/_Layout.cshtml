@@ -1,0 +1,295 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @*<title>@ViewBag.Title - My ASP.NET Application</title>*@
+    <!-- Favicon -->
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="../Assets/assets/img/warehouse_1.png">
+
+    <title>ZWMS</title>
+
+    @Styles.Render("~/Assets/lib/Bootstrap/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="../Assets/lib/remixicon/fonts/remixicon.css">
+    <link rel="stylesheet" href="../Assets/lib/jqvmap/jqvmap.min.css">
+    <link rel="stylesheet" href="../Assets/lib/apexcharts/apexcharts.css">
+    <script src="../Assets/lib/jquery/jquery.min.js"></script>
+    <script src="../Assets/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="../Assets/lib/jqvmap/jquery.vmap.min.js"></script>
+    <script src="../Assets/lib/jqvmap/maps/jquery.vmap.world.js"></script>
+    <script src="../Assets/lib/apexcharts/apexcharts.min.js"></script>
+    @*<script src="../Assets/assets/contents/js/Dashboard.js"></script>*@
+
+    <script src="../Assets/assets/js/script.js"></script>
+
+    <script src="../Assets/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="../Assets/assets/js/db.data.js"></script>
+    <script src="../Assets/assets/js/db.analytics.js"></script>
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="../Assets/assets/css/style.min.css">
+
+    @*<script src="https://code.jquery.com/jquery-3.6.1.js"></script>*@
+    <script src="../Assets/assets/js/jquery-3.6.1.js"></script>
+
+    <style>
+        .loader {
+            border: 5px solid #f3f3f3; /* Light grey */
+            border-top: 5px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -25px; /* Negative half of height */
+            margin-left: -25px; /* Negative half of width */
+        }
+
+        .loaderforslabs {
+            border: 5px solid #f3f3f3; /* Light grey */
+            border-top: 5px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin-top: -25px; /* Negative half of height */
+            /*   margin-left: -25px;*/ /* Negative half of width */
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+
+        <input type="hidden" id="url_local" value="@System.Configuration.ConfigurationManager.AppSettings["url_local"]" />
+        <div class="col-sm-3"><input type="hidden" id="front_URL" value="@System.Configuration.ConfigurationManager.AppSettings["url_local_front"]" /></div>
+        <div class="sidebar-header">
+            @*<a href="../" style="color:darkorange" class="sidebar-logo">ZWMS</a>*@
+            <img src="~/Assets/assets/img/zwmsaljazeerah.jpeg" style="width:95%;" />
+        </div><!-- sidebar-header -->
+        <div id="sidebarMenu" class="sidebar-body ps ps--active-y">
+            @*<div class="nav-group show">
+                    <a href="#" class="nav-label">Dashboard</a>
+                    <ul class="nav nav-sidebar">
+                        <li class="nav-item">
+                            <a href="../Home/Index" class="nav-link"><i class="ri-dashboard-fill"></i><span>Dashboard</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nav-group">
+                    <a href="#" class="nav-label">Inventory</a>
+                    <ul class="nav nav-sidebar">
+                        <li class="nav-item">
+                            <a href="../Warehouse/Index" class="nav-link"><i class="ri-home-8-line"></i><span>Warehouse</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../InventoryPeriods/Index" class="nav-link"><i class="ri-history-line"></i> <span>Inventory Periods</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../Inventory/Index" class="nav-link"><i class="ri-folders-line"></i> <span>Inventory</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../AnonymousItems/Index" class="nav-link"><i class="ri-folder-unknow-line"></i> <span>Anonymous Items</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nav-group">
+                    <a href="#" class="nav-label">Tools</a>
+                    <ul class="nav nav-sidebar">
+                        <li class="nav-item">
+                            <a href="../Users/Index" class="nav-link"><i class="ri-user-line"></i> <span>Users</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../DevicesConfiguration/Index" class="nav-link"><i class="ri-smartphone-line"></i> <span>Device Configuration</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../Import/MasterData" class="nav-link"><i class="ri-folder-shared-line"></i> <span>Import Master Data</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../Import/BookStockInventoryData" class="nav-link"><i class="ri-folder-shared-line"></i> <span>Import Stock Data</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../Home/BookStockData" class="nav-link"><i class="ri-folder-received-line"></i> <span>View Book Stock Data</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../Export/Index" class="nav-link"><i class="ri-folder-received-line"></i> <span>Export Data</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../Import/GetImportMasterData" class="nav-link"><i class="ri-folder-received-line"></i> <span>View Master Data</span></a>
+                        </li>
+                    </ul>
+                </div>*@
+            <div class="ps__rail-x" style="left: 0px; top: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 645px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 351px;"></div></div>
+        </div><!-- sidebar-body -->
+        @*shahroz*@
+        <!--<div class="sidebar-footer">
+        <div class="sidebar-footer-top">
+            <div class="sidebar-footer-thumb">
+                <img src="../Assets/assets/img/img1.jpg" alt="">
+            </div>-->
+        <!-- sidebar-footer-thumb -->
+        <!--<div class="sidebar-footer-body">
+            <h6><a href="../pages/profile.html">Shaira Diaz</a></h6>
+            <p>Premium Member</p>
+        </div>-->
+        <!-- sidebar-footer-body -->
+        <!--<a id="sidebarFooterMenu" href="" class="dropdown-link"><i class="ri-arrow-down-s-line"></i></a>
+        </div>-->
+        <!-- sidebar-footer-top -->
+        <!--<div class="sidebar-footer-menu">
+            <nav class="nav">
+                <a href=""><i class="ri-edit-2-line"></i> Edit Profile</a>
+                <a href=""><i class="ri-profile-line"></i> View Profile</a>
+            </nav>
+            <hr>
+            <nav class="nav">
+                <a href=""><i class="ri-question-line"></i> Help Center</a>
+                <a href=""><i class="ri-lock-line"></i> Privacy Settings</a>
+                <a href=""><i class="ri-user-settings-line"></i> Account Settings</a>
+                <a href=""><i class="ri-logout-box-r-line"></i> Log Out</a>
+            </nav>
+        </div>-->
+        <!-- sidebar-footer-menu -->
+        <!--</div>--><!-- sidebar-footer -->
+        @*shahroz*@
+    </div>
+
+    <div class="header-main px-3 px-lg-4">
+        <a id="menuSidebar" href="#" class="menu-link me-3 me-lg-4"><i class="ri-menu-2-fill"></i></a>
+
+        <div class="form-search me-auto">
+            <input type="text" class="form-control" value="" placeholder="Search">
+            <i class="ri-search-line"></i>
+        </div><!-- form-search -->
+
+        <div class="dropdown dropdown-skin">
+            <a href="" class="dropdown-link" data-bs-toggle="dropdown" data-bs-auto-close="outside"><i class="ri-settings-3-line"></i></a>
+            <div class="dropdown-menu dropdown-menu-end mt-10-f">
+                <label>Skin Mode</label>
+                <nav id="skinMode" class="nav nav-skin">
+                    <a href="" class="nav-link active">Light</a>
+                    <a href="" class="nav-link">Dark</a>
+                </nav>
+                <hr>
+                <label>Sidebar Skin</label>
+                <nav id="sidebarSkin" class="nav nav-skin">
+                    <a href="" class="nav-link active">Default</a>
+                    <a href="" class="nav-link">Prime</a>
+                    <a href="" class="nav-link">Dark</a>
+                </nav>
+                @*<hr>*@
+                @*<label>Direction</label>*@
+                @*<nav id="layoutDirection" class="nav nav-skin">
+                        <a href="" class="nav-link active">LTR</a>
+                        <a href="" class="nav-link">RTL</a>
+                    </nav>*@
+            </div><!-- dropdown-menu -->
+        </div><!-- dropdown -->
+        @*shahroz notification*@
+        <!--<div class="dropdown dropdown-notification ms-3 ms-xl-4">
+        <a href="" class="dropdown-link" data-bs-toggle="dropdown" data-bs-auto-close="outside"><small>3</small><i class="ri-notification-3-line"></i></a>
+        <div class="dropdown-menu dropdown-menu-end mt-10-f me--10-f">
+            <div class="dropdown-menu-header">
+                <h6 class="dropdown-menu-title">Notifications</h6>
+            </div>-->
+        <!-- dropdown-menu-header -->
+        <!--<ul class="list-group">
+        <li class="list-group-item">
+            <div class="avatar online"><img src="../Assets/assets/img/img10.jpg" alt=""></div>
+            <div class="list-group-body">
+                <p><strong>Dominador Manuel</strong> and <strong>100 other people</strong> reacted to your comment "Tell your partner that...</p>
+                <span>Aug 20 08:55am</span>
+            </div>-->
+        <!-- list-group-body -->
+        <!--</li>
+        <li class="list-group-item">
+            <div class="avatar online"><img src="../Assets/assets/img/img11.jpg" alt=""></div>
+            <div class="list-group-body">
+                <p><strong>Angela Ighot</strong> tagged you and <strong>9 others</strong> in a post.</p>
+                <span>Aug 18 10:30am</span>
+            </div>-->
+        <!-- list-group-body -->
+        <!--</li>
+        <li class="list-group-item">
+            <div class="avatar"><span class="avatar-initial bg-primary">a</span></div>
+            <div class="list-group-body">
+                <p>New listings were added that match your search alert <strong>house for rent</strong></p>
+                <span>Aug 15 08:10pm</span>
+            </div>-->
+        <!-- list-group-body -->
+        <!--</li>
+        <li class="list-group-item">
+            <div class="avatar online"><img src="../Assets/assets/img/img14.jpg" alt=""></div>
+            <div class="list-group-body">
+                <p>Reminder: <strong>Jerry Cuares</strong> invited you to like <strong>Cuares Surveying Services</strong>. <br><a href="">Accept</a> or <a href="">Decline</a></p>
+                <span>Aug 14 11:50pm</span>
+            </div>-->
+        <!-- list-group-body -->
+        <!--</li>
+        <li class="list-group-item">
+            <div class="avatar online"><img src="../Assets/Assets/assets/img/img15.jpg" alt=""></div>
+            <div class="list-group-body">
+                <p><strong>Dyanne Aceron</strong> reacted to your post <strong>King of the Bed</strong>.</p>
+                <span>Aug 10 05:30am</span>
+            </div>-->
+        <!-- list-group-body -->
+        <!--</li>
+            </ul>
+            <div class="dropdown-menu-footer"><a href="">Show all Notifications</a></div>
+        </div>-->
+        <!-- dropdown-menu -->
+        <!--</div>--><!-- dropdown -->
+        @*shahroz notification*@
+        <div class="dropdown dropdown-profile ms-3 ms-xl-4">
+            <a href="" class="dropdown-link" data-bs-toggle="dropdown" data-bs-auto-close="outside"><div class="avatar online"><img src="../Assets/assets/img/img1.jpg" alt=""></div></a>
+            <div class="dropdown-menu dropdown-menu-end mt-10-f">
+                <div class="dropdown-menu-body">
+                    <div class="avatar avatar-xl online mb-3"><img src="../Assets/assets/img/img1.jpg" alt=""></div>
+                    <h5 id="loginName" class="mb-1 text-dark fw-semibold"></h5>
+                    @*<h5 class="mb-1 text-dark fw-semibold">Shaira Diaz</h5>*@
+                    <p class="fs-sm text-secondary">Premium Member</p>
+
+                    <nav class="nav">
+                        <a href=""><i class="ri-edit-2-line"></i> Edit Profile</a>
+                        <a href=""><i class="ri-profile-line"></i> View Profile</a>
+                        <a href="~/Login/ChangePassword" class="nav-label"><i class="ri-edit-2-line"></i> Change Password</a>
+                    </nav>
+                    <hr>
+                    <nav class="nav">
+                        @*<a href=""><i class="ri-question-line"></i> Help Center</a>*@
+                        @*<a href=""><i class="ri-lock-line"></i> Privacy Settings</a>*@
+                        @*<a href=""><i class="ri-user-settings-line"></i> Account Settings</a>*@
+                        <a href="../Login/Index" id="logOutBtn"><i class="ri-logout-box-r-line"></i> Log Out</a>
+                    </nav>
+                </div><!-- dropdown-menu-body -->
+            </div><!-- dropdown-menu -->
+        </div><!-- dropdown -->
+    </div>
+    <div>
+        @RenderBody()
+        <hr />
+
+    </div>
+
+    <script src="../Assets/assets/contents/js/Menus.js"></script>
+
+</body>
+</html>
